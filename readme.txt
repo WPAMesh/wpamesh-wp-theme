@@ -4,7 +4,6 @@ Tags: dark, one-column, two-columns, three-columns, full-site-editing, block-pat
 Requires at least: 6.0
 Tested up to: 6.7
 Requires PHP: 7.4
-Stable tag: 1.0.0
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -34,6 +33,8 @@ WPAMesh is a custom WordPress block theme designed for the Western Pennsylvania 
 * Upcoming Events - Event listings
 * Discord Widget - Community join button
 * Featured Node - Highlight infrastructure nodes
+* Node Header - Single node page header with featured image
+* Node Specs - Node specifications table
 
 == Installation ==
 
@@ -43,30 +44,30 @@ WPAMesh is a custom WordPress block theme designed for the Western Pennsylvania 
 4. Click "Activate" to enable the theme
 5. See SETUP-GUIDE.md for detailed configuration instructions
 
-== Customization ==
+== Frequently Asked Questions ==
 
-This is a block theme using Full Site Editing. To customize:
+= Does this theme require any plugins? =
 
-1. Go to Appearance > Editor (Site Editor)
-2. Click on any element to edit it directly
-3. Use the Styles panel (paintbrush icon) for global changes
-4. Access Templates and Parts from the navigation menu
+The theme works standalone, but for full Node functionality you'll need Secure Custom Fields (SCF) or Advanced Custom Fields (ACF) to manage node metadata.
 
-== Navigation Setup ==
+= How do I customize the navigation? =
 
-The theme includes four navigation sections in the left sidebar:
+Go to Appearance > Editor, click on any navigation menu in the sidebar, and edit links directly in the preview.
 
-* Getting Started - Introduction to Meshtastic
-* View The Mesh - Maps and node listings
-* Guides - Tutorials and documentation
-* Community - Social links
+= Why don't I see the right sidebar? =
 
-To edit navigation:
-1. Go to Appearance > Editor
-2. Click on any navigation menu
-3. Edit links directly in the preview
+The right sidebar only appears on screens wider than 1400px to maintain readability on smaller displays.
 
 == Changelog ==
+
+= 1.1.0 =
+* Added single-node.html template for Node custom post type
+* Added node-header.php pattern with large featured image banner
+* Added node-specs.php pattern with formatted specs table
+* Added helper functions for height (feet/meters) and antenna gain formatting
+* Added role-specific badge colors for node display
+* Fixed WordPress block flow layout margin issues throughout theme
+* Fixed template-part wrapper margin resets
 
 = 1.0.0 =
 * Initial release
@@ -76,9 +77,27 @@ To edit navigation:
 * 8 custom block patterns
 * Mobile-first responsive design
 
-== Credits ==
+== Copyright ==
 
-* Designed for the WPAMesh community
-* Built with WordPress Full Site Editing
-* Uses Barlow and Barlow Condensed fonts from Google Fonts
-* Pittsburgh skyline image from wpamesh.net
+WPAMesh WordPress Theme, (C) 2025 WPAMesh Community
+WPAMesh is distributed under the terms of the GNU GPL.
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 2 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+GNU General Public License for more details.
+
+== Resources ==
+
+Barlow and Barlow Condensed fonts
+License: Open Font License
+Source: https://fonts.google.com/specimen/Barlow
+
+normalize.css
+License: MIT
+Source: https://necolas.github.io/normalize.css/

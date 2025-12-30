@@ -567,6 +567,21 @@ html {
    Right Sidebar (Wide Screens Only)
    ============================================ */
 
+/* Reset WordPress block flow layout margins throughout our theme */
+.wpamesh-page-wrapper .is-layout-flow > *,
+.wpamesh-page-wrapper > .wp-block-group,
+.wpamesh-main-content.is-layout-flow > *,
+.wpamesh-main-content .is-layout-flow > *,
+.wp-block-template-part.is-layout-flow > * {
+    margin-block: 0;
+}
+
+/* Reset WordPress template-part wrapper margins */
+.wp-block-template-part:has(.wpamesh-right-sidebar),
+.wp-block-template-part:has(.wpamesh-sidebar) {
+    margin: 0;
+}
+
 .wpamesh-right-sidebar {
     display: none;
     background: var(--wpamesh-steel);
@@ -611,10 +626,22 @@ html {
     gap: 0.5rem;
 }
 
+/* Override WordPress flow layout margins for stat boxes */
+.wpamesh-stats-grid.is-layout-flow > *,
+.wpamesh-stats-grid > .wp-block-group {
+    margin-block-start: 0 !important;
+    margin-block-end: 0 !important;
+}
+
 .wpamesh-stat-box {
     background: var(--wpamesh-steel-light);
     padding: 0.75rem;
     text-align: center;
+}
+
+/* Override WordPress flow layout margins inside stat boxes */
+.wpamesh-stat-box.is-layout-flow > * {
+    margin-block: 0;
 }
 
 .wpamesh-stat-box .number {
@@ -715,6 +742,189 @@ html {
     font-size: 0.8rem;
     color: var(--wpamesh-text-dim);
     line-height: 1.5;
+}
+
+/* ============================================
+   Node Page Header
+   ============================================ */
+
+.wpamesh-node-page-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.5rem 2rem;
+    background: var(--wpamesh-steel);
+    border-bottom: 3px solid var(--wpamesh-gold);
+}
+
+.wpamesh-node-page-icon {
+    font-size: 3rem;
+    line-height: 1;
+}
+
+.wpamesh-node-page-title {
+    flex: 1;
+}
+
+.wpamesh-node-page-name {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 2rem;
+    color: var(--wpamesh-white);
+    margin: 0;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    line-height: 1.1;
+}
+
+/* Featured image as large banner below header */
+.wpamesh-node-featured-image {
+    width: 100%;
+    max-height: 400px;
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+}
+
+.wpamesh-node-featured-image img {
+    width: 100%;
+    height: auto;
+    max-height: 400px;
+    object-fit: cover;
+    display: block;
+}
+
+@media (max-width: 600px) {
+    .wpamesh-node-page-header {
+        padding: 1rem;
+        flex-wrap: wrap;
+    }
+
+    .wpamesh-node-page-icon {
+        font-size: 2rem;
+    }
+
+    .wpamesh-node-page-name {
+        font-size: 1.5rem;
+    }
+
+    .wpamesh-node-featured-image {
+        max-height: 250px;
+    }
+
+    .wpamesh-node-featured-image img {
+        max-height: 250px;
+    }
+}
+
+/* ============================================
+   Node Details (Single Node Template)
+   ============================================ */
+
+.wpamesh-node-details {
+    background: var(--wpamesh-steel);
+    border: 1px solid var(--wpamesh-border);
+    border-left: 3px solid var(--wpamesh-gold);
+    padding: 1rem;
+}
+
+.wpamesh-node-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--wpamesh-border);
+}
+
+.wpamesh-node-icon {
+    font-size: 1.75rem;
+    line-height: 1;
+    min-width: 2rem;
+    text-align: center;
+}
+
+.wpamesh-node-title {
+    flex: 1;
+    min-width: 0;
+}
+
+.wpamesh-node-name {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 1.25rem;
+    color: var(--wpamesh-white);
+    margin: 0;
+    letter-spacing: 0.5px;
+    line-height: 1.2;
+}
+
+.wpamesh-node-mode {
+    display: inline-block;
+    font-size: 0.65rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--wpamesh-black);
+    background: var(--wpamesh-gold);
+    padding: 0.15rem 0.4rem;
+    border-radius: 2px;
+    margin-top: 0.25rem;
+}
+
+/* Role-specific badge colors */
+.wpamesh-role-client { background: var(--wpamesh-text-dim); color: var(--wpamesh-white); }
+.wpamesh-role-client_mute { background: var(--wpamesh-steel-light); color: var(--wpamesh-text); }
+.wpamesh-role-router { background: var(--wpamesh-rust); }
+.wpamesh-role-router_late { background: var(--wpamesh-rust); }
+.wpamesh-role-repeater { background: var(--wpamesh-gold); }
+.wpamesh-role-tracker { background: #4a9eff; }
+.wpamesh-role-sensor { background: #9b59b6; color: var(--wpamesh-white); }
+.wpamesh-role-tak { background: #27ae60; }
+.wpamesh-role-tak_tracker { background: #27ae60; }
+.wpamesh-role-client_hidden { background: var(--wpamesh-black); color: var(--wpamesh-text-dim); border: 1px solid var(--wpamesh-border); }
+.wpamesh-role-lost_and_found { background: #e74c3c; }
+
+.wpamesh-node-specs {
+    display: block;
+    margin: 0;
+}
+
+.wpamesh-spec-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 0.35rem 0;
+    border-bottom: 1px solid var(--wpamesh-border);
+    gap: 1rem;
+}
+
+.wpamesh-spec-row:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.wpamesh-spec-row dt {
+    font-size: 0.8rem;
+    color: var(--wpamesh-text-dim);
+    margin: 0;
+    flex-shrink: 0;
+}
+
+.wpamesh-spec-row dd {
+    font-size: 0.85rem;
+    color: var(--wpamesh-white);
+    font-weight: 500;
+    margin: 0;
+    text-align: right;
+}
+
+.wpamesh-spec-row dd a {
+    color: var(--wpamesh-gold);
+    text-decoration: none;
+}
+
+.wpamesh-spec-row dd a:hover {
+    text-decoration: underline;
 }
 
 /* ============================================

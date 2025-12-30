@@ -114,3 +114,44 @@ add_action( 'init', function() {
     remove_action( 'wp_head', 'print_emoji_detection_script', 7 );
     remove_action( 'wp_print_styles', 'print_emoji_styles' );
 });
+
+/**
+ * Node helper functions for formatting ACF field values
+ */
+
+/**
+ * Convert feet to meters
+ *
+ * @param float $feet Height in feet.
+ * @return int Height in meters (rounded).
+ */
+function wpamesh_feet_to_meters( $feet ) {
+    return round( $feet * 0.3048 );
+}
+
+/**
+ * Format height with both feet and meters
+ *
+ * @param mixed $feet Height in feet (from ACF number field).
+ * @return string Formatted height string or empty string if invalid.
+ */
+function wpamesh_format_height( $feet ) {
+    if ( ! is_numeric( $feet ) || $feet === '' || $feet === null ) {
+        return '';
+    }
+    $meters = wpamesh_feet_to_meters( $feet );
+    return sprintf( '%s ft (%s m)', number_format( $feet ), number_format( $meters ) );
+}
+
+/**
+ * Format antenna gain with dB unit
+ *
+ * @param mixed $gain Antenna gain value (from ACF number field).
+ * @return string Formatted gain string or empty string if invalid.
+ */
+function wpamesh_format_antenna_gain( $gain ) {
+    if ( ! is_numeric( $gain ) || $gain === '' || $gain === null ) {
+        return '';
+    }
+    return $gain . ' dB';
+}
