@@ -8,7 +8,7 @@
  */
 ?>
 <!-- wp:group {"className":"wpamesh-content-section","layout":{"type":"default"}} -->
-<div class="wp-block-group wpamesh-content-section">
+<div class="wpamesh-content-section wp-block-group">
 
 <!-- wp:heading {"level":2,"className":"wpamesh-section-title"} -->
 <h2 class="wp-block-heading wpamesh-section-title">Recent Posts</h2>
@@ -18,15 +18,15 @@
 <!-- wp:post-template {"className":"wpamesh-posts-grid","layout":{"type":"grid","columnCount":2}} -->
 
 <!-- wp:group {"className":"wpamesh-post-card","layout":{"type":"default"}} -->
-<div class="wp-block-group wpamesh-post-card">
+<div class="wpamesh-post-card wp-block-group">
 
 <!-- wp:post-title {"level":4,"isLink":true} /-->
 
 <!-- wp:group {"className":"meta","layout":{"type":"flex","flexWrap":"wrap"},"fontSize":"small"} -->
-<div class="wp-block-group meta">
+<div class="meta wp-block-group">
 <!-- wp:post-terms {"term":"category"} /-->
 <!-- wp:paragraph -->
-<p>&middot;</p>
+<p>·</p>
 <!-- /wp:paragraph -->
 <!-- wp:post-excerpt {"excerptLength":10,"moreText":""} /-->
 </div>

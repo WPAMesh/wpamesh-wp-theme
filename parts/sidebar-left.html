@@ -1,106 +1,81 @@
-<!-- wp:group {"className":"wpamesh-sidebar","layout":{"type":"default"}} -->
-<aside id="wpamesh-sidebar" class="wp-block-group wpamesh-sidebar" role="navigation" aria-label="Main navigation">
-
-<!-- Sidebar Header with Logo -->
-<!-- wp:group {"className":"wpamesh-sidebar-header","layout":{"type":"default"}} -->
-<div class="wp-block-group wpamesh-sidebar-header">
-
-<!-- wp:group {"className":"wpamesh-logo","layout":{"type":"flex","flexWrap":"nowrap"}} -->
-<div class="wp-block-group wpamesh-logo">
-
-<!-- wp:group {"className":"wpamesh-logo-mark","layout":{"type":"default"}} -->
-<div class="wp-block-group wpamesh-logo-mark">
-<!-- wp:html --><span>&#128225;</span><!-- /wp:html -->
-</div>
+<!-- wp:group {"tagName":"aside","className":"wpamesh-sidebar","layout":{"type":"default"},"ariaLabel":"Main navigation"} -->
+<aside id="wpamesh-sidebar" aria-label="Main navigation" class="wpamesh-sidebar wp-block-group"><!-- wp:group {"className":"wpamesh-sidebar-header","layout":{"type":"default"}} -->
+<div class="wpamesh-sidebar-header wp-block-group"><!-- wp:group {"className":"wpamesh-logo","layout":{"type":"flex","flexWrap":"nowrap"}} -->
+<div class="wpamesh-logo wp-block-group"><!-- wp:group {"className":"wpamesh-logo-mark","layout":{"type":"default"}} -->
+<div class="wpamesh-logo-mark wp-block-group"><!-- wp:paragraph {"className":"wpamesh-logo-icon"} -->
+<p class="wpamesh-logo-icon">📡</p>
+<!-- /wp:paragraph --></div>
 <!-- /wp:group -->
 
 <!-- wp:group {"className":"wpamesh-logo-text","layout":{"type":"default"}} -->
-<div class="wp-block-group wpamesh-logo-text">
-<!-- wp:site-title {"level":0,"isLink":true,"style":{"typography":{"fontStyle":"normal","fontWeight":"700"}},"fontFamily":"barlow-condensed"} /-->
-</div>
+<div class="wpamesh-logo-text wp-block-group"><!-- wp:site-title {"level":0,"style":{"typography":{"fontStyle":"normal","fontWeight":"700"}},"fontFamily":"barlow-condensed"} /--></div>
+<!-- /wp:group --></div>
+<!-- /wp:group --></div>
 <!-- /wp:group -->
 
-</div>
-<!-- /wp:group -->
-
-</div>
-<!-- /wp:group -->
-
-<!-- Sidebar Navigation -->
-<!-- wp:group {"className":"wpamesh-sidebar-nav","layout":{"type":"default"}} -->
-<nav class="wp-block-group wpamesh-sidebar-nav">
-
-<!-- Getting Started Section -->
-<!-- wp:group {"className":"wpamesh-nav-section","layout":{"type":"default"}} -->
-<div class="wp-block-group wpamesh-nav-section">
-<!-- wp:heading {"level":3} -->
+<!-- wp:group {"tagName":"nav","className":"wpamesh-sidebar-nav","layout":{"type":"default"}} -->
+<nav class="wpamesh-sidebar-nav wp-block-group"><!-- wp:group {"className":"wpamesh-nav-section","layout":{"type":"default"}} -->
+<div class="wpamesh-nav-section wp-block-group"><!-- wp:heading {"level":3} -->
 <h3 class="wp-block-heading">Getting Started</h3>
 <!-- /wp:heading -->
 
-<!-- wp:navigation {"ariaLabel":"Getting Started","overlayMenu":"never","layout":{"type":"flex","orientation":"vertical"}} -->
+<!-- wp:navigation {"overlayMenu":"never","layout":{"type":"flex","orientation":"vertical"},"ariaLabel":"Getting Started"} -->
 <!-- wp:navigation-link {"label":"What's Meshtastic?","url":"/whats-meshtastic/","kind":"custom"} /-->
+
 <!-- wp:navigation-link {"label":"Joining the WPAMesh","url":"/posts/getting-on-the-air-with-the-wpamesh/","kind":"custom"} /-->
-<!-- wp:navigation-link {"label":"Flash Your Device","url":"https://flasher.meshtastic.org/","kind":"custom","opensInNewTab":true} /-->
-<!-- wp:navigation-link {"label":"Video Tutorial","url":"https://www.youtube.com/watch?v=Euw9ppwkbxQ","kind":"custom","opensInNewTab":true} /-->
-<!-- /wp:navigation -->
-</div>
+
+<!-- wp:navigation-link {"label":"Flash Your Device","opensInNewTab":true,"url":"https://flasher.meshtastic.org/","kind":"custom"} /-->
+
+<!-- wp:navigation-link {"label":"Video Tutorial","opensInNewTab":true,"url":"https://www.youtube.com/watch?v=Euw9ppwkbxQ","kind":"custom"} /-->
+<!-- /wp:navigation --></div>
 <!-- /wp:group -->
 
-<!-- View The Mesh Section -->
 <!-- wp:group {"className":"wpamesh-nav-section","layout":{"type":"default"}} -->
-<div class="wp-block-group wpamesh-nav-section">
-<!-- wp:heading {"level":3} -->
+<div class="wpamesh-nav-section wp-block-group"><!-- wp:heading {"level":3} -->
 <h3 class="wp-block-heading">View The Mesh</h3>
 <!-- /wp:heading -->
 
-<!-- wp:navigation {"ariaLabel":"View The Mesh","overlayMenu":"never","layout":{"type":"flex","orientation":"vertical"}} -->
-<!-- wp:navigation-link {"label":"Live Map","url":"https://map.wpamesh.net/map","kind":"custom","opensInNewTab":true} /-->
+<!-- wp:navigation {"overlayMenu":"never","layout":{"type":"flex","orientation":"vertical"},"ariaLabel":"View The Mesh"} -->
+<!-- wp:navigation-link {"label":"Live Map","opensInNewTab":true,"url":"https://map.wpamesh.net/map","kind":"custom"} /-->
+
 <!-- wp:navigation-link {"label":"Member Nodes","url":"/member-nodes/","kind":"custom"} /-->
+
 <!-- wp:navigation-link {"label":"MQTT Server","url":"/mqtt/","kind":"custom"} /-->
-<!-- /wp:navigation -->
-</div>
+<!-- /wp:navigation --></div>
 <!-- /wp:group -->
 
-<!-- Guides Section -->
 <!-- wp:group {"className":"wpamesh-nav-section","layout":{"type":"default"}} -->
-<div class="wp-block-group wpamesh-nav-section">
-<!-- wp:heading {"level":3} -->
+<div class="wpamesh-nav-section wp-block-group"><!-- wp:heading {"level":3} -->
 <h3 class="wp-block-heading">Guides</h3>
 <!-- /wp:heading -->
 
-<!-- wp:navigation {"ariaLabel":"Guides","overlayMenu":"never","layout":{"type":"flex","orientation":"vertical"}} -->
+<!-- wp:navigation {"overlayMenu":"never","layout":{"type":"flex","orientation":"vertical"},"ariaLabel":"Guides"} -->
 <!-- wp:navigation-link {"label":"RoadsEnd Tower","url":"/posts/roadsend-tower/","kind":"custom"} /-->
+
 <!-- wp:navigation-link {"label":"All Guides","url":"/posts/category/guide/","kind":"custom"} /-->
-<!-- /wp:navigation -->
-</div>
+<!-- /wp:navigation --></div>
 <!-- /wp:group -->
 
-<!-- Community Section -->
 <!-- wp:group {"className":"wpamesh-nav-section","layout":{"type":"default"}} -->
-<div class="wp-block-group wpamesh-nav-section">
-<!-- wp:heading {"level":3} -->
+<div class="wpamesh-nav-section wp-block-group"><!-- wp:heading {"level":3} -->
 <h3 class="wp-block-heading">Community</h3>
 <!-- /wp:heading -->
 
-<!-- wp:navigation {"ariaLabel":"Community","overlayMenu":"never","layout":{"type":"flex","orientation":"vertical"}} -->
-<!-- wp:navigation-link {"label":"Discord","url":"https://discord.gg/67xqYqaqXP","kind":"custom","opensInNewTab":true} /-->
-<!-- wp:navigation-link {"label":"Facebook","url":"https://www.facebook.com/groups/873345134557415","kind":"custom","opensInNewTab":true} /-->
-<!-- wp:navigation-link {"label":"Meshtastic.org","url":"https://meshtastic.org/","kind":"custom","opensInNewTab":true} /-->
-<!-- /wp:navigation -->
-</div>
+<!-- wp:navigation {"overlayMenu":"never","layout":{"type":"flex","orientation":"vertical"},"ariaLabel":"Community"} -->
+<!-- wp:navigation-link {"label":"Discord","opensInNewTab":true,"url":"https://discord.gg/67xqYqaqXP","kind":"custom"} /-->
+
+<!-- wp:navigation-link {"label":"Facebook","opensInNewTab":true,"url":"https://www.facebook.com/groups/873345134557415","kind":"custom"} /-->
+
+<!-- wp:navigation-link {"label":"Meshtastic.org","opensInNewTab":true,"url":"https://meshtastic.org/","kind":"custom"} /-->
+<!-- /wp:navigation --></div>
+<!-- /wp:group --></nav>
 <!-- /wp:group -->
 
-</nav>
-<!-- /wp:group -->
-
-<!-- Sidebar Footer with Status Widget -->
 <!-- wp:group {"className":"wpamesh-sidebar-footer","layout":{"type":"default"}} -->
-<div class="wp-block-group wpamesh-sidebar-footer">
+<div class="wpamesh-sidebar-footer wp-block-group">
 
 <!-- wp:pattern {"slug":"wpamesh/status-widget"} /-->
 
 </div>
-<!-- /wp:group -->
-
-</aside>
+<!-- /wp:group --></aside>
 <!-- /wp:group -->
