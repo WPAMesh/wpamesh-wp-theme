@@ -14,11 +14,19 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Enqueue theme styles and scripts
  */
 add_action( 'wp_enqueue_scripts', function() {
+    // Google Fonts - Barlow and Barlow Condensed
+    wp_enqueue_style(
+        'wpamesh-google-fonts',
+        'https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@600;700&display=swap',
+        array(),
+        null
+    );
+
     // Main theme stylesheet (extracted from HTML redesign)
     wp_enqueue_style(
         'wpamesh-theme',
         get_theme_file_uri( 'assets/css/theme.css' ),
-        array(),
+        array( 'wpamesh-google-fonts' ),
         wp_get_theme()->get( 'Version' )
     );
 

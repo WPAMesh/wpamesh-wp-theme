@@ -46,6 +46,23 @@ body {
     min-height: 100vh;
 }
 
+a {
+    transition: color 0.15s;
+}
+
+/* ============================================
+   WordPress Block Paragraph Resets
+   ============================================ */
+
+/* Reset paragraph margins inside custom components */
+.wpamesh-stat-box p,
+.wpamesh-event-item p,
+.wpamesh-featured-node p,
+.wpamesh-status-row p,
+.wpamesh-discord-widget p {
+    margin: 0;
+}
+
 /* ============================================
    Accessibility: Skip Link
    ============================================ */
@@ -852,4 +869,142 @@ html {
 /* Site logo in sidebar */
 .wpamesh-sidebar .wp-block-site-logo img {
     display: block;
+}
+
+/* Site title in logo */
+.wpamesh-logo-text .wp-block-site-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 1.4rem;
+    color: var(--wpamesh-white);
+    letter-spacing: 0.5px;
+    margin: 0;
+}
+
+.wpamesh-logo-text .wp-block-site-title a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.wpamesh-logo-text .wp-block-site-title a:hover {
+    color: var(--wpamesh-gold);
+}
+
+/* ============================================
+   WordPress Button Block Overrides
+   ============================================ */
+
+.wpamesh-discord-widget .wp-block-button {
+    margin: 0;
+}
+
+.wpamesh-discord-widget .wp-block-button__link {
+    background: var(--wpamesh-discord) !important;
+    color: var(--wpamesh-white) !important;
+    padding: 0.5rem 1rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: background 0.15s;
+}
+
+.wpamesh-discord-widget .wp-block-button__link:hover {
+    background: #4752c4 !important;
+}
+
+/* Hero CTA Button */
+.wpamesh-hero-text .wp-block-buttons {
+    margin-top: 1rem;
+}
+
+.wpamesh-hero-text .wp-block-button.wpamesh-hero-cta,
+.wpamesh-hero-cta.wp-block-button {
+    margin: 0;
+}
+
+.wpamesh-hero-text .wpamesh-hero-cta .wp-block-button__link,
+.wpamesh-hero-cta .wp-block-button__link {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0.5rem 1.25rem;
+    background: rgba(255, 184, 28, 0.15) !important;
+    border: 1px solid rgba(255, 184, 28, 0.4);
+    border-radius: 20px;
+    color: var(--wpamesh-gold) !important;
+    font-size: 0.9rem;
+    text-decoration: none;
+    transition: background 0.15s, border-color 0.15s;
+}
+
+.wpamesh-hero-text .wpamesh-hero-cta .wp-block-button__link:hover,
+.wpamesh-hero-cta .wp-block-button__link:hover {
+    background: rgba(255, 184, 28, 0.25) !important;
+    border-color: rgba(255, 184, 28, 0.6);
+}
+
+/* ============================================
+   WordPress Image Block Overrides
+   ============================================ */
+
+/* Hero Banner Image */
+.wpamesh-hero-banner .wp-block-image {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    margin: 0;
+}
+
+.wpamesh-hero-banner .wp-block-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: grayscale(30%);
+    opacity: 0.5;
+}
+
+.wpamesh-hero-banner .wp-block-image figcaption {
+    display: none;
+}
+
+/* Map Container Image */
+.wpamesh-map-container .wp-block-image {
+    margin: 0;
+}
+
+.wpamesh-map-container .wp-block-image img {
+    width: 100%;
+    display: block;
+}
+
+/* ============================================
+   Navigation Block in Sidebar
+   ============================================ */
+
+.wpamesh-nav-section .wp-block-navigation {
+    gap: 0;
+}
+
+.wpamesh-nav-section .wp-block-navigation__container {
+    flex-direction: column;
+    gap: 0;
+}
+
+.wpamesh-nav-section .wp-block-navigation-item {
+    margin-bottom: 0.3rem;
+}
+
+.wpamesh-nav-section .wp-block-navigation-item__content {
+    color: var(--wpamesh-text);
+    font-size: 0.9rem;
+    padding: 0.2rem 0;
+    text-decoration: none;
+}
+
+.wpamesh-nav-section .wp-block-navigation-item__content:hover {
+    color: var(--wpamesh-gold);
+    text-decoration: none;
 }
