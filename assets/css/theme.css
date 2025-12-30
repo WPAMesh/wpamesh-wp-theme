@@ -777,6 +777,47 @@ html {
     line-height: 1.1;
 }
 
+.wpamesh-node-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 0.25rem;
+    flex-wrap: wrap;
+}
+
+/* Reusable badge component */
+.wpamesh-badge {
+    display: inline-flex;
+    align-items: center;
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 0.15rem 0.5rem;
+    border-radius: 2px;
+}
+
+.wpamesh-node-status::before {
+    content: '\25CF';
+    margin-right: 0.3rem;
+    font-size: 0.6rem;
+}
+
+.wpamesh-node-status.online {
+    background: rgba(74, 222, 128, 0.2);
+    color: var(--wpamesh-green);
+}
+
+.wpamesh-node-status.offline {
+    background: rgba(154, 154, 158, 0.2);
+    color: var(--wpamesh-text-dim);
+}
+
+.wpamesh-node-last-seen {
+    font-size: 0.7rem;
+    color: var(--wpamesh-text-dim);
+}
+
 /* Featured image as large banner below header */
 .wpamesh-node-featured-image {
     width: 100%;
@@ -858,17 +899,10 @@ html {
     line-height: 1.2;
 }
 
+/* Role badge - extends .wpamesh-badge */
 .wpamesh-node-mode {
-    display: inline-block;
-    font-size: 0.65rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
     color: var(--wpamesh-black);
     background: var(--wpamesh-gold);
-    padding: 0.15rem 0.4rem;
-    border-radius: 2px;
-    margin-top: 0.25rem;
 }
 
 /* Role-specific badge colors */

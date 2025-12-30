@@ -60,6 +60,14 @@ The right sidebar only appears on screens wider than 1400px to maintain readabil
 
 == Changelog ==
 
+= 1.2.0 =
+* Added meshview API integration for live network statistics
+* Network stats pattern now displays live data from map.wpamesh.net
+* Added node_id field support for linking WordPress nodes to meshview
+* Node header now shows live online/offline status when node_id is set
+* Added API helper functions with WordPress transient caching (5 min TTL)
+* Added hex/decimal node ID conversion utilities
+
 = 1.1.0 =
 * Added single-node.html template for Node custom post type
 * Added node-header.php pattern with large featured image banner

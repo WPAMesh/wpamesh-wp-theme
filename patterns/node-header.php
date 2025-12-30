@@ -13,6 +13,7 @@ $post_id = get_the_ID();
 // Get ACF/SCF fields with explicit post ID
 $long_name  = get_field( 'long_name', $post_id ) ?: 'Node Name';
 $short_name = get_field( 'short_name', $post_id ) ?: '📡';
+$node_id    = get_field( 'node_id', $post_id ); // Hex ID like "!a5060ad0"
 
 // Role returns array with 'value' and 'label' keys
 $role_field = get_field( 'role', $post_id );
@@ -21,13 +22,40 @@ $role_label = is_array( $role_field ) ? $role_field['label'] : ( $role_field ?: 
 
 // Check for featured image
 $has_thumbnail = has_post_thumbnail( $post_id );
+
+// Get live node status from meshview API if node_id is set
+$live_node    = null;
+$is_online    = false;
+$last_seen    = '';
+$has_live_data = false;
+
+if ( $node_id ) {
+    $live_node = wpamesh_get_node_by_hex_id( $node_id );
+    if ( $live_node ) {
+        $has_live_data = true;
+        $is_online     = $live_node['is_online'];
+        $last_seen     = $live_node['last_seen_formatted'];
+    }
+}
+
+$online_class = $has_live_data ? ( $is_online ? 'wpamesh-node-online' : 'wpamesh-node-offline' ) : '';
 ?>
 <!-- wp:html -->
-<div class="wpamesh-node-page-header wpamesh-node-role-<?php echo esc_attr( $role_value ); ?>">
+<div class="wpamesh-node-page-header wpamesh-node-role-<?php echo esc_attr( $role_value ); ?> <?php echo esc_attr( $online_class ); ?>">
 <span class="wpamesh-node-page-icon"><?php echo esc_html( $short_name ); ?></span>
 <div class="wpamesh-node-page-title">
 <h1 class="wpamesh-node-page-name"><?php echo esc_html( $long_name ); ?></h1>
-<span class="wpamesh-node-mode wpamesh-role-<?php echo esc_attr( $role_value ); ?>"><?php echo esc_html( $role_label ); ?></span>
+<div class="wpamesh-node-meta">
+<span class="wpamesh-badge wpamesh-node-mode wpamesh-role-<?php echo esc_attr( $role_value ); ?>"><?php echo esc_html( $role_label ); ?></span>
+<?php if ( $has_live_data ) : ?>
+<span class="wpamesh-badge wpamesh-node-status <?php echo $is_online ? 'online' : 'offline'; ?>">
+<?php echo $is_online ? esc_html__( 'Online', 'wpamesh' ) : esc_html__( 'Offline', 'wpamesh' ); ?>
+</span>
+<?php if ( ! $is_online && $last_seen ) : ?>
+<span class="wpamesh-node-last-seen"><?php echo esc_html( $last_seen ); ?></span>
+<?php endif; ?>
+<?php endif; ?>
+</div>
 </div>
 </div>
 <?php if ( $has_thumbnail ) : ?>

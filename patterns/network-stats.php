@@ -6,51 +6,42 @@
  * Keywords: stats, statistics, numbers, nodes
  * Inserter: true
  */
+
+// Fetch live stats from meshview API
+$stats = wpamesh_get_network_stats();
+$channel_metrics = wpamesh_get_channel_metrics();
 ?>
 <!-- wp:group {"className":"wpamesh-right-widget","layout":{"type":"default"}} -->
 <div class="wpamesh-right-widget wp-block-group"><!-- wp:heading {"level":3} -->
 <h3 class="wp-block-heading">Network Stats</h3>
 <!-- /wp:heading -->
 
-<!-- wp:group {"className":"wpamesh-stats-grid","layout":{"type":"default"}} -->
-<div class="wpamesh-stats-grid wp-block-group"><!-- wp:group {"className":"wpamesh-stat-box","layout":{"type":"default"}} -->
-<div class="wpamesh-stat-box wp-block-group"><!-- wp:paragraph {"className":"number"} -->
-<p class="number">47</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:paragraph {"className":"label"} -->
+<!-- wp:html -->
+<div class="wpamesh-stats-grid">
+<div class="wpamesh-stat-box">
+<p class="number"><?php echo esc_html( number_format( $stats['total_nodes'] ) ); ?></p>
 <p class="label">Nodes</p>
-<!-- /wp:paragraph --></div>
-<!-- /wp:group -->
-
-<!-- wp:group {"className":"wpamesh-stat-box","layout":{"type":"default"}} -->
-<div class="wpamesh-stat-box wp-block-group"><!-- wp:paragraph {"className":"number"} -->
-<p class="number">12</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:paragraph {"className":"label"} -->
-<p class="label">Online</p>
-<!-- /wp:paragraph --></div>
-<!-- /wp:group -->
-
-<!-- wp:group {"className":"wpamesh-stat-box","layout":{"type":"default"}} -->
-<div class="wpamesh-stat-box wp-block-group"><!-- wp:paragraph {"className":"number"} -->
-<p class="number">6</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:paragraph {"className":"label"} -->
-<p class="label">Counties</p>
-<!-- /wp:paragraph --></div>
-<!-- /wp:group -->
-
-<!-- wp:group {"className":"wpamesh-stat-box","layout":{"type":"default"}} -->
-<div class="wpamesh-stat-box wp-block-group"><!-- wp:paragraph {"className":"number"} -->
-<p class="number">3</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:paragraph {"className":"label"} -->
-<p class="label">Repeaters</p>
-<!-- /wp:paragraph --></div>
-<!-- /wp:group --></div>
-<!-- /wp:group --></div>
+</div>
+<div class="wpamesh-stat-box">
+<p class="number"><?php echo esc_html( number_format( $stats['active_nodes'] ) ); ?></p>
+<p class="label">Active</p>
+</div>
+<div class="wpamesh-stat-box">
+<p class="number"><?php echo esc_html( number_format( $stats['routers'] ) ); ?></p>
+<p class="label">Routers</p>
+</div>
+<div class="wpamesh-stat-box">
+<p class="number"><?php echo esc_html( number_format( $stats['packets_24h'] ) ); ?></p>
+<p class="label">Msgs/24h</p>
+</div>
+<div class="wpamesh-stat-box">
+<p class="number"><?php echo $channel_metrics['channel_utilization'] !== null ? esc_html( $channel_metrics['channel_utilization'] . '%' ) : '—'; ?></p>
+<p class="label">Ch. Util</p>
+</div>
+<div class="wpamesh-stat-box">
+<p class="number"><?php echo $channel_metrics['air_util_tx'] !== null ? esc_html( $channel_metrics['air_util_tx'] . '%' ) : '—'; ?></p>
+<p class="label">Airtime</p>
+</div>
+</div>
+<!-- /wp:html --></div>
 <!-- /wp:group -->
