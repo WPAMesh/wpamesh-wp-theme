@@ -1,0 +1,23 @@
+SCREENSHOT INSTRUCTIONS
+=======================
+
+WordPress themes need a screenshot.png file in the theme root folder.
+
+Requirements:
+- Filename: screenshot.png
+- Dimensions: 1200 x 900 pixels
+- Format: PNG
+
+How to create:
+1. Install and activate the theme on a test WordPress site
+2. Visit the homepage
+3. Take a full-page screenshot
+4. Crop/resize to 1200x900 pixels
+5. Save as screenshot.png in the theme root folder
+
+The screenshot appears in:
+- Appearance > Themes (theme preview)
+- Theme selection dialogs
+
+Tip: Capture the homepage showing the hero banner, welcome section,
+and partial sidebar to give a good representation of the theme's look.

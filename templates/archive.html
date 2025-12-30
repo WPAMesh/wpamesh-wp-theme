@@ -1,0 +1,77 @@
+<!-- wp:template-part {"slug":"header","tagName":"header","area":"header"} /-->
+
+<!-- wp:group {"tagName":"div","className":"wpamesh-page-wrapper","layout":{"type":"default"}} -->
+<div class="wp-block-group wpamesh-page-wrapper">
+
+<!-- wp:template-part {"slug":"sidebar-left","tagName":"aside","area":"sidebar"} /-->
+
+<!-- wp:group {"tagName":"div","layout":{"type":"default"}} -->
+<div class="wp-block-group">
+
+<!-- wp:group {"tagName":"main","className":"wpamesh-main-content","anchor":"main-content","layout":{"type":"default"}} -->
+<main id="main-content" class="wp-block-group wpamesh-main-content">
+
+<!-- wp:group {"className":"wpamesh-main-inner","layout":{"type":"constrained"}} -->
+<div class="wp-block-group wpamesh-main-inner">
+
+<!-- wp:group {"className":"wpamesh-content-section","layout":{"type":"default"}} -->
+<div class="wp-block-group wpamesh-content-section">
+
+<!-- wp:query-title {"type":"archive","className":"wpamesh-section-title"} /-->
+
+<!-- wp:term-description /-->
+
+</div>
+<!-- /wp:group -->
+
+<!-- wp:query {"queryId":2,"query":{"perPage":10,"postType":"post","inherit":true}} -->
+<!-- wp:post-template {"className":"wpamesh-posts-grid","layout":{"type":"grid","columnCount":2}} -->
+
+<!-- wp:group {"className":"wpamesh-post-card","layout":{"type":"default"}} -->
+<div class="wp-block-group wpamesh-post-card">
+
+<!-- wp:post-title {"level":4,"isLink":true} /-->
+
+<!-- wp:group {"className":"meta","layout":{"type":"flex","flexWrap":"wrap"},"fontSize":"small"} -->
+<div class="wp-block-group meta">
+<!-- wp:post-terms {"term":"category"} /-->
+<!-- wp:paragraph -->
+<p>&middot;</p>
+<!-- /wp:paragraph -->
+<!-- wp:post-date /-->
+</div>
+<!-- /wp:group -->
+
+</div>
+<!-- /wp:group -->
+
+<!-- /wp:post-template -->
+
+<!-- wp:query-pagination {"layout":{"type":"flex","justifyContent":"center"}} -->
+<!-- wp:query-pagination-previous /-->
+<!-- wp:query-pagination-numbers /-->
+<!-- wp:query-pagination-next /-->
+<!-- /wp:query-pagination -->
+
+<!-- wp:query-no-results -->
+<!-- wp:paragraph {"align":"center"} -->
+<p class="has-text-align-center">No posts found in this category.</p>
+<!-- /wp:paragraph -->
+<!-- /wp:query-no-results -->
+<!-- /wp:query -->
+
+</div>
+<!-- /wp:group -->
+
+</main>
+<!-- /wp:group -->
+
+<!-- wp:template-part {"slug":"footer","tagName":"footer","area":"footer"} /-->
+
+</div>
+<!-- /wp:group -->
+
+<!-- wp:template-part {"slug":"sidebar-right","tagName":"aside","area":"sidebar"} /-->
+
+</div>
+<!-- /wp:group -->
