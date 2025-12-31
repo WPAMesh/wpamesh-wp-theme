@@ -35,6 +35,7 @@ WPAMesh is a custom WordPress block theme designed for the Western Pennsylvania 
 * Featured Node - Highlight infrastructure nodes
 * Node Header - Single node page header with featured image
 * Node Specs - Node specifications table
+* Member Nodes - Dynamic listing of recognized infrastructure nodes with live status
 
 == Installation ==
 
@@ -59,6 +60,25 @@ Go to Appearance > Editor, click on any navigation menu in the sidebar, and edit
 The right sidebar only appears on screens wider than 1400px to maintain readability on smaller displays.
 
 == Changelog ==
+
+= 1.2.3 =
+* Added Member Nodes pattern for dynamic infrastructure node listings
+* Added [wpamesh_node_list] shortcode for flexible node list placement
+* Shortcode supports tier filtering: [wpamesh_node_list tier="core_router"]
+* Available tiers: core_router, supplemental, gateway, service
+* Optional show_title="false" attribute to hide tier headings
+* Shows live online/offline status dots for nodes with node_id set
+* Requires new SCF fields: node_tier (select), location_name (text)
+
+= 1.2.2 =
+* Fixed API field names for channel metrics (from_node_id)
+* Fixed role filtering to use client-side array filtering
+
+= 1.2.1 =
+* Added channel utilization and airtime metrics to Network Stats
+* Added wpamesh_get_channel_metrics() for network-wide channel stats
+* Added wpamesh_get_node_channel_metrics() for per-node metrics
+* Added protobuf text format payload parser for telemetry data
 
 = 1.2.0 =
 * Added meshview API integration for live network statistics
