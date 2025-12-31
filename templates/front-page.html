@@ -1,61 +1,95 @@
-<!-- wp:template-part {"slug":"header","tagName":"header","area":"header"} /-->
+<!-- wp:template-part {"slug":"header","theme":"wpamesh-theme","tagName":"header","area":"header"} /-->
 
-<!-- wp:group {"tagName":"div","className":"wpamesh-page-wrapper","layout":{"type":"default"}} -->
-<div class="wp-block-group wpamesh-page-wrapper">
+<!-- wp:group {"className":"wpamesh-page-wrapper","layout":{"type":"default"}} -->
+<div class="wpamesh-page-wrapper wp-block-group"><!-- wp:template-part {"slug":"sidebar-left","theme":"wpamesh-theme","tagName":"aside","area":"sidebar"} /-->
 
-<!-- wp:template-part {"slug":"sidebar-left","tagName":"aside","area":"sidebar"} /-->
+<!-- wp:group {"layout":{"type":"default"}} -->
+<div class="wp-block-group"><!-- wp:group {"tagName":"main","className":"wpamesh-main-content","layout":{"type":"default"}} -->
+<main id="main-content" class="wpamesh-main-content wp-block-group"><!-- wp:group {"className":"wpamesh-hero-banner","layout":{"type":"default"}} -->
+<div class="wpamesh-hero-banner wp-block-group"><!-- wp:image {"sizeSlug":"large","linkDestination":"none"} -->
+<figure class="wp-block-image size-large"><img src="https://wpamesh.net/wp-content/uploads/2025/06/pittsburgh_109_9953_pano_up-copy-1024x399.jpg" alt="Downtown Pittsburgh skyline"/></figure>
+<!-- /wp:image -->
 
-<!-- wp:group {"tagName":"div","layout":{"type":"default"}} -->
-<div class="wp-block-group">
+<!-- wp:group {"className":"wpamesh-hero-text","layout":{"type":"default"}} -->
+<div class="wpamesh-hero-text wp-block-group"><!-- wp:heading {"textAlign":"center","level":1} -->
+<h1 class="wp-block-heading has-text-align-center">Meshtastic For The Yinzers</h1>
+<!-- /wp:heading -->
 
-<!-- wp:group {"tagName":"main","className":"wpamesh-main-content","anchor":"main-content","layout":{"type":"default"}} -->
-<main id="main-content" class="wp-block-group wpamesh-main-content">
+<!-- wp:paragraph {"align":"center"} -->
+<p class="has-text-align-center">Off-grid mesh radio for Western Pennsylvania</p>
+<!-- /wp:paragraph -->
 
-<!-- wp:pattern {"slug":"wpamesh/hero-banner"} /-->
+<!-- wp:buttons {"layout":{"type":"flex","justifyContent":"center"}} -->
+<div class="wp-block-buttons"><!-- wp:button -->
+<div class="wp-block-button"><a class="wp-block-button__link wp-element-button" href="/whats-meshtastic/">New to Mesh? Start Here</a></div>
+<!-- /wp:button --></div>
+<!-- /wp:buttons --></div>
+<!-- /wp:group --></div>
+<!-- /wp:group -->
 
 <!-- wp:group {"className":"wpamesh-main-inner","layout":{"type":"constrained"}} -->
-<div class="wp-block-group wpamesh-main-inner">
-
-<!-- wp:group {"className":"wpamesh-content-section","layout":{"type":"default"}} -->
-<div class="wp-block-group wpamesh-content-section">
-
-<!-- wp:heading {"level":2,"className":"wpamesh-section-title"} -->
-<h2 class="wp-block-heading wpamesh-section-title">Welcome</h2>
+<div class="wpamesh-main-inner wp-block-group"><!-- wp:group {"className":"wpamesh-content-section","layout":{"type":"default"}} -->
+<div class="wpamesh-content-section wp-block-group"><!-- wp:heading {"className":"wpamesh-section-title"} -->
+<h2 class="wpamesh-section-title wp-block-heading">Welcome</h2>
 <!-- /wp:heading -->
 
 <!-- wp:group {"className":"wpamesh-intro-text","layout":{"type":"default"}} -->
-<div class="wp-block-group wpamesh-intro-text">
-
-<!-- wp:paragraph -->
-<p>Welcome to the home of the Western Pennsylvania Meshtastic community. We're a group of radio enthusiasts building an off-grid mesh network centered around Pittsburgh, with nodes reaching into Allegheny, Westmoreland, Butler, Armstrong, Indiana, and Beaver counties.</p>
+<div class="wpamesh-intro-text wp-block-group"><!-- wp:paragraph -->
+<p class="">Welcome to the home of the Western Pennsylvania Meshtastic community. We're a group of radio enthusiasts building an off-grid mesh network centered around Pittsburgh, with nodes reaching into Allegheny, Westmoreland, Butler, Armstrong, Indiana, and Beaver counties.</p>
 <!-- /wp:paragraph -->
 
 <!-- wp:paragraph -->
-<p>Whether you're looking to join the network, check coverage in your area, or connect with other local operators, you're in the right place.</p>
+<p class="">Whether you're looking to join the network, check coverage in your area, or connect with other local operators, you're in the right place.</p>
+<!-- /wp:paragraph --></div>
+<!-- /wp:group --></div>
+<!-- /wp:group -->
+
+<!-- wp:group {"className":"wpamesh-content-section","layout":{"type":"default"}} -->
+<div class="wpamesh-content-section wp-block-group"><!-- wp:heading {"className":"wpamesh-section-title"} -->
+<h2 class="wpamesh-section-title wp-block-heading">Coverage Map</h2>
+<!-- /wp:heading -->
+
+<!-- wp:group {"className":"wpamesh-map-container","layout":{"type":"default"}} -->
+<div class="wpamesh-map-container wp-block-group"><!-- wp:image {"sizeSlug":"large","linkDestination":"custom"} -->
+<figure class="wp-block-image size-large"><a href="https://map.wpamesh.net/map"><img src="https://wpamesh.net/wp-content/uploads/2025/09/Screenshot_20250929_085517_Meshtastic-768x577.webp" alt="WPAMesh node coverage map - click to view live map"/></a></figure>
+<!-- /wp:image --></div>
+<!-- /wp:group --></div>
+<!-- /wp:group -->
+
+<!-- wp:group {"className":"wpamesh-content-section","layout":{"type":"default"}} -->
+<div class="wpamesh-content-section wp-block-group"><!-- wp:heading {"className":"wpamesh-section-title"} -->
+<h2 class="wpamesh-section-title wp-block-heading">Recent Posts</h2>
+<!-- /wp:heading -->
+
+<!-- wp:query {"queryId":10,"query":{"perPage":4,"postType":"post","order":"desc","orderBy":"date","inherit":false}} -->
+<div class="wp-block-query"><!-- wp:post-template {"className":"wpamesh-posts-grid","layout":{"type":"default"}} -->
+<!-- wp:group {"className":"wpamesh-post-card","layout":{"type":"default"}} -->
+<div class="wpamesh-post-card wp-block-group"><!-- wp:post-title {"level":4,"isLink":true} /-->
+
+<!-- wp:group {"className":"meta"} -->
+<div class="meta wp-block-group"><!-- wp:post-terms {"term":"category"} /-->
+
+<!-- wp:paragraph -->
+<p class="">·</p>
 <!-- /wp:paragraph -->
 
-</div>
+<!-- wp:post-excerpt {"moreText":"","excerptLength":10} /--></div>
+<!-- /wp:group --></div>
+<!-- /wp:group -->
+<!-- /wp:post-template -->
+
+<!-- wp:query-no-results -->
+<!-- wp:paragraph {"align":"center"} -->
+<p class="has-text-align-center">No posts yet. Check back soon!</p>
+<!-- /wp:paragraph -->
+<!-- /wp:query-no-results --></div>
+<!-- /wp:query --></div>
+<!-- /wp:group --></div>
+<!-- /wp:group --></main>
 <!-- /wp:group -->
 
-</div>
+<!-- wp:template-part {"slug":"footer","theme":"wpamesh-theme","tagName":"footer","area":"footer"} /--></div>
 <!-- /wp:group -->
 
-<!-- wp:pattern {"slug":"wpamesh/coverage-map"} /-->
-
-<!-- wp:pattern {"slug":"wpamesh/recent-posts"} /-->
-
-</div>
-<!-- /wp:group -->
-
-</main>
-<!-- /wp:group -->
-
-<!-- wp:template-part {"slug":"footer","tagName":"footer","area":"footer"} /-->
-
-</div>
-<!-- /wp:group -->
-
-<!-- wp:template-part {"slug":"sidebar-right","tagName":"aside","area":"sidebar"} /-->
-
-</div>
+<!-- wp:template-part {"slug":"sidebar-right","theme":"wpamesh-theme","tagName":"aside","area":"sidebar"} /--></div>
 <!-- /wp:group -->
