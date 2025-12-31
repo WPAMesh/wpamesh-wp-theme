@@ -821,7 +821,7 @@ html {
 /* Featured image as large banner below header */
 .wpamesh-node-featured-image {
     width: 100%;
-    max-height: 400px;
+    max-height: 300px;
     overflow: hidden;
     margin-bottom: 1.5rem;
 }
@@ -829,8 +829,8 @@ html {
 .wpamesh-node-featured-image img {
     width: 100%;
     height: auto;
-    max-height: 400px;
-    object-fit: cover;
+    max-height: 300px;
+    object-fit: scale-down;
     display: block;
 }
 
@@ -849,11 +849,11 @@ html {
     }
 
     .wpamesh-node-featured-image {
-        max-height: 250px;
+        max-height: 200px;
     }
 
     .wpamesh-node-featured-image img {
-        max-height: 250px;
+        max-height: 200px;
     }
 }
 
