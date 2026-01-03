@@ -662,6 +662,219 @@ function wpamesh_clear_api_cache() {
 
 /**
  * =============================================================================
+ * REST API Endpoints
+ * =============================================================================
+ * Custom REST API endpoints to expose node data for external integrations.
+ *
+ * Endpoints:
+ *   GET /wp-json/wpamesh/v1/nodes          - All nodes
+ *   GET /wp-json/wpamesh/v1/nodes?tier=X   - Filtered by tier
+ *   GET /wp-json/wpamesh/v1/nodes/{id}     - Single node by WP post ID
+ */
+
+add_action( 'rest_api_init', 'wpamesh_register_rest_routes' );
+
+/**
+ * Fix floating-point precision in REST API JSON responses
+ *
+ * WordPress uses wp_json_encode which can produce floating-point artifacts.
+ * This filter applies serialize_precision to limit decimal places in output.
+ */
+add_filter( 'rest_pre_serve_request', function( $served, $result, $request, $server ) {
+    // Only apply to our namespace
+    if ( strpos( $request->get_route(), '/wpamesh/v1/' ) === 0 ) {
+        // Set serialize_precision to avoid floating-point artifacts
+        ini_set( 'serialize_precision', 10 );
+    }
+    return $served;
+}, 10, 4 );
+
+/**
+ * Register REST API routes
+ */
+function wpamesh_register_rest_routes() {
+    register_rest_route( 'wpamesh/v1', '/nodes', array(
+        'methods'             => 'GET',
+        'callback'            => 'wpamesh_rest_get_nodes',
+        'permission_callback' => '__return_true',
+        'args'                => array(
+            'tier' => array(
+                'description'       => 'Filter nodes by tier (core_router, supplemental, gateway, service)',
+                'type'              => 'string',
+                'sanitize_callback' => 'sanitize_key',
+                'validate_callback' => function( $param ) {
+                    $valid_tiers = array( 'core_router', 'supplemental', 'gateway', 'service' );
+                    return empty( $param ) || in_array( $param, $valid_tiers, true );
+                },
+            ),
+        ),
+    ) );
+
+    register_rest_route( 'wpamesh/v1', '/nodes/(?P<id>\d+)', array(
+        'methods'             => 'GET',
+        'callback'            => 'wpamesh_rest_get_single_node',
+        'permission_callback' => '__return_true',
+        'args'                => array(
+            'id' => array(
+                'description'       => 'WordPress post ID of the node',
+                'type'              => 'integer',
+                'required'          => true,
+                'sanitize_callback' => 'absint',
+            ),
+        ),
+    ) );
+}
+
+/**
+ * Format a node post for REST API response
+ *
+ * @param int $post_id WordPress post ID.
+ * @return array Formatted node data.
+ */
+function wpamesh_format_node_for_rest( $post_id ) {
+    // Get ACF fields
+    $long_name    = get_field( 'long_name', $post_id ) ?: get_the_title( $post_id );
+    $short_name   = get_field( 'short_name', $post_id ) ?: '';
+    $node_id      = get_field( 'node_id', $post_id ) ?: null;
+    $latitude     = get_field( 'latitude', $post_id );
+    $longitude    = get_field( 'longitude', $post_id );
+    $height_agl   = get_field( 'height_agl', $post_id );
+    $height_msl   = get_field( 'height_msl', $post_id );
+    $antenna_gain = get_field( 'antenna_gain', $post_id );
+    $hardware     = get_field( 'hardware', $post_id ) ?: null;
+    $maintainer   = get_field( 'maintainer', $post_id ) ?: null;
+
+    // Get node tier (may be array with value/label or string)
+    $node_tier_field = get_field( 'node_tier', $post_id );
+    $node_tier = is_array( $node_tier_field ) ? $node_tier_field['value'] : ( $node_tier_field ?: null );
+
+    // Get role (may be array with value/label or string)
+    $role_field = get_field( 'role', $post_id );
+    $role = is_array( $role_field ) ? $role_field['value'] : ( $role_field ?: null );
+
+    // Get live status from Meshview API if node_id is set
+    $is_online  = null;
+    $last_seen  = null;
+
+    if ( $node_id ) {
+        $live_node = wpamesh_get_node_by_hex_id( $node_id );
+        if ( $live_node ) {
+            $is_online = $live_node['is_online'];
+            // Convert last_seen to ISO 8601 format
+            $last_seen_seconds = $live_node['last_seen_us'] / 1000000;
+            $last_seen = gmdate( 'Y-m-d\TH:i:s\Z', (int) $last_seen_seconds );
+        }
+    }
+
+    // Build response structure
+    // Note: Using (float) number_format() to avoid PHP floating-point precision artifacts in JSON
+    $node_data = array(
+        'wp_id'      => $post_id,
+        'long_name'  => $long_name,
+        'short_name' => $short_name,
+        'node_id'    => $node_id,
+        'position'   => array(
+            'latitude'  => is_numeric( $latitude ) ? (float) number_format( (float) $latitude, 6, '.', '' ) : null,
+            'longitude' => is_numeric( $longitude ) ? (float) number_format( (float) $longitude, 6, '.', '' ) : null,
+        ),
+        'antenna'    => array(
+            'agl_m'   => is_numeric( $height_agl ) ? (float) number_format( (float) $height_agl * 0.3048, 1, '.', '' ) : null,
+            'msl_m'   => is_numeric( $height_msl ) ? (float) number_format( (float) $height_msl * 0.3048, 1, '.', '' ) : null,
+            'gain_dbi' => is_numeric( $antenna_gain ) ? (float) $antenna_gain : null,
+        ),
+        'hardware'   => $hardware,
+        'maintainer' => $maintainer,
+        'node_tier'  => $node_tier,
+        'role'       => $role,
+        'status'     => array(
+            'online'    => $is_online,
+            'last_seen' => $last_seen,
+        ),
+    );
+
+    return $node_data;
+}
+
+/**
+ * REST API callback: Get all nodes
+ *
+ * @param WP_REST_Request $request Request object.
+ * @return WP_REST_Response|WP_Error Response object.
+ */
+function wpamesh_rest_get_nodes( $request ) {
+    $tier_filter = $request->get_param( 'tier' );
+
+    // Query posts in the Node-Detail category
+    $query_args = array(
+        'category_name'  => 'node-detail',
+        'posts_per_page' => -1,
+        'orderby'        => 'title',
+        'order'          => 'ASC',
+        'post_status'    => 'publish',
+    );
+
+    $nodes_query = new WP_Query( $query_args );
+    $nodes = array();
+
+    if ( $nodes_query->have_posts() ) {
+        while ( $nodes_query->have_posts() ) {
+            $nodes_query->the_post();
+            $post_id = get_the_ID();
+
+            // Filter by tier if specified
+            if ( $tier_filter ) {
+                $node_tier_field = get_field( 'node_tier', $post_id );
+                $node_tier = is_array( $node_tier_field ) ? $node_tier_field['value'] : ( $node_tier_field ?: '' );
+
+                if ( $node_tier !== $tier_filter ) {
+                    continue;
+                }
+            }
+
+            $nodes[] = wpamesh_format_node_for_rest( $post_id );
+        }
+        wp_reset_postdata();
+    }
+
+    return rest_ensure_response( $nodes );
+}
+
+/**
+ * REST API callback: Get single node by WordPress post ID
+ *
+ * @param WP_REST_Request $request Request object.
+ * @return WP_REST_Response|WP_Error Response object.
+ */
+function wpamesh_rest_get_single_node( $request ) {
+    $post_id = $request->get_param( 'id' );
+
+    // Get the post
+    $post = get_post( $post_id );
+
+    if ( ! $post || $post->post_status !== 'publish' ) {
+        return new WP_Error(
+            'node_not_found',
+            __( 'Node not found.', 'wpamesh' ),
+            array( 'status' => 404 )
+        );
+    }
+
+    // Verify it's in the node-detail category
+    if ( ! has_category( 'node-detail', $post_id ) ) {
+        return new WP_Error(
+            'node_not_found',
+            __( 'Node not found.', 'wpamesh' ),
+            array( 'status' => 404 )
+        );
+    }
+
+    $node_data = wpamesh_format_node_for_rest( $post_id );
+
+    return rest_ensure_response( $node_data );
+}
+
+/**
+ * =============================================================================
  * Node List Shortcode
  * =============================================================================
  * Displays a list of member nodes, optionally filtered by tier.
