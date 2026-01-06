@@ -165,6 +165,9 @@ function wpamesh_format_antenna_gain( $gain ) {
 
 define( 'WPAMESH_API_BASE', 'https://map.wpamesh.net/api' );
 define( 'WPAMESH_CACHE_EXPIRY', 15 * MINUTE_IN_SECONDS );
+define( 'WPAMESH_DAYS_ACTIVE', 3 );        // Days to consider a node "active"
+define( 'WPAMESH_DAYS_TOTAL', 7 );         // Days to include in total node count
+define( 'WPAMESH_ONLINE_HOURS', 6 );       // Hours since last activity to consider "online"
 
 /**
  * Convert hex node ID to decimal
@@ -260,7 +263,7 @@ function wpamesh_get_network_stats() {
     );
 
     // Get nodes active in the last week (excludes flyover connections to distant meshes)
-    $weekly_nodes = wpamesh_api_fetch( '/nodes', array( 'days_active' => 7 ) );
+    $weekly_nodes = wpamesh_api_fetch( '/nodes', array( 'days_active' => WPAMESH_DAYS_TOTAL ) );
     if ( $weekly_nodes && isset( $weekly_nodes['nodes'] ) ) {
         $stats['total_nodes'] = count( $weekly_nodes['nodes'] );
 
@@ -273,7 +276,7 @@ function wpamesh_get_network_stats() {
     }
 
     // Get active nodes (last 3 days) for "recently active" count
-    $active_nodes = wpamesh_api_fetch( '/nodes', array( 'days_active' => 3 ) );
+    $active_nodes = wpamesh_api_fetch( '/nodes', array( 'days_active' => WPAMESH_DAYS_ACTIVE ) );
     if ( $active_nodes && isset( $active_nodes['nodes'] ) ) {
         $stats['active_nodes'] = count( $active_nodes['nodes'] );
     }
@@ -343,7 +346,7 @@ function wpamesh_get_node_by_id( $node_id ) {
             }
 
             // Consider online if active in last 3 hours (routers may have long intervals)
-            $node['is_online'] = ( time() - $last_seen_seconds ) < ( 3 * HOUR_IN_SECONDS );
+            $node['is_online'] = ( time() - $last_seen_seconds ) < ( WPAMESH_ONLINE_HOURS * HOUR_IN_SECONDS );
             $node['last_seen_formatted'] = wpamesh_format_last_seen_seconds( $last_seen_seconds );
 
             // Cache individual node for 5 minutes
@@ -499,7 +502,7 @@ function wpamesh_get_channel_metrics() {
     );
 
     // Get recently active nodes and filter to routers
-    $all_nodes = wpamesh_api_fetch( '/nodes', array( 'days_active' => 3 ) );
+    $all_nodes = wpamesh_api_fetch( '/nodes', array( 'days_active' => WPAMESH_DAYS_ACTIVE ) );
 
     if ( ! $all_nodes || ! isset( $all_nodes['nodes'] ) || empty( $all_nodes['nodes'] ) ) {
         set_transient( $cache_key, $metrics, WPAMESH_CACHE_EXPIRY );
@@ -531,8 +534,12 @@ function wpamesh_get_channel_metrics() {
         return $metrics;
     }
 
-    // Collect latest metrics per router (avoid double-counting)
-    $node_metrics = array();
+    // Collect all samples per router (nodes may report at different rates)
+    $node_samples = array();
+
+    // Only include packets within our activity window
+    $max_age_seconds = WPAMESH_DAYS_ACTIVE * DAY_IN_SECONDS;
+    $cutoff_time     = time() - $max_age_seconds;
 
     foreach ( $telemetry['packets'] as $packet ) {
         $from_node_id = $packet['from_node_id'] ?? null;
@@ -542,36 +549,49 @@ function wpamesh_get_channel_metrics() {
             continue;
         }
 
-        // Skip if we already have data for this node (we want the most recent)
-        if ( isset( $node_metrics[ $from_node_id ] ) ) {
+        // Skip packets older than our window (import_time_us is in microseconds)
+        $import_time_us = $packet['import_time_us'] ?? 0;
+        if ( $import_time_us / 1000000 < $cutoff_time ) {
             continue;
         }
 
         $payload = wpamesh_parse_telemetry_payload( $packet['payload'] ?? '' );
 
-        // Check for channel utilization data
+        // Collect all samples with channel utilization data
         if ( isset( $payload['channel_utilization'] ) ) {
-            $node_metrics[ $from_node_id ] = array(
+            if ( ! isset( $node_samples[ $from_node_id ] ) ) {
+                $node_samples[ $from_node_id ] = array();
+            }
+            $node_samples[ $from_node_id ][] = array(
                 'channel_utilization' => $payload['channel_utilization'],
                 'air_util_tx'         => $payload['air_util_tx'] ?? 0,
             );
         }
     }
 
-    // Calculate averages
-    if ( ! empty( $node_metrics ) ) {
+    // Calculate per-node averages first, then average across nodes
+    // This prevents nodes with more frequent reporting from skewing the results
+    if ( ! empty( $node_samples ) ) {
         $total_cu  = 0;
         $total_air = 0;
 
-        foreach ( $node_metrics as $data ) {
-            $total_cu  += $data['channel_utilization'];
-            $total_air += $data['air_util_tx'];
+        foreach ( $node_samples as $node_id => $samples ) {
+            $node_cu  = 0;
+            $node_air = 0;
+            foreach ( $samples as $sample ) {
+                $node_cu  += $sample['channel_utilization'];
+                $node_air += $sample['air_util_tx'];
+            }
+            // Average this node's samples
+            $sample_count = count( $samples );
+            $total_cu    += $node_cu / $sample_count;
+            $total_air   += $node_air / $sample_count;
         }
 
-        $count = count( $node_metrics );
-        $metrics['channel_utilization'] = round( $total_cu / $count, 1 );
-        $metrics['air_util_tx']         = round( $total_air / $count, 2 );
-        $metrics['reporting_nodes']     = $count;
+        $node_count = count( $node_samples );
+        $metrics['channel_utilization'] = round( $total_cu / $node_count, 1 );
+        $metrics['air_util_tx']         = round( $total_air / $node_count, 2 );
+        $metrics['reporting_nodes']     = $node_count;
     }
 
     set_transient( $cache_key, $metrics, WPAMESH_CACHE_EXPIRY );
@@ -608,10 +628,20 @@ function wpamesh_get_node_channel_metrics( $node_id ) {
         return null;
     }
 
+    // Only include packets within our activity window
+    $max_age_seconds = WPAMESH_DAYS_ACTIVE * DAY_IN_SECONDS;
+    $cutoff_time     = time() - $max_age_seconds;
+
     // Collect all packets with channel utilization data
     $samples = array();
 
     foreach ( $telemetry['packets'] as $packet ) {
+        // Skip packets older than our window (import_time_us is in microseconds)
+        $import_time_us = $packet['import_time_us'] ?? 0;
+        if ( $import_time_us / 1000000 < $cutoff_time ) {
+            continue;
+        }
+
         $payload = wpamesh_parse_telemetry_payload( $packet['payload'] ?? '' );
 
         if ( isset( $payload['channel_utilization'] ) ) {
