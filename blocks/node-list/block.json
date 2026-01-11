@@ -1,0 +1,28 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
+    "name": "wpamesh/node-list",
+    "version": "1.0.0",
+    "title": "Node List",
+    "category": "widgets",
+    "icon": "networking",
+    "description": "Displays a list of member nodes with live status and metrics.",
+    "keywords": ["node", "nodes", "list", "router", "mesh", "network"],
+    "textdomain": "wpamesh-theme",
+    "attributes": {
+        "tier": {
+            "type": "string",
+            "default": ""
+        },
+        "showTitle": {
+            "type": "boolean",
+            "default": true
+        }
+    },
+    "supports": {
+        "html": false,
+        "align": ["wide", "full"]
+    },
+    "render": "file:./render.php",
+    "editorScript": "file:./editor.js"
+}

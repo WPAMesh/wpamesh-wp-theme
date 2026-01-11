@@ -58,6 +58,15 @@ add_action( 'init', function() {
 });
 
 /**
+ * Register custom blocks
+ */
+add_action( 'init', function() {
+    register_block_type( get_template_directory() . '/blocks/network-stats' );
+    register_block_type( get_template_directory() . '/blocks/stat-box' );
+    register_block_type( get_template_directory() . '/blocks/node-list' );
+});
+
+/**
  * Add tabindex to main content anchor for skip link accessibility
  * Block themes don't automatically add tabindex to anchored elements
  */

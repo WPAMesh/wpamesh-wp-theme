@@ -1,0 +1,20 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
+    "name": "wpamesh/network-stats",
+    "version": "1.0.0",
+    "title": "Network Stats",
+    "category": "widgets",
+    "icon": "chart-bar",
+    "description": "Container for network statistics. Add Stat Box blocks inside to display live data.",
+    "keywords": ["stats", "statistics", "nodes", "network", "mesh"],
+    "textdomain": "wpamesh-theme",
+    "supports": {
+        "html": false,
+        "align": false,
+        "multiple": false
+    },
+    "allowedBlocks": ["wpamesh/stat-box"],
+    "render": "file:./render.php",
+    "editorScript": "file:./editor.js"
+}
