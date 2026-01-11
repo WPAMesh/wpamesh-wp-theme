@@ -61,49 +61,19 @@ The right sidebar only appears on screens wider than 1400px to maintain readabil
 
 == Changelog ==
 
+For full changelog history, see CHANGELOG.md.
+
+= 1.3.0 =
+* Added custom Gutenberg blocks: Network Stats, Stat Box, and Node List
+* Added Discord webhook notifications for new posts
+* Discord notifications configurable via Settings > General
+
 = 1.2.3 =
 * Added Member Nodes pattern for dynamic infrastructure node listings
 * Added [wpamesh_node_list] shortcode for flexible node list placement
-* Shortcode supports tier filtering: [wpamesh_node_list tier="core_router"]
-* Available tiers: core_router, supplemental, gateway, service
-* Optional show_title="false" attribute to hide tier headings
-* Shows live online/offline status dots for nodes with node_id set
-* Requires new SCF fields: node_tier (select), location_name (text)
 
 = 1.2.2 =
-* Fixed API field names for channel metrics (from_node_id)
-* Fixed role filtering to use client-side array filtering
-
-= 1.2.1 =
-* Added channel utilization and airtime metrics to Network Stats
-* Added wpamesh_get_channel_metrics() for network-wide channel stats
-* Added wpamesh_get_node_channel_metrics() for per-node metrics
-* Added protobuf text format payload parser for telemetry data
-
-= 1.2.0 =
-* Added meshview API integration for live network statistics
-* Network stats pattern now displays live data from map.wpamesh.net
-* Added node_id field support for linking WordPress nodes to meshview
-* Node header now shows live online/offline status when node_id is set
-* Added API helper functions with WordPress transient caching (5 min TTL)
-* Added hex/decimal node ID conversion utilities
-
-= 1.1.0 =
-* Added single-node.html template for Node custom post type
-* Added node-header.php pattern with large featured image banner
-* Added node-specs.php pattern with formatted specs table
-* Added helper functions for height (feet/meters) and antenna gain formatting
-* Added role-specific badge colors for node display
-* Fixed WordPress block flow layout margin issues throughout theme
-* Fixed template-part wrapper margin resets
-
-= 1.0.0 =
-* Initial release
-* Dark theme with gold accents
-* 3-column responsive layout
-* Full Site Editing support
-* 8 custom block patterns
-* Mobile-first responsive design
+* Fixed API field names for channel metrics
 
 == Copyright ==
 
