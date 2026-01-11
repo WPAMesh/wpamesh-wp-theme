@@ -651,6 +651,465 @@ function wpamesh_clear_api_cache() {
 
 /**
  * =============================================================================
+ * Sidebar Stats - Aggregated Cache with Background Refresh & AJAX Loading
+ * =============================================================================
+ * Combines all sidebar statistics into a single cache for better performance.
+ * Uses WP-Cron for background refresh so page loads never wait for API calls.
+ * Provides AJAX endpoint for lazy loading on the frontend.
+ */
+
+/**
+ * Get all sidebar stats from aggregated cache
+ *
+ * Returns cached data immediately. If cache is empty, returns defaults
+ * and schedules a background refresh.
+ *
+ * @return array Aggregated stats for sidebar display
+ */
+function wpamesh_get_sidebar_stats() {
+    $cache_key = 'wpamesh_sidebar_stats';
+    $cached = get_transient( $cache_key );
+
+    if ( false !== $cached ) {
+        return $cached;
+    }
+
+    // Return defaults and schedule background refresh
+    // This ensures page loads are never blocked by API calls
+    if ( ! wp_next_scheduled( 'wpamesh_refresh_sidebar_stats' ) ) {
+        wp_schedule_single_event( time(), 'wpamesh_refresh_sidebar_stats' );
+    }
+
+    return array(
+        'total_nodes'         => 0,
+        'active_nodes'        => 0,
+        'routers'             => 0,
+        'packets_24h'         => 0,
+        'channel_utilization' => null,
+        'air_util_tx'         => null,
+        'last_updated'        => null,
+    );
+}
+
+/**
+ * Refresh sidebar stats in background
+ *
+ * Called by WP-Cron. Fetches all stats and stores in a single cache.
+ */
+function wpamesh_do_refresh_sidebar_stats() {
+    // Get network stats (makes API calls)
+    $network_stats = wpamesh_get_network_stats();
+
+    // Get channel metrics (makes API calls per router)
+    $channel_metrics = wpamesh_get_channel_metrics();
+
+    // Combine into single cache
+    $stats = array(
+        'total_nodes'         => $network_stats['total_nodes'],
+        'active_nodes'        => $network_stats['active_nodes'],
+        'routers'             => $network_stats['routers'],
+        'packets_24h'         => $network_stats['packets_24h'],
+        'channel_utilization' => $channel_metrics['channel_utilization'],
+        'air_util_tx'         => $channel_metrics['air_util_tx'],
+        'last_updated'        => time(),
+    );
+
+    // Cache for slightly longer than the cron interval to avoid gaps
+    set_transient( 'wpamesh_sidebar_stats', $stats, 20 * MINUTE_IN_SECONDS );
+
+    return $stats;
+}
+add_action( 'wpamesh_refresh_sidebar_stats', 'wpamesh_do_refresh_sidebar_stats' );
+
+/**
+ * Schedule recurring background refresh
+ */
+function wpamesh_schedule_stats_refresh() {
+    if ( ! wp_next_scheduled( 'wpamesh_refresh_sidebar_stats' ) ) {
+        wp_schedule_event( time(), 'wpamesh_fifteen_minutes', 'wpamesh_refresh_sidebar_stats' );
+    }
+}
+add_action( 'init', 'wpamesh_schedule_stats_refresh' );
+
+/**
+ * Add custom cron interval
+ */
+add_filter( 'cron_schedules', function( $schedules ) {
+    $schedules['wpamesh_fifteen_minutes'] = array(
+        'interval' => 15 * MINUTE_IN_SECONDS,
+        'display'  => __( 'Every 15 Minutes', 'wpamesh' ),
+    );
+    return $schedules;
+});
+
+/**
+ * Clean up cron on theme deactivation
+ */
+function wpamesh_deactivate_cron() {
+    $timestamp = wp_next_scheduled( 'wpamesh_refresh_sidebar_stats' );
+    if ( $timestamp ) {
+        wp_unschedule_event( $timestamp, 'wpamesh_refresh_sidebar_stats' );
+    }
+}
+add_action( 'switch_theme', 'wpamesh_deactivate_cron' );
+
+/**
+ * AJAX endpoint for lazy loading sidebar stats
+ *
+ * If cache is empty, performs a synchronous refresh since AJAX requests
+ * are already async from the user's perspective.
+ */
+add_action( 'wp_ajax_wpamesh_sidebar_stats', 'wpamesh_ajax_sidebar_stats' );
+add_action( 'wp_ajax_nopriv_wpamesh_sidebar_stats', 'wpamesh_ajax_sidebar_stats' );
+
+function wpamesh_ajax_sidebar_stats() {
+    $stats = wpamesh_get_sidebar_stats();
+
+    // If cache is empty (last_updated is null), do a synchronous refresh
+    if ( $stats['last_updated'] === null ) {
+        $stats = wpamesh_do_refresh_sidebar_stats();
+    }
+
+    wp_send_json_success( array(
+        'total_nodes'         => number_format( $stats['total_nodes'] ),
+        'active_nodes'        => number_format( $stats['active_nodes'] ),
+        'routers'             => number_format( $stats['routers'] ),
+        'packets_24h'         => number_format( $stats['packets_24h'] ),
+        'channel_utilization' => $stats['channel_utilization'] !== null ? $stats['channel_utilization'] . '%' : '—',
+        'air_util_tx'         => $stats['air_util_tx'] !== null ? $stats['air_util_tx'] . '%' : '—',
+        'last_updated'        => $stats['last_updated'] ? human_time_diff( $stats['last_updated'] ) . ' ago' : 'never',
+    ) );
+}
+
+/**
+ * Enqueue AJAX scripts for lazy loading
+ */
+add_action( 'wp_enqueue_scripts', function() {
+    $version = wp_get_theme()->get( 'Version' );
+
+    // Sidebar stats script
+    wp_enqueue_script(
+        'wpamesh-sidebar-stats',
+        get_theme_file_uri( 'assets/js/sidebar-stats.js' ),
+        array(),
+        $version,
+        true
+    );
+
+    wp_localize_script( 'wpamesh-sidebar-stats', 'wpameshStats', array(
+        'ajaxUrl' => admin_url( 'admin-ajax.php' ),
+        'action'  => 'wpamesh_sidebar_stats',
+    ) );
+
+    // Node list script
+    wp_enqueue_script(
+        'wpamesh-node-list',
+        get_theme_file_uri( 'assets/js/node-list.js' ),
+        array(),
+        $version,
+        true
+    );
+
+    wp_localize_script( 'wpamesh-node-list', 'wpameshNodes', array(
+        'ajaxUrl'      => admin_url( 'admin-ajax.php' ),
+        'action'       => 'wpamesh_node_list_data',
+        'singleAction' => 'wpamesh_single_node_data',
+    ) );
+});
+
+/**
+ * =============================================================================
+ * Node List Cache with Background Refresh & AJAX Loading
+ * =============================================================================
+ * Caches node list data including live status to avoid per-node API calls.
+ */
+
+/**
+ * Get all node list data from cache
+ *
+ * Returns cached data immediately. If cache is empty, returns basic node info
+ * without live status and schedules a background refresh.
+ *
+ * @return array Array of nodes with live status data
+ */
+function wpamesh_get_node_list_data() {
+    $cache_key = 'wpamesh_node_list_data';
+    $cached = get_transient( $cache_key );
+
+    if ( false !== $cached ) {
+        return $cached;
+    }
+
+    // Schedule background refresh if not already scheduled
+    if ( ! wp_next_scheduled( 'wpamesh_refresh_node_list_data' ) ) {
+        wp_schedule_single_event( time(), 'wpamesh_refresh_node_list_data' );
+    }
+
+    // Return empty array - block will render without live data
+    return array();
+}
+
+/**
+ * Refresh node list data in background
+ *
+ * Called by WP-Cron. Fetches all nodes with their live status and metrics.
+ */
+function wpamesh_do_refresh_node_list_data() {
+    // Define tier labels for grouping
+    $tier_labels = array(
+        'core_router'  => __( 'Routers', 'wpamesh' ),
+        'supplemental' => __( 'Medium Profile', 'wpamesh' ),
+        'gateway'      => __( 'Gateways', 'wpamesh' ),
+        'service'      => __( 'Other Services', 'wpamesh' ),
+    );
+
+    // Query posts in the Node-Detail category
+    $nodes_query = new WP_Query( array(
+        'category_name'  => 'node-detail',
+        'posts_per_page' => -1,
+        'orderby'        => 'title',
+        'order'          => 'ASC',
+    ) );
+
+    $nodes_data = array();
+
+    if ( $nodes_query->have_posts() ) {
+        while ( $nodes_query->have_posts() ) {
+            $nodes_query->the_post();
+            $post_id = get_the_ID();
+
+            // Get tier field
+            $node_tier_field = get_field( 'node_tier', $post_id );
+            $node_tier = is_array( $node_tier_field ) ? $node_tier_field['value'] : ( $node_tier_field ?: 'uncategorized' );
+
+            // Get node fields
+            $long_name  = get_field( 'long_name', $post_id ) ?: get_the_title();
+            $short_name = get_field( 'short_name', $post_id ) ?: '';
+            $node_id    = get_field( 'node_id', $post_id );
+            $location   = get_field( 'location_name', $post_id );
+
+            // Get role field
+            $role_field = get_field( 'role', $post_id );
+            $role_label = is_array( $role_field ) ? $role_field['label'] : ( $role_field ?: '' );
+
+            // Get live status and channel metrics if node_id is set
+            $is_online     = null;
+            $has_live_data = false;
+            $channel_util  = null;
+            $air_util      = null;
+            $last_seen     = null;
+            $last_seen_ts  = null;
+
+            if ( $node_id ) {
+                $live_node = wpamesh_get_node_by_hex_id( $node_id );
+                if ( $live_node ) {
+                    $has_live_data = true;
+                    $is_online     = $live_node['is_online'];
+                    $last_seen     = $live_node['last_seen_formatted'];
+                    $last_seen_ts  = (int) ( $live_node['last_seen_us'] / 1000000 );
+
+                    // Get channel metrics for this node
+                    $node_metrics = wpamesh_get_node_channel_metrics( $live_node['node_id'] );
+                    if ( $node_metrics ) {
+                        $channel_util = $node_metrics['channel_utilization'];
+                        $air_util     = $node_metrics['air_util_tx'];
+                    }
+                }
+            }
+
+            $node_data = array(
+                'post_id'       => $post_id,
+                'node_id'       => $node_id,
+                'tier'          => $node_tier,
+                'long_name'     => $long_name,
+                'short_name'    => $short_name,
+                'permalink'     => get_permalink(),
+                'location'      => $location,
+                'role'          => $role_label,
+                'has_live_data' => $has_live_data,
+                'is_online'     => $is_online,
+                'last_seen'     => $last_seen,
+                'last_seen_ts'  => $last_seen_ts,
+                'channel_util'  => $channel_util,
+                'air_util'      => $air_util,
+            );
+
+            $nodes_data[] = $node_data;
+
+            // Also cache individual node data for single-node lookups
+            if ( $node_id ) {
+                set_transient( 'wpamesh_node_' . $node_id, $node_data, 20 * MINUTE_IN_SECONDS );
+            }
+        }
+        wp_reset_postdata();
+    }
+
+    // Cache aggregated list for slightly longer than the cron interval
+    set_transient( 'wpamesh_node_list_data', $nodes_data, 20 * MINUTE_IN_SECONDS );
+
+    return $nodes_data;
+}
+add_action( 'wpamesh_refresh_node_list_data', 'wpamesh_do_refresh_node_list_data' );
+
+/**
+ * Get single node data from per-node cache
+ *
+ * Uses individual node transients for O(1) lookups instead of iterating
+ * through the full node list. Falls back to list cache if per-node cache
+ * is missing.
+ *
+ * @param string $node_id The hex node ID (e.g., "!abcd1234").
+ * @return array|null Node data array or null if not found.
+ */
+function wpamesh_get_single_node_data( $node_id ) {
+    if ( empty( $node_id ) ) {
+        return null;
+    }
+
+    // Try per-node cache first (O(1) lookup)
+    $cached = get_transient( 'wpamesh_node_' . $node_id );
+    if ( false !== $cached ) {
+        return $cached;
+    }
+
+    // Fall back to searching the list cache
+    $all_nodes = wpamesh_get_node_list_data();
+    foreach ( $all_nodes as $node ) {
+        if ( $node['node_id'] === $node_id ) {
+            // Populate per-node cache for next time
+            set_transient( 'wpamesh_node_' . $node_id, $node, 20 * MINUTE_IN_SECONDS );
+            return $node;
+        }
+    }
+
+    return null;
+}
+
+/**
+ * Schedule recurring background refresh for node list
+ */
+add_action( 'init', function() {
+    if ( ! wp_next_scheduled( 'wpamesh_refresh_node_list_data' ) ) {
+        wp_schedule_event( time() + 60, 'wpamesh_fifteen_minutes', 'wpamesh_refresh_node_list_data' );
+    }
+}, 11 ); // After sidebar stats scheduling
+
+/**
+ * Clean up node list cron on theme deactivation
+ */
+add_action( 'switch_theme', function() {
+    $timestamp = wp_next_scheduled( 'wpamesh_refresh_node_list_data' );
+    if ( $timestamp ) {
+        wp_unschedule_event( $timestamp, 'wpamesh_refresh_node_list_data' );
+    }
+}, 11 );
+
+/**
+ * AJAX endpoint for lazy loading node list data
+ *
+ * If cache is empty, performs a synchronous refresh since AJAX requests
+ * are already async from the user's perspective.
+ */
+add_action( 'wp_ajax_wpamesh_node_list_data', 'wpamesh_ajax_node_list_data' );
+add_action( 'wp_ajax_nopriv_wpamesh_node_list_data', 'wpamesh_ajax_node_list_data' );
+
+function wpamesh_ajax_node_list_data() {
+    $nodes = wpamesh_get_node_list_data();
+
+    // If cache is empty, do a synchronous refresh for AJAX callers
+    // This is acceptable because AJAX is already async from user perspective
+    if ( empty( $nodes ) ) {
+        $nodes = wpamesh_do_refresh_node_list_data();
+    }
+
+    // Format for JSON response - index by node_id for easy lookup
+    $formatted = array();
+    foreach ( $nodes as $node ) {
+        if ( ! $node['node_id'] ) {
+            continue;
+        }
+        $formatted[ $node['node_id'] ] = array(
+            'is_online'    => $node['is_online'],
+            'last_seen'    => $node['last_seen'],
+            'channel_util' => $node['channel_util'] !== null ? $node['channel_util'] . '%' : null,
+            'air_util'     => $node['air_util'] !== null ? $node['air_util'] . '%' : null,
+        );
+    }
+
+    wp_send_json_success( $formatted );
+}
+
+/**
+ * Get channel load level based on Meshtastic firmware thresholds
+ *
+ * Based on airtime.h from Meshtastic firmware:
+ * - polite_channel_util_percent = 25% (telemetry throttling starts)
+ * - max_channel_util_percent = 40% (transmissions get skipped)
+ *
+ * @param float|null $channel_util Channel utilization percentage.
+ * @return array{level: string, label: string}|null Load level info or null if no data.
+ */
+function wpamesh_get_channel_load_level( $channel_util ) {
+    if ( $channel_util === null ) {
+        return null;
+    }
+
+    if ( $channel_util < 25 ) {
+        return array(
+            'level' => 'low',
+            'label' => __( 'Low', 'wpamesh' ),
+        );
+    } elseif ( $channel_util < 40 ) {
+        return array(
+            'level' => 'elevated',
+            'label' => __( 'Elevated', 'wpamesh' ),
+        );
+    } else {
+        return array(
+            'level' => 'high',
+            'label' => __( 'High', 'wpamesh' ),
+        );
+    }
+}
+
+/**
+ * AJAX endpoint for single node data lookup
+ *
+ * Uses per-node cache for O(1) lookup. Accepts node_id parameter.
+ * Used by node header pages to avoid fetching the full node list.
+ */
+add_action( 'wp_ajax_wpamesh_single_node_data', 'wpamesh_ajax_single_node_data' );
+add_action( 'wp_ajax_nopriv_wpamesh_single_node_data', 'wpamesh_ajax_single_node_data' );
+
+function wpamesh_ajax_single_node_data() {
+    $node_id = isset( $_POST['node_id'] ) ? sanitize_text_field( $_POST['node_id'] ) : '';
+
+    if ( empty( $node_id ) ) {
+        wp_send_json_error( 'Missing node_id parameter' );
+        return;
+    }
+
+    $node = wpamesh_get_single_node_data( $node_id );
+
+    if ( ! $node ) {
+        wp_send_json_error( 'Node not found' );
+        return;
+    }
+
+    $load_level = wpamesh_get_channel_load_level( $node['channel_util'] );
+
+    wp_send_json_success( array(
+        'is_online'    => $node['is_online'],
+        'last_seen'    => $node['last_seen'],
+        'channel_util' => $node['channel_util'] !== null ? $node['channel_util'] . '%' : null,
+        'air_util'     => $node['air_util'] !== null ? $node['air_util'] . '%' : null,
+        'load_level'   => $load_level ? $load_level['level'] : null,
+        'load_label'   => $load_level ? $load_level['label'] : null,
+    ) );
+}
+
+/**
+ * =============================================================================
  * REST API Endpoints
  * =============================================================================
  * Custom REST API endpoints to expose node data for external integrations.
@@ -741,17 +1200,18 @@ function wpamesh_format_node_for_rest( $post_id ) {
     $role_field = get_field( 'role', $post_id );
     $role = is_array( $role_field ) ? $role_field['value'] : ( $role_field ?: null );
 
-    // Get live status from Meshview API if node_id is set
+    // Get live status from per-node cache (avoids blocking API calls)
     $is_online  = null;
     $last_seen  = null;
 
     if ( $node_id ) {
-        $live_node = wpamesh_get_node_by_hex_id( $node_id );
-        if ( $live_node ) {
-            $is_online = $live_node['is_online'];
-            // Convert last_seen to ISO 8601 format
-            $last_seen_seconds = $live_node['last_seen_us'] / 1000000;
-            $last_seen = gmdate( 'Y-m-d\TH:i:s\Z', (int) $last_seen_seconds );
+        $cached_node = wpamesh_get_single_node_data( $node_id );
+        if ( $cached_node && $cached_node['has_live_data'] ) {
+            $is_online = $cached_node['is_online'];
+            // Convert Unix timestamp to ISO 8601 format for REST API
+            if ( ! empty( $cached_node['last_seen_ts'] ) ) {
+                $last_seen = gmdate( 'Y-m-d\TH:i:s\Z', $cached_node['last_seen_ts'] );
+            }
         }
     }
 
@@ -895,13 +1355,48 @@ function wpamesh_node_list_shortcode( $atts ) {
         'service'      => __( 'Other Services', 'wpamesh' ),
     );
 
-    // Query posts in the Node-Detail category
-    $nodes_query = new WP_Query( array(
-        'category_name'  => 'node-detail',
-        'posts_per_page' => -1,
-        'orderby'        => 'title',
-        'order'          => 'ASC',
-    ) );
+    // Get nodes from aggregated cache (background-refreshed, no blocking API calls)
+    $cached_nodes = wpamesh_get_node_list_data();
+
+    // If cache is empty, fall back to basic WP query without live data
+    if ( empty( $cached_nodes ) ) {
+        $nodes_query = new WP_Query( array(
+            'category_name'  => 'node-detail',
+            'posts_per_page' => -1,
+            'orderby'        => 'title',
+            'order'          => 'ASC',
+        ) );
+
+        $cached_nodes = array();
+        if ( $nodes_query->have_posts() ) {
+            while ( $nodes_query->have_posts() ) {
+                $nodes_query->the_post();
+                $post_id = get_the_ID();
+
+                $node_tier_field = get_field( 'node_tier', $post_id );
+                $node_tier = is_array( $node_tier_field ) ? $node_tier_field['value'] : ( $node_tier_field ?: 'uncategorized' );
+
+                $role_field = get_field( 'role', $post_id );
+                $role_label = is_array( $role_field ) ? $role_field['label'] : ( $role_field ?: '' );
+
+                $cached_nodes[] = array(
+                    'post_id'       => $post_id,
+                    'node_id'       => get_field( 'node_id', $post_id ),
+                    'tier'          => $node_tier,
+                    'long_name'     => get_field( 'long_name', $post_id ) ?: get_the_title(),
+                    'short_name'    => get_field( 'short_name', $post_id ) ?: '',
+                    'permalink'     => get_permalink(),
+                    'location'      => get_field( 'location_name', $post_id ),
+                    'role'          => $role_label,
+                    'has_live_data' => false,
+                    'is_online'     => null,
+                    'channel_util'  => null,
+                    'air_util'      => null,
+                );
+            }
+            wp_reset_postdata();
+        }
+    }
 
     // Group nodes by tier
     $grouped_nodes = array();
@@ -910,69 +1405,12 @@ function wpamesh_node_list_shortcode( $atts ) {
     }
     $grouped_nodes['uncategorized'] = array();
 
-    if ( $nodes_query->have_posts() ) {
-        while ( $nodes_query->have_posts() ) {
-            $nodes_query->the_post();
-            $post_id = get_the_ID();
-
-            // Get tier field
-            $node_tier_field = get_field( 'node_tier', $post_id );
-            $node_tier = is_array( $node_tier_field ) ? $node_tier_field['value'] : ( $node_tier_field ?: 'uncategorized' );
-
-            // If filtering by tier, skip non-matching nodes
-            if ( $tier_filter && $node_tier !== $tier_filter ) {
-                continue;
-            }
-
-            // Get node fields
-            $long_name  = get_field( 'long_name', $post_id ) ?: get_the_title();
-            $short_name = get_field( 'short_name', $post_id ) ?: '📡';
-            $node_id    = get_field( 'node_id', $post_id );
-            $location   = get_field( 'location_name', $post_id );
-
-            // Get role field
-            $role_field = get_field( 'role', $post_id );
-            $role_label = is_array( $role_field ) ? $role_field['label'] : ( $role_field ?: '' );
-
-            // Get live status and channel metrics if node_id is set
-            $is_online          = null;
-            $has_live_data      = false;
-            $channel_util       = null;
-            $air_util           = null;
-            if ( $node_id ) {
-                $live_node = wpamesh_get_node_by_hex_id( $node_id );
-                if ( $live_node ) {
-                    $has_live_data = true;
-                    $is_online     = $live_node['is_online'];
-
-                    // Get channel metrics for this node
-                    $node_metrics = wpamesh_get_node_channel_metrics( $live_node['node_id'] );
-                    if ( $node_metrics ) {
-                        $channel_util = $node_metrics['channel_utilization'];
-                        $air_util     = $node_metrics['air_util_tx'];
-                    }
-                }
-            }
-
-            $node_data = array(
-                'long_name'     => $long_name,
-                'short_name'    => $short_name,
-                'permalink'     => get_permalink(),
-                'location'      => $location,
-                'role'          => $role_label,
-                'has_live_data' => $has_live_data,
-                'is_online'     => $is_online,
-                'channel_util'  => $channel_util,
-                'air_util'      => $air_util,
-            );
-
-            if ( isset( $grouped_nodes[ $node_tier ] ) ) {
-                $grouped_nodes[ $node_tier ][] = $node_data;
-            } else {
-                $grouped_nodes['uncategorized'][] = $node_data;
-            }
+    foreach ( $cached_nodes as $node ) {
+        if ( $tier_filter && $node['tier'] !== $tier_filter ) {
+            continue;
         }
-        wp_reset_postdata();
+        $tier_key = isset( $grouped_nodes[ $node['tier'] ] ) ? $node['tier'] : 'uncategorized';
+        $grouped_nodes[ $tier_key ][] = $node;
     }
 
     // Remove empty groups
@@ -997,7 +1435,7 @@ function wpamesh_node_list_shortcode( $atts ) {
             <?php endif; ?>
             <ul class="wpamesh-node-list">
                 <?php foreach ( $nodes as $node ) : ?>
-                <li class="wpamesh-node-item">
+                <li class="wpamesh-node-item"<?php echo $node['node_id'] ? ' data-node-id="' . esc_attr( $node['node_id'] ) . '"' : ''; ?>>
                     <div class="wpamesh-node-info">
                         <h4>
                             <?php if ( $node['has_live_data'] ) : ?>

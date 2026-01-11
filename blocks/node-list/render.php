@@ -2,6 +2,9 @@
 /**
  * Server-side rendering for the Node List block.
  *
+ * Uses the aggregated node list cache for better performance.
+ * Includes data-node-id attribute for AJAX lazy loading updates.
+ *
  * @package wpamesh-theme
  */
 
@@ -16,13 +19,49 @@ $tier_labels = array(
     'service'      => __( 'Other Services', 'wpamesh' ),
 );
 
-// Query posts in the Node-Detail category.
-$nodes_query = new WP_Query( array(
-    'category_name'  => 'node-detail',
-    'posts_per_page' => -1,
-    'orderby'        => 'title',
-    'order'          => 'ASC',
-) );
+// Get nodes from aggregated cache (background-refreshed, no blocking API calls).
+$cached_nodes = wpamesh_get_node_list_data();
+
+// If cache is empty, fall back to basic WP query without live data.
+if ( empty( $cached_nodes ) ) {
+    // Query posts in the Node-Detail category for basic info only.
+    $nodes_query = new WP_Query( array(
+        'category_name'  => 'node-detail',
+        'posts_per_page' => -1,
+        'orderby'        => 'title',
+        'order'          => 'ASC',
+    ) );
+
+    $cached_nodes = array();
+    if ( $nodes_query->have_posts() ) {
+        while ( $nodes_query->have_posts() ) {
+            $nodes_query->the_post();
+            $post_id = get_the_ID();
+
+            $node_tier_field = get_field( 'node_tier', $post_id );
+            $node_tier = is_array( $node_tier_field ) ? $node_tier_field['value'] : ( $node_tier_field ?: 'uncategorized' );
+
+            $role_field = get_field( 'role', $post_id );
+            $role_label = is_array( $role_field ) ? $role_field['label'] : ( $role_field ?: '' );
+
+            $cached_nodes[] = array(
+                'post_id'       => $post_id,
+                'node_id'       => get_field( 'node_id', $post_id ),
+                'tier'          => $node_tier,
+                'long_name'     => get_field( 'long_name', $post_id ) ?: get_the_title(),
+                'short_name'    => get_field( 'short_name', $post_id ) ?: '',
+                'permalink'     => get_permalink(),
+                'location'      => get_field( 'location_name', $post_id ),
+                'role'          => $role_label,
+                'has_live_data' => false,
+                'is_online'     => null,
+                'channel_util'  => null,
+                'air_util'      => null,
+            );
+        }
+        wp_reset_postdata();
+    }
+}
 
 // Group nodes by tier.
 $grouped_nodes = array();
@@ -31,69 +70,14 @@ foreach ( $tier_labels as $key => $label ) {
 }
 $grouped_nodes['uncategorized'] = array();
 
-if ( $nodes_query->have_posts() ) {
-    while ( $nodes_query->have_posts() ) {
-        $nodes_query->the_post();
-        $post_id = get_the_ID();
-
-        // Get tier field.
-        $node_tier_field = get_field( 'node_tier', $post_id );
-        $node_tier       = is_array( $node_tier_field ) ? $node_tier_field['value'] : ( $node_tier_field ?: 'uncategorized' );
-
-        // If filtering by tier, skip non-matching nodes.
-        if ( $tier_filter && $node_tier !== $tier_filter ) {
-            continue;
-        }
-
-        // Get node fields.
-        $long_name  = get_field( 'long_name', $post_id ) ?: get_the_title();
-        $short_name = get_field( 'short_name', $post_id ) ?: '📡';
-        $node_id    = get_field( 'node_id', $post_id );
-        $location   = get_field( 'location_name', $post_id );
-
-        // Get role field.
-        $role_field = get_field( 'role', $post_id );
-        $role_label = is_array( $role_field ) ? $role_field['label'] : ( $role_field ?: '' );
-
-        // Get live status and channel metrics if node_id is set.
-        $is_online     = null;
-        $has_live_data = false;
-        $channel_util  = null;
-        $air_util      = null;
-        if ( $node_id ) {
-            $live_node = wpamesh_get_node_by_hex_id( $node_id );
-            if ( $live_node ) {
-                $has_live_data = true;
-                $is_online     = $live_node['is_online'];
-
-                // Get channel metrics for this node.
-                $node_metrics = wpamesh_get_node_channel_metrics( $live_node['node_id'] );
-                if ( $node_metrics ) {
-                    $channel_util = $node_metrics['channel_utilization'];
-                    $air_util     = $node_metrics['air_util_tx'];
-                }
-            }
-        }
-
-        $node_data = array(
-            'long_name'     => $long_name,
-            'short_name'    => $short_name,
-            'permalink'     => get_permalink(),
-            'location'      => $location,
-            'role'          => $role_label,
-            'has_live_data' => $has_live_data,
-            'is_online'     => $is_online,
-            'channel_util'  => $channel_util,
-            'air_util'      => $air_util,
-        );
-
-        if ( isset( $grouped_nodes[ $node_tier ] ) ) {
-            $grouped_nodes[ $node_tier ][] = $node_data;
-        } else {
-            $grouped_nodes['uncategorized'][] = $node_data;
-        }
+foreach ( $cached_nodes as $node ) {
+    // If filtering by tier, skip non-matching nodes.
+    if ( $tier_filter && $node['tier'] !== $tier_filter ) {
+        continue;
     }
-    wp_reset_postdata();
+
+    $tier_key = isset( $grouped_nodes[ $node['tier'] ] ) ? $node['tier'] : 'uncategorized';
+    $grouped_nodes[ $tier_key ][] = $node;
 }
 
 // Remove empty groups.
@@ -116,7 +100,7 @@ $wrapper_attributes = get_block_wrapper_attributes( array( 'class' => 'wpamesh-n
         <?php endif; ?>
         <ul class="wpamesh-node-list">
             <?php foreach ( $nodes as $node ) : ?>
-            <li class="wpamesh-node-item">
+            <li class="wpamesh-node-item"<?php echo $node['node_id'] ? ' data-node-id="' . esc_attr( $node['node_id'] ) . '"' : ''; ?>>
                 <div class="wpamesh-node-info">
                     <h4>
                         <?php if ( $node['has_live_data'] ) : ?>

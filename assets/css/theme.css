@@ -662,6 +662,26 @@ html {
     letter-spacing: 0.5px;
 }
 
+/* Stat box update animation */
+.wpamesh-stat-box .number.wpamesh-stat-updated {
+    animation: wpamesh-stat-pulse 0.3s ease-out;
+}
+
+@keyframes wpamesh-stat-pulse {
+    0% { opacity: 0.5; transform: scale(0.95); }
+    100% { opacity: 1; transform: scale(1); }
+}
+
+/* Node list update animation */
+.wpamesh-node-item.wpamesh-node-updated {
+    animation: wpamesh-node-pulse 0.3s ease-out;
+}
+
+@keyframes wpamesh-node-pulse {
+    0% { background-color: rgba(255, 182, 18, 0.1); }
+    100% { background-color: transparent; }
+}
+
 /* Events */
 .wpamesh-event-item {
     background: var(--wpamesh-steel-light);
@@ -820,6 +840,78 @@ html {
 .wpamesh-node-last-seen {
     font-size: 0.7rem;
     color: var(--wpamesh-text-dim);
+}
+
+/* Node page metrics (channel util on right side of header)
+ * Based on Meshtastic firmware thresholds:
+ * - low: < 25% (normal operation)
+ * - elevated: 25-40% (polite mode throttling)
+ * - high: > 40% (transmissions skipped)
+ */
+.wpamesh-node-page-metrics {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    flex-shrink: 0;
+}
+
+.wpamesh-channel-util {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 0.5rem 0.75rem;
+    border-radius: 4px;
+}
+
+.wpamesh-channel-util .value {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.wpamesh-channel-util .label {
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-top: 0.15rem;
+}
+
+.wpamesh-channel-util.wpamesh-load-low {
+    background: rgba(74, 222, 128, 0.15);
+}
+
+.wpamesh-channel-util.wpamesh-load-low .value {
+    color: var(--wpamesh-green);
+}
+
+.wpamesh-channel-util.wpamesh-load-low .label {
+    color: var(--wpamesh-green);
+}
+
+.wpamesh-channel-util.wpamesh-load-elevated {
+    background: rgba(255, 184, 28, 0.15);
+}
+
+.wpamesh-channel-util.wpamesh-load-elevated .value {
+    color: var(--wpamesh-gold);
+}
+
+.wpamesh-channel-util.wpamesh-load-elevated .label {
+    color: var(--wpamesh-gold);
+}
+
+.wpamesh-channel-util.wpamesh-load-high {
+    background: rgba(196, 92, 38, 0.15);
+}
+
+.wpamesh-channel-util.wpamesh-load-high .value {
+    color: var(--wpamesh-rust);
+}
+
+.wpamesh-channel-util.wpamesh-load-high .label {
+    color: var(--wpamesh-rust);
 }
 
 /* Featured image as large banner below header */

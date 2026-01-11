@@ -63,6 +63,18 @@ The right sidebar only appears on screens wider than 1400px to maintain readabil
 
 For full changelog history, see CHANGELOG.md.
 
+= 1.3.3 =
+* Added channel utilization with load level indicator on node page headers
+* Load levels based on Meshtastic firmware thresholds (Low, Elevated, High)
+
+= 1.3.2 =
+* Added per-node cache for O(1) single node lookups (hybrid cache strategy)
+
+= 1.3.1 =
+* Added background cache warming for Meshview API data
+* Added AJAX lazy loading for stats and node lists
+* Page loads no longer block on external API calls
+
 = 1.3.0 =
 * Added custom Gutenberg blocks: Network Stats, Stat Box, and Node List
 * Added Discord webhook notifications for new posts

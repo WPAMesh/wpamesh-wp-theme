@@ -5,6 +5,9 @@
  * Categories: wpamesh
  * Keywords: node, meshtastic, header, title
  * Inserter: true
+ *
+ * Uses per-node cache for O(1) live status lookup (no blocking API calls).
+ * Includes data-node-id attribute for AJAX lazy loading updates.
  */
 
 // Get the current post ID for ACF field retrieval
@@ -23,25 +26,28 @@ $role_label = is_array( $role_field ) ? $role_field['label'] : ( $role_field ?: 
 // Check for featured image
 $has_thumbnail = has_post_thumbnail( $post_id );
 
-// Get live node status from meshview API if node_id is set
-$live_node    = null;
-$is_online    = false;
-$last_seen    = '';
+// Get live node status from per-node cache (O(1) lookup, no blocking API calls)
+$is_online     = null;
+$last_seen     = '';
 $has_live_data = false;
+$channel_util  = null;
+$load_level    = null;
 
 if ( $node_id ) {
-    $live_node = wpamesh_get_node_by_hex_id( $node_id );
-    if ( $live_node ) {
-        $has_live_data = true;
-        $is_online     = $live_node['is_online'];
-        $last_seen     = $live_node['last_seen_formatted'];
+    $cached_node = wpamesh_get_single_node_data( $node_id );
+    if ( $cached_node ) {
+        $has_live_data = $cached_node['has_live_data'];
+        $is_online     = $cached_node['is_online'];
+        $last_seen     = $cached_node['last_seen'] ?? '';
+        $channel_util  = $cached_node['channel_util'];
+        $load_level    = wpamesh_get_channel_load_level( $channel_util );
     }
 }
 
 $online_class = $has_live_data ? ( $is_online ? 'wpamesh-node-online' : 'wpamesh-node-offline' ) : '';
 ?>
 <!-- wp:html -->
-<div class="wpamesh-node-page-header wpamesh-node-role-<?php echo esc_attr( $role_value ); ?> <?php echo esc_attr( $online_class ); ?>">
+<div class="wpamesh-node-page-header wpamesh-node-role-<?php echo esc_attr( $role_value ); ?> <?php echo esc_attr( $online_class ); ?>"<?php echo $node_id ? ' data-node-id="' . esc_attr( $node_id ) . '"' : ''; ?>>
 <span class="wpamesh-node-page-icon"><?php echo esc_html( $short_name ); ?></span>
 <div class="wpamesh-node-page-title">
 <h1 class="wpamesh-node-page-name"><?php echo esc_html( $long_name ); ?></h1>
@@ -57,6 +63,14 @@ $online_class = $has_live_data ? ( $is_online ? 'wpamesh-node-online' : 'wpamesh
 <?php endif; ?>
 </div>
 </div>
+<?php if ( $channel_util !== null && $load_level ) : ?>
+<div class="wpamesh-node-page-metrics">
+<span class="wpamesh-channel-util wpamesh-load-<?php echo esc_attr( $load_level['level'] ); ?>" title="<?php echo esc_attr( sprintf( __( 'Channel Utilization: %s%% (%s load)', 'wpamesh' ), $channel_util, $load_level['label'] ) ); ?>">
+<span class="value"><?php echo esc_html( $channel_util ); ?>%</span>
+<span class="label"><?php echo esc_html( $load_level['label'] ); ?></span>
+</span>
+</div>
+<?php endif; ?>
 </div>
 <?php if ( $has_thumbnail ) : ?>
 <div class="wpamesh-node-featured-image">

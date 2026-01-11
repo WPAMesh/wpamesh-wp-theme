@@ -2,6 +2,36 @@
 
 All notable changes to the WPAMesh theme will be documented in this file.
 
+## [1.3.3] - 2026-01-11
+
+### Added
+- Channel utilization load indicator on node page headers
+- Load levels based on Meshtastic firmware thresholds: Low (<25%), Elevated (25-40%), High (>40%)
+- `wpamesh_get_channel_load_level()` helper function for load classification
+
+## [1.3.2] - 2026-01-11
+
+### Added
+- Per-node cache for O(1) single node lookups (hybrid cache strategy)
+- `wpamesh_get_single_node_data()` helper for efficient single node retrieval
+
+### Changed
+- Node page headers use per-node cache instead of list iteration
+- REST API single node endpoint uses per-node cache for live status
+
+## [1.3.1] - 2026-01-11
+
+### Added
+- Background cache warming for Meshview API data using WP-Cron
+- AJAX lazy loading for sidebar stats and node lists
+- Aggregated sidebar stats cache (single API fetch for all stats)
+- Aggregated node list cache with live status data
+
+### Changed
+- Page loads no longer block on external API calls
+- Stats and node status hydrate asynchronously via JavaScript
+- AJAX endpoints perform synchronous refresh if cache is empty
+
 ## [1.3.0] - 2026-01-11
 
 ### Added
