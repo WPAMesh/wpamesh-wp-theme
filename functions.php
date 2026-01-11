@@ -1038,3 +1038,327 @@ function wpamesh_node_list_shortcode( $atts ) {
 
     return ob_get_clean();
 }
+
+/**
+ * =============================================================================
+ * Discord Notifications
+ * =============================================================================
+ * Sends Discord webhook notifications when posts in specific categories are published.
+ *
+ * Configuration: Set WPAMESH_DISCORD_WEBHOOK in wp-config.php or use the filter below.
+ * Categories: Add category slugs to the wpamesh_discord_categories filter.
+ */
+
+/**
+ * Get Discord webhook URL
+ */
+function wpamesh_get_discord_webhook() {
+    // Constant takes priority (for version-controlled configs)
+    if ( defined( 'WPAMESH_DISCORD_WEBHOOK' ) && WPAMESH_DISCORD_WEBHOOK ) {
+        return WPAMESH_DISCORD_WEBHOOK;
+    }
+    // Then check admin setting
+    $option = get_option( 'wpamesh_discord_webhook', '' );
+    if ( ! empty( $option ) ) {
+        return $option;
+    }
+    // Finally allow filter override
+    return apply_filters( 'wpamesh_discord_webhook', '' );
+}
+
+/**
+ * Register Discord settings in admin
+ */
+add_action( 'admin_init', function() {
+    // Register the setting
+    register_setting( 'general', 'wpamesh_discord_webhook', array(
+        'type'              => 'string',
+        'sanitize_callback' => 'esc_url_raw',
+        'default'           => '',
+    ) );
+
+    register_setting( 'general', 'wpamesh_discord_categories', array(
+        'type'              => 'string',
+        'sanitize_callback' => 'sanitize_text_field',
+        'default'           => 'announcements, news',
+    ) );
+
+    // Add settings section
+    add_settings_section(
+        'wpamesh_discord_section',
+        __( 'Discord Notifications', 'wpamesh' ),
+        function() {
+            echo '<p>' . esc_html__( 'Configure Discord webhook notifications for new posts.', 'wpamesh' ) . '</p>';
+        },
+        'general'
+    );
+
+    // Webhook URL field
+    add_settings_field(
+        'wpamesh_discord_webhook',
+        __( 'Discord Webhook URL', 'wpamesh' ),
+        function() {
+            $value = get_option( 'wpamesh_discord_webhook', '' );
+            $disabled = defined( 'WPAMESH_DISCORD_WEBHOOK' ) && WPAMESH_DISCORD_WEBHOOK;
+            ?>
+            <input type="url"
+                   name="wpamesh_discord_webhook"
+                   id="wpamesh_discord_webhook"
+                   value="<?php echo esc_attr( $disabled ? WPAMESH_DISCORD_WEBHOOK : $value ); ?>"
+                   class="regular-text"
+                   <?php echo $disabled ? 'disabled' : ''; ?>
+            />
+            <?php if ( $disabled ) : ?>
+            <p class="description"><?php esc_html_e( 'Set via WPAMESH_DISCORD_WEBHOOK constant in wp-config.php', 'wpamesh' ); ?></p>
+            <?php else : ?>
+            <p class="description"><?php esc_html_e( 'Get this from Discord: Server Settings → Integrations → Webhooks', 'wpamesh' ); ?></p>
+            <?php endif; ?>
+            <?php
+        },
+        'general',
+        'wpamesh_discord_section'
+    );
+
+    // Categories field
+    add_settings_field(
+        'wpamesh_discord_categories',
+        __( 'Notify for Categories', 'wpamesh' ),
+        function() {
+            $value = get_option( 'wpamesh_discord_categories', 'announcements, news' );
+            ?>
+            <input type="text"
+                   name="wpamesh_discord_categories"
+                   id="wpamesh_discord_categories"
+                   value="<?php echo esc_attr( $value ); ?>"
+                   class="regular-text"
+            />
+            <p class="description"><?php esc_html_e( 'Comma-separated category slugs. Only posts in these categories will trigger notifications.', 'wpamesh' ); ?></p>
+            <?php
+        },
+        'general',
+        'wpamesh_discord_section'
+    );
+});
+
+/**
+ * Get categories that should trigger Discord notifications
+ *
+ * @return array Category slugs that trigger notifications
+ */
+function wpamesh_get_discord_categories() {
+    $option = get_option( 'wpamesh_discord_categories', 'announcements, news' );
+    $categories = array_map( 'trim', explode( ',', $option ) );
+    $categories = array_map( 'strtolower', $categories ); // Normalize to lowercase
+    $categories = array_filter( $categories ); // Remove empty values
+    return apply_filters( 'wpamesh_discord_categories', $categories );
+}
+
+/**
+ * Send Discord webhook notification
+ *
+ * @param array $payload Discord webhook payload
+ * @return bool|WP_Error True on success, WP_Error on failure
+ */
+function wpamesh_send_discord_webhook( $payload ) {
+    $webhook_url = wpamesh_get_discord_webhook();
+    if ( empty( $webhook_url ) ) {
+        return new WP_Error( 'no_webhook', 'Discord webhook URL not configured' );
+    }
+
+    $response = wp_remote_post( $webhook_url, array(
+        'headers' => array( 'Content-Type' => 'application/json' ),
+        'body'    => wp_json_encode( $payload ),
+        'timeout' => 10,
+    ) );
+
+    if ( is_wp_error( $response ) ) {
+        return $response;
+    }
+
+    $code = wp_remote_retrieve_response_code( $response );
+    if ( $code >= 200 && $code < 300 ) {
+        return true;
+    }
+
+    return new WP_Error( 'discord_error', 'Discord returned HTTP ' . $code );
+}
+
+/**
+ * Build Discord notification payload for a post
+ *
+ * @param WP_Post $post The post object
+ * @return array Discord webhook payload
+ */
+function wpamesh_build_discord_payload( $post ) {
+    // Get excerpt, trimmed to ~200 chars at word boundary
+    $excerpt = $post->post_excerpt;
+    if ( empty( $excerpt ) ) {
+        $excerpt = wp_strip_all_tags( $post->post_content );
+    }
+    $excerpt = trim( $excerpt );
+    if ( strlen( $excerpt ) > 200 ) {
+        $excerpt = substr( $excerpt, 0, 200 );
+        $excerpt = preg_replace( '/\s+\S*$/', '', $excerpt ); // Trim to word boundary
+        $excerpt .= '...';
+    }
+
+    // Format: ## Title\n\nExcerpt\n-# URL
+    $content = sprintf(
+        "## %s\n\n%s\n-# %s",
+        $post->post_title,
+        $excerpt,
+        get_permalink( $post )
+    );
+
+    $payload = array(
+        'username' => get_bloginfo( 'name' ),
+        'content'  => $content,
+    );
+
+    // Add featured image as embed if available
+    $thumbnail_id = get_post_thumbnail_id( $post->ID );
+    if ( $thumbnail_id ) {
+        $image_url = wp_get_attachment_image_url( $thumbnail_id, 'large' );
+        if ( $image_url ) {
+            $payload['embeds'] = array(
+                array(
+                    'image' => array( 'url' => $image_url ),
+                ),
+            );
+        }
+    }
+
+    return apply_filters( 'wpamesh_discord_payload', $payload, $post );
+}
+
+/**
+ * Check if post should trigger Discord notification
+ *
+ * @param WP_Post $post The post object
+ * @return bool True if notification should be sent
+ */
+function wpamesh_should_notify_discord( $post ) {
+    $allowed_categories = wpamesh_get_discord_categories();
+    if ( empty( $allowed_categories ) ) {
+        return false;
+    }
+
+    foreach ( $allowed_categories as $cat_slug ) {
+        if ( has_category( $cat_slug, $post ) ) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+/**
+ * Log Discord notification result (stores in option for admin visibility)
+ *
+ * @param string $message Log message
+ * @param string $level   'info', 'error', or 'success'
+ */
+function wpamesh_discord_log( $message, $level = 'info' ) {
+    $log = get_option( 'wpamesh_discord_log', array() );
+    $log[] = array(
+        'time'    => current_time( 'mysql' ),
+        'level'   => $level,
+        'message' => $message,
+    );
+    // Keep only last 20 entries
+    $log = array_slice( $log, -20 );
+    update_option( 'wpamesh_discord_log', $log, false );
+}
+
+/**
+ * Send Discord notification when a post is published
+ *
+ * Uses 'publish_post' hook which fires after all post data (including categories) is saved.
+ * We track which posts we've notified to prevent duplicates.
+ */
+add_action( 'publish_post', function( $post_id, $post ) {
+    // Skip revisions and autosaves
+    if ( wp_is_post_revision( $post_id ) || wp_is_post_autosave( $post_id ) ) {
+        return;
+    }
+
+    // Check if we've already notified for this post (prevent duplicates on update)
+    $notified = get_post_meta( $post_id, '_wpamesh_discord_notified', true );
+    if ( $notified ) {
+        return;
+    }
+
+    // Check category filter
+    if ( ! wpamesh_should_notify_discord( $post ) ) {
+        $cats = wp_get_post_categories( $post_id, array( 'fields' => 'slugs' ) );
+        wpamesh_discord_log(
+            sprintf( 'Skipped post "%s" (ID %d) - categories [%s] not in allowed list [%s]',
+                $post->post_title,
+                $post_id,
+                implode( ', ', $cats ),
+                implode( ', ', wpamesh_get_discord_categories() )
+            ),
+            'info'
+        );
+        return;
+    }
+
+    // Check webhook URL
+    $webhook_url = wpamesh_get_discord_webhook();
+    if ( empty( $webhook_url ) ) {
+        wpamesh_discord_log(
+            sprintf( 'Failed for post "%s" (ID %d) - No webhook URL configured', $post->post_title, $post_id ),
+            'error'
+        );
+        return;
+    }
+
+    // Build and send
+    $payload = wpamesh_build_discord_payload( $post );
+    $result = wpamesh_send_discord_webhook( $payload );
+
+    if ( is_wp_error( $result ) ) {
+        wpamesh_discord_log(
+            sprintf( 'Failed for post "%s" (ID %d) - %s', $post->post_title, $post_id, $result->get_error_message() ),
+            'error'
+        );
+    } else {
+        // Mark as notified to prevent duplicates on future updates
+        update_post_meta( $post_id, '_wpamesh_discord_notified', time() );
+        wpamesh_discord_log(
+            sprintf( 'Sent notification for post "%s" (ID %d)', $post->post_title, $post_id ),
+            'success'
+        );
+    }
+}, 10, 2 );
+
+/**
+ * Add Discord log viewer to admin
+ */
+add_action( 'admin_init', function() {
+    add_settings_field(
+        'wpamesh_discord_log',
+        __( 'Recent Activity', 'wpamesh' ),
+        function() {
+            $log = get_option( 'wpamesh_discord_log', array() );
+            if ( empty( $log ) ) {
+                echo '<p class="description">' . esc_html__( 'No activity yet.', 'wpamesh' ) . '</p>';
+                return;
+            }
+            echo '<div style="max-height: 200px; overflow-y: auto; background: #f6f7f7; padding: 10px; font-family: monospace; font-size: 12px;">';
+            foreach ( array_reverse( $log ) as $entry ) {
+                $color = $entry['level'] === 'error' ? '#d63638' : ( $entry['level'] === 'success' ? '#00a32a' : '#666' );
+                printf(
+                    '<div style="color: %s; margin-bottom: 5px;">[%s] %s</div>',
+                    esc_attr( $color ),
+                    esc_html( $entry['time'] ),
+                    esc_html( $entry['message'] )
+                );
+            }
+            echo '</div>';
+            echo '<p class="description">' . esc_html__( 'Shows last 20 notification attempts.', 'wpamesh' ) . '</p>';
+        },
+        'general',
+        'wpamesh_discord_section'
+    );
+}, 20 ); // Priority 20 to run after main settings
