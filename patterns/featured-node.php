@@ -3,7 +3,7 @@
  * Title: Featured Node
  * Slug: wpamesh/featured-node
  * Categories: wpamesh
- * Keywords: node, featured, infrastructure
+ * Keywords: node, featured, infrastructure, post
  * Inserter: true
  */
 ?>
@@ -12,17 +12,31 @@
 <h3 class="wp-block-heading">Featured Node</h3>
 <!-- /wp:heading -->
 
+<!-- wp:query {"queryId":20,"query":{"perPage":1,"postType":"post","order":"desc","orderBy":"date","inherit":false}} -->
+<div class="wp-block-query"><!-- wp:post-template {"className":"wpamesh-featured-node-wrapper","layout":{"type":"default"}} -->
+
 <!-- wp:group {"className":"wpamesh-featured-node","layout":{"type":"default"}} -->
-<div class="wpamesh-featured-node wp-block-group"><!-- wp:paragraph {"className":"node-name"} -->
-<p class="node-name">RoadsEnd Tower</p>
-<!-- /wp:paragraph -->
+<div class="wpamesh-featured-node wp-block-group">
 
-<!-- wp:paragraph {"className":"node-role"} -->
-<p class="node-role">Infrastructure · Repeater</p>
-<!-- /wp:paragraph -->
+<!-- wp:post-featured-image {"isLink":true,"width":"500px","height":"500px","style":{"border":{"radius":"0px"}}} /-->
 
+<!-- wp:post-title {"level":4,"isLink":true,"className":"node-name"} /-->
+
+<!-- wp:post-excerpt {"excerptLength":30,"className":"node-desc"} /-->
+
+</div>
+<!-- /wp:group -->
+
+<!-- /wp:post-template -->
+
+<!-- wp:query-no-results -->
 <!-- wp:paragraph {"className":"node-desc"} -->
-<p class="node-desc">High-elevation relay providing coverage across multiple counties. One of our core backbone nodes.</p>
-<!-- /wp:paragraph --></div>
-<!-- /wp:group --></div>
+<p class="node-desc">No featured node available.</p>
+<!-- /wp:paragraph -->
+<!-- /wp:query-no-results -->
+
+</div>
+<!-- /wp:query -->
+
+</div>
 <!-- /wp:group -->
