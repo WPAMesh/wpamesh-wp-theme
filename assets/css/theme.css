@@ -746,24 +746,24 @@ html {
 
 /* Featured Node */
 .wpamesh-featured-node-wrapper {
-    max-width: 500px;
+    width: 100%;
 }
 
 .wpamesh-featured-node {
     background: var(--wpamesh-steel-light);
     padding: 0.75rem;
-    max-width: 500px;
+    width: 100%;
 }
 
 .wpamesh-featured-node .wp-block-post-featured-image {
     margin-bottom: 0.75rem;
+    overflow: hidden;
 }
 
 .wpamesh-featured-node .wp-block-post-featured-image img {
     width: 100%;
     height: auto;
-    max-width: 500px;
-    max-height: 500px;
+    aspect-ratio: 1 / 1;
     object-fit: cover;
     display: block;
 }
