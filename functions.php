@@ -815,6 +815,16 @@ add_action( 'wp_enqueue_scripts', function() {
         'action'       => 'wpamesh_node_list_data',
         'singleAction' => 'wpamesh_single_node_data',
     ) );
+
+    // Guide page TOC scroll tracking script
+    // Only loads on pages with .wpa-toc-list elements
+    wp_enqueue_script(
+        'wpamesh-guide-toc',
+        get_theme_file_uri( 'assets/js/guide-toc.js' ),
+        array(),
+        $version,
+        true
+    );
 });
 
 /**
