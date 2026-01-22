@@ -1519,3 +1519,748 @@ html {
     color: var(--wpamesh-gold);
     text-decoration: none;
 }
+
+/* ============================================
+   Guide Page Styles (.wpa-* classes)
+   For WordPress guide pages (device-roles, getting-started, reaching-mesh)
+   ============================================ */
+
+/* Guide Container */
+.wpa-guide {
+    max-width: 800px;
+    line-height: 1.8;
+}
+
+.wpa-guide h2 {
+    color: var(--wpamesh-gold) !important;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1.4rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-bottom: 1px solid var(--wpamesh-border);
+    padding-bottom: 12px;
+    margin-top: 48px;
+    margin-bottom: 20px;
+}
+
+.wpa-guide h3 {
+    color: var(--wpamesh-white);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1.1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-top: 32px;
+    margin-bottom: 16px;
+}
+
+.wpa-guide p {
+    color: var(--wpamesh-text);
+    margin-bottom: 1rem;
+}
+
+.wpa-guide strong {
+    color: var(--wpamesh-white);
+}
+
+.wpa-guide a {
+    color: var(--wpamesh-gold);
+}
+
+.wpa-guide code {
+    font-family: 'JetBrains Mono', 'Consolas', monospace;
+    background: var(--wpamesh-steel-light);
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.9em;
+    color: var(--wpamesh-gold);
+}
+
+.wpa-guide ul, .wpa-guide ol {
+    color: var(--wpamesh-text);
+    padding-left: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.wpa-guide li {
+    margin-bottom: 0.5rem;
+}
+
+/* Intro Box */
+.wpa-intro {
+    background: linear-gradient(135deg, rgba(255, 184, 28, 0.1), rgba(255, 184, 28, 0.02));
+    border: 1px solid var(--wpamesh-gold);
+    border-radius: 8px;
+    padding: 24px;
+    margin: 24px 0;
+}
+
+.wpa-intro p {
+    font-size: 1.05rem;
+    margin: 0;
+    color: var(--wpamesh-white);
+}
+
+/* Quick Answer Box */
+.wpa-quick-answer {
+    background: linear-gradient(135deg, rgba(74, 222, 128, 0.15), rgba(74, 222, 128, 0.05));
+    border: 2px solid var(--wpamesh-green);
+    border-radius: 8px;
+    padding: 24px;
+    margin: 24px 0;
+}
+
+.wpa-quick-answer-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--wpamesh-green);
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.wpa-quick-answer p {
+    font-size: 1.05rem;
+    margin: 0;
+    color: var(--wpamesh-white);
+}
+
+/* Alert Boxes */
+.wpa-alert {
+    padding: 20px 24px;
+    border-radius: 8px;
+    margin: 24px 0;
+    border-left: 4px solid;
+}
+
+.wpa-alert p {
+    margin: 0;
+}
+
+.wpa-alert p + p {
+    margin-top: 10px;
+}
+
+.wpa-alert-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 600;
+    font-size: 1rem;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.wpa-alert-danger {
+    background: rgba(196, 92, 38, 0.15);
+    border-color: var(--wpamesh-rust);
+}
+.wpa-alert-danger .wpa-alert-title {
+    color: var(--wpamesh-rust);
+}
+
+.wpa-alert-warning {
+    background: rgba(255, 184, 28, 0.1);
+    border-color: var(--wpamesh-gold);
+}
+.wpa-alert-warning .wpa-alert-title {
+    color: var(--wpamesh-gold);
+}
+
+.wpa-alert-info {
+    background: rgba(88, 101, 242, 0.1);
+    border-color: var(--wpamesh-discord);
+}
+.wpa-alert-info .wpa-alert-title {
+    color: var(--wpamesh-discord);
+}
+
+.wpa-alert-success {
+    background: rgba(74, 222, 128, 0.1);
+    border-color: var(--wpamesh-green);
+}
+.wpa-alert-success .wpa-alert-title {
+    color: var(--wpamesh-green);
+}
+
+/* Analogy Box */
+.wpa-analogy {
+    background: var(--wpamesh-steel);
+    border: 1px solid var(--wpamesh-border);
+    border-radius: 8px;
+    padding: 24px;
+    margin: 24px 0;
+}
+
+.wpa-analogy-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1rem;
+    color: var(--wpamesh-discord);
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.wpa-analogy p {
+    margin: 0;
+}
+
+/* Decision Flow */
+.wpa-flow {
+    background: var(--wpamesh-steel);
+    border: 1px solid var(--wpamesh-border);
+    border-radius: 8px;
+    padding: 28px;
+    margin: 28px 0;
+}
+
+.wpa-flow h3 {
+    margin-top: 0;
+    margin-bottom: 24px;
+}
+
+.wpa-flow-step {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 20px;
+    align-items: flex-start;
+}
+
+.wpa-flow-step:last-child {
+    margin-bottom: 0;
+}
+
+.wpa-flow-num {
+    width: 32px;
+    height: 32px;
+    background: var(--wpamesh-gold);
+    color: var(--wpamesh-black);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    flex-shrink: 0;
+}
+
+.wpa-flow-content {
+    flex: 1;
+    padding-top: 2px;
+}
+
+.wpa-flow-q {
+    font-weight: 600;
+    color: var(--wpamesh-white);
+    margin-bottom: 4px;
+}
+
+.wpa-flow-a {
+    color: var(--wpamesh-text);
+}
+
+/* Role Cards */
+.wpa-role {
+    background: var(--wpamesh-steel);
+    border: 1px solid var(--wpamesh-border);
+    border-radius: 8px;
+    padding: 24px;
+    margin: 20px 0;
+}
+
+.wpa-role-recommended {
+    border-color: var(--wpamesh-green);
+    border-width: 2px;
+    background: linear-gradient(135deg, rgba(74, 222, 128, 0.08), var(--wpamesh-steel));
+}
+
+.wpa-role-caution {
+    border-color: var(--wpamesh-gold);
+    border-width: 2px;
+}
+
+.wpa-role-danger {
+    border-color: var(--wpamesh-rust);
+    border-width: 2px;
+}
+
+.wpa-role-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+}
+
+.wpa-role-name {
+    font-family: 'JetBrains Mono', 'Consolas', monospace;
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--wpamesh-white);
+}
+
+.wpa-role-desc {
+    color: var(--wpamesh-text);
+    margin-bottom: 16px;
+}
+
+.wpa-role-details {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 10px;
+    margin-bottom: 16px;
+}
+
+.wpa-role-usecases {
+    border-top: 1px solid var(--wpamesh-border);
+    padding-top: 16px;
+    margin-top: 16px;
+}
+
+.wpa-usecases-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--wpamesh-text-dim);
+    margin-bottom: 10px;
+}
+
+.wpa-usecases-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.wpa-usecases-list li {
+    background: var(--wpamesh-steel-light);
+    border: 1px solid var(--wpamesh-border);
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    margin: 0;
+}
+
+/* Guide Badges */
+.wpa-badge {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.7rem;
+    padding: 4px 10px;
+    border-radius: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.wpa-badge-green {
+    background: rgba(74, 222, 128, 0.2);
+    color: var(--wpamesh-green);
+}
+
+.wpa-badge-gold {
+    background: rgba(255, 184, 28, 0.2);
+    color: var(--wpamesh-gold);
+}
+
+.wpa-badge-rust {
+    background: rgba(196, 92, 38, 0.2);
+    color: var(--wpamesh-rust);
+}
+
+.wpa-badge-blue {
+    background: rgba(88, 101, 242, 0.2);
+    color: var(--wpamesh-discord);
+}
+
+/* Detail Items */
+.wpa-detail {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    font-size: 0.9rem;
+    color: var(--wpamesh-text);
+}
+
+.wpa-detail-icon {
+    flex-shrink: 0;
+    width: 18px;
+    text-align: center;
+}
+
+.wpa-detail-yes { color: var(--wpamesh-green); }
+.wpa-detail-no { color: var(--wpamesh-rust); }
+.wpa-detail-info { color: var(--wpamesh-discord); }
+.wpa-detail-warn { color: var(--wpamesh-gold); }
+
+/* Guide Tables */
+.wpa-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 0.9rem;
+}
+
+.wpa-table th,
+.wpa-table td {
+    padding: 12px 16px;
+    text-align: left;
+    border-bottom: 1px solid var(--wpamesh-border);
+}
+
+.wpa-table th {
+    background: var(--wpamesh-steel-light);
+    color: var(--wpamesh-gold);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.wpa-table td {
+    color: var(--wpamesh-text);
+}
+
+.wpa-table td:first-child {
+    font-family: 'JetBrains Mono', 'Consolas', monospace;
+    color: var(--wpamesh-white);
+}
+
+.wpa-table tr:hover td {
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.wpa-table .yes { color: var(--wpamesh-green); }
+.wpa-table .no { color: var(--wpamesh-rust); }
+.wpa-table .warn { color: var(--wpamesh-gold); }
+.wpa-table .danger { color: var(--wpamesh-rust); font-weight: 600; }
+.wpa-table .highlight { background: rgba(74, 222, 128, 0.1); }
+
+/* Info Cards */
+.wpa-card {
+    background: var(--wpamesh-steel);
+    border: 1px solid var(--wpamesh-border);
+    border-radius: 8px;
+    padding: 24px;
+    margin: 24px 0;
+}
+
+.wpa-card-highlight {
+    border-color: var(--wpamesh-gold);
+    background: linear-gradient(135deg, rgba(255, 184, 28, 0.08), var(--wpamesh-steel));
+}
+
+.wpa-card-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--wpamesh-white);
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.wpa-card p {
+    margin-bottom: 12px;
+}
+
+.wpa-card p:last-child {
+    margin-bottom: 0;
+}
+
+/* Steps */
+.wpa-steps {
+    background: var(--wpamesh-steel-light);
+    border-radius: 6px;
+    padding: 20px 24px;
+    margin-top: 16px;
+}
+
+.wpa-steps-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--wpamesh-gold);
+    margin-bottom: 12px;
+}
+
+.wpa-steps ol {
+    margin: 0;
+    padding-left: 1.25rem;
+}
+
+.wpa-steps li {
+    margin-bottom: 8px;
+}
+
+.wpa-steps li:last-child {
+    margin-bottom: 0;
+}
+
+/* Note Box */
+.wpa-note {
+    background: var(--wpamesh-steel);
+    border-left: 4px solid var(--wpamesh-gold);
+    padding: 20px 24px;
+    margin: 24px 0;
+    border-radius: 0 8px 8px 0;
+}
+
+.wpa-note p {
+    margin: 0;
+}
+
+.wpa-note strong {
+    color: var(--wpamesh-gold);
+}
+
+/* Summary Box */
+.wpa-summary {
+    background: linear-gradient(135deg, rgba(74, 222, 128, 0.1), rgba(74, 222, 128, 0.02));
+    border: 2px solid var(--wpamesh-green);
+    border-radius: 8px;
+    padding: 32px;
+    margin: 32px 0;
+    text-align: center;
+}
+
+.wpa-summary h3 {
+    color: var(--wpamesh-green) !important;
+    margin-top: 0;
+    margin-bottom: 12px;
+}
+
+.wpa-summary p {
+    color: var(--wpamesh-white);
+    font-size: 1.1rem;
+    margin: 0;
+}
+
+/* CTA Button */
+.wpa-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 24px;
+    background: var(--wpamesh-gold);
+    border-radius: 6px;
+    color: var(--wpamesh-black) !important;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 600;
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    text-decoration: none !important;
+    transition: background 0.2s;
+}
+
+.wpa-cta:hover {
+    background: var(--wpamesh-gold-dim);
+}
+
+/* Contact Box */
+.wpa-contact {
+    background: linear-gradient(135deg, var(--wpamesh-steel-light), var(--wpamesh-steel));
+    border: 1px solid var(--wpamesh-border);
+    border-radius: 8px;
+    padding: 32px;
+    margin: 32px 0;
+    text-align: center;
+}
+
+.wpa-contact h3 {
+    color: var(--wpamesh-gold) !important;
+    margin-top: 0;
+    margin-bottom: 12px;
+}
+
+.wpa-contact p {
+    margin-bottom: 20px;
+}
+
+.wpa-contact-btns {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.wpa-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    background: var(--wpamesh-steel-lighter);
+    border: 1px solid var(--wpamesh-border);
+    border-radius: 6px;
+    color: var(--wpamesh-white) !important;
+    font-family: 'Barlow Condensed', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-size: 0.9rem;
+    text-decoration: none !important;
+    transition: all 0.2s;
+}
+
+.wpa-btn:hover {
+    border-color: var(--wpamesh-gold);
+    background: var(--wpamesh-steel-light);
+}
+
+/* Method Cards */
+.wpa-method {
+    background: var(--wpamesh-steel);
+    border: 1px solid var(--wpamesh-border);
+    border-radius: 8px;
+    padding: 24px;
+    margin: 24px 0;
+}
+
+.wpa-method-best {
+    border-color: var(--wpamesh-discord);
+    border-width: 2px;
+    background: linear-gradient(135deg, rgba(88, 101, 242, 0.1), var(--wpamesh-steel));
+}
+
+.wpa-method-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+}
+
+.wpa-method-name {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--wpamesh-white);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.wpa-method-desc {
+    color: var(--wpamesh-text);
+    margin-bottom: 16px;
+}
+
+/* Pros/Cons */
+.wpa-pros-cons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 20px;
+}
+
+@media (max-width: 600px) {
+    .wpa-pros-cons {
+        grid-template-columns: 1fr;
+    }
+}
+
+.wpa-pros, .wpa-cons {
+    background: var(--wpamesh-steel-light);
+    border-radius: 6px;
+    padding: 16px 20px;
+}
+
+.wpa-pros-title, .wpa-cons-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 10px;
+}
+
+.wpa-pros-title {
+    color: var(--wpamesh-green);
+}
+
+.wpa-cons-title {
+    color: var(--wpamesh-gold);
+}
+
+.wpa-pros ul, .wpa-cons ul {
+    margin: 0;
+    padding-left: 1.25rem;
+    font-size: 0.9rem;
+}
+
+.wpa-pros li, .wpa-cons li {
+    margin-bottom: 6px;
+}
+
+/* Firehose CTA */
+.wpa-firehose {
+    background: linear-gradient(135deg, rgba(88, 101, 242, 0.15), rgba(88, 101, 242, 0.05));
+    border: 2px solid var(--wpamesh-discord);
+    border-radius: 8px;
+    padding: 32px;
+    margin: 32px 0;
+    text-align: center;
+}
+
+.wpa-firehose h3 {
+    color: var(--wpamesh-white) !important;
+    margin-top: 0;
+    margin-bottom: 12px;
+}
+
+.wpa-firehose p {
+    margin-bottom: 20px;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.wpa-firehose-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 28px;
+    background: var(--wpamesh-discord);
+    border-radius: 6px;
+    color: var(--wpamesh-white) !important;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 600;
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    text-decoration: none !important;
+    transition: background 0.2s;
+}
+
+.wpa-firehose-btn:hover {
+    background: #4752c4;
+}
+
+/* Troubleshooting */
+.wpa-trouble {
+    background: var(--wpamesh-steel);
+    border: 1px solid var(--wpamesh-border);
+    border-radius: 8px;
+    padding: 24px;
+    margin: 20px 0;
+}
+
+.wpa-trouble-q {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 600;
+    color: var(--wpamesh-white);
+    margin-bottom: 12px;
+    font-size: 1.05rem;
+}
+
+.wpa-trouble-a {
+    color: var(--wpamesh-text);
+}
+
+.wpa-trouble-a p {
+    margin-bottom: 10px;
+}
+
+.wpa-trouble-a p:last-child {
+    margin-bottom: 0;
+}
