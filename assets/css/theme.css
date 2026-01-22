@@ -2269,6 +2269,16 @@ html {
    Guide Page Layout with TOC
    ============================================ */
 
+/* Allow guide layout to break out of constrained parent (900px -> 1200px) */
+.wpamesh-main-inner:has(.wpa-page-layout) {
+    max-width: 1200px;
+}
+
+/* Override WordPress block constrained layout for guide pages */
+.is-layout-constrained > .wpa-page-layout {
+    max-width: 1200px;
+}
+
 /* Page layout with TOC sidebar */
 .wpa-page-layout {
     display: flex;
@@ -2300,6 +2310,12 @@ html {
     border: 1px solid var(--wpamesh-border);
     max-height: calc(100vh - 64px);
     overflow-y: auto;
+}
+
+/* Adjust TOC sticky position when WordPress admin bar is present */
+.admin-bar .wpa-toc {
+    top: 64px; /* 32px original + 32px admin bar */
+    max-height: calc(100vh - 96px);
 }
 
 .wpa-toc-title {
