@@ -14,10 +14,10 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Enqueue theme styles and scripts
  */
 add_action( 'wp_enqueue_scripts', function() {
-    // Google Fonts - Barlow and Barlow Condensed
+    // Google Fonts - Barlow, Barlow Condensed, and JetBrains Mono
     wp_enqueue_style(
         'wpamesh-google-fonts',
-        'https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@600;700&display=swap',
+        'https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@600;700&family=JetBrains+Mono:wght@400;500;600&display=swap',
         array(),
         null
     );
@@ -815,6 +815,16 @@ add_action( 'wp_enqueue_scripts', function() {
         'action'       => 'wpamesh_node_list_data',
         'singleAction' => 'wpamesh_single_node_data',
     ) );
+
+    // Guide page TOC scroll tracking script
+    // Only loads on pages with .wpa-toc-list elements
+    wp_enqueue_script(
+        'wpamesh-guide-toc',
+        get_theme_file_uri( 'assets/js/guide-toc.js' ),
+        array(),
+        $version,
+        true
+    );
 });
 
 /**
