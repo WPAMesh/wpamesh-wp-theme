@@ -66,6 +66,20 @@ Meshview API at `https://map.wpamesh.net/api`:
 - Desktop: ≥ 900px (left sidebar visible)
 - Wide: ≥ 1400px (right sidebar appears)
 
+## Guide Page Workflow
+
+Guide/documentation pages use a two-stage workflow:
+
+1. **Preview stage** (`pages/previews/`) - Standalone HTML with inline CSS for browser preview
+2. **WordPress stage** (`pages/wordpress/`) - Content fragments using `wpa-*` classes from theme CSS
+
+### Slash Commands
+
+- `/new-page <brief>` - Create a new preview page based on content description
+- `/wp-convert` - Auto-detect and migrate preview pages to WordPress format
+
+Preview pages use classes like `.intro-box`, `.alert`, `.info-card`. WordPress versions use `wpa-*` prefixed equivalents (`.wpa-intro`, `.wpa-alert`, `.wpa-card`) defined in `assets/css/theme.css` starting at line 1524.
+
 ## Code Conventions
 
 - CSS custom properties use `--wpamesh-*` prefix
