@@ -1,0 +1,342 @@
+<!--
+================================================================================
+Property Owner Guide
+================================================================================
+WordPress Ready - Styles are in the WPAMesh theme (assets/css/theme.css)
+
+INSTRUCTIONS:
+1. Create a new Page in WordPress
+2. Switch to the Code Editor (⋮ menu → Code Editor) or use a Custom HTML block
+3. Paste this entire content (no inline styles needed - theme provides .wpa-* classes)
+4. Update/Publish
+
+NOTE: TOC scroll tracking requires the theme's guide-toc.js script to be enqueued.
+================================================================================
+-->
+
+<div class="wpa-page-layout">
+<div class="wpa-main-content">
+<div class="wpa-guide">
+
+<div class="wpa-quick-answer">
+<div class="wpa-quick-answer-title">The Short Answer</div>
+<p>Your property could be a valuable part of Western Pennsylvania's mesh network. <strong>Elevated locations with clear line-of-sight</strong>—hilltops, tall buildings, rooftops—make excellent node sites. This guide helps you evaluate your location and understand what's involved.</p>
+</div>
+
+<h2 id="overview">Why Location Matters</h2>
+
+<p>Meshtastic is a <strong>line-of-sight radio network</strong>. Unlike cell towers that use powerful transmitters and licensed spectrum, mesh nodes use low-power, license-free radios. This means physical obstructions—hills, trees, buildings—can block the signal.</p>
+
+<p>That's why <strong>elevation is everything</strong>. A node at 30 feet on a rooftop can easily outperform one at ground level, even with identical equipment. The higher your antenna, the more of the surrounding terrain it can "see."</p>
+
+<div class="wpa-analogy">
+<div class="wpa-analogy-title">Think of It This Way</div>
+<p>Imagine standing on a flat plain with a flashlight. At ground level, you can only shine it a short distance before the curve of the earth or obstacles block it. Now climb a tower—suddenly you can illuminate a much wider area. Radio waves work the same way.</p>
+</div>
+
+<h2 id="site-survey">Evaluating Your Location</h2>
+
+<p>Before investing in equipment, you should evaluate whether your location has the coverage potential you're hoping for. There are two complementary approaches: using online tools and doing a physical assessment.</p>
+
+<h3>Using site.meshtastic.org</h3>
+
+<p>The Meshtastic community maintains <a href="https://site.meshtastic.org/" target="_blank">site.meshtastic.org</a>, a coverage prediction tool that shows theoretical line-of-sight from any location.</p>
+
+<div class="wpa-flow">
+<h3>How to Use the Coverage Simulator</h3>
+<div class="wpa-flow-step">
+<div class="wpa-flow-num">1</div>
+<div class="wpa-flow-content">
+<div class="wpa-flow-q">Go to site.meshtastic.org</div>
+<div class="wpa-flow-a">Open <a href="https://site.meshtastic.org/" target="_blank">site.meshtastic.org</a> in your browser.</div>
+</div>
+</div>
+<div class="wpa-flow-step">
+<div class="wpa-flow-num">2</div>
+<div class="wpa-flow-content">
+<div class="wpa-flow-q">Find your location</div>
+<div class="wpa-flow-a">Search for your address or click on the map to place your proposed antenna location.</div>
+</div>
+</div>
+<div class="wpa-flow-step">
+<div class="wpa-flow-num">3</div>
+<div class="wpa-flow-content">
+<div class="wpa-flow-q">Set antenna height (in meters)</div>
+<div class="wpa-flow-a">The tool uses meters. Use this table:</div>
+</div>
+</div>
+</div>
+
+<table class="wpa-table">
+<thead>
+<tr>
+<th>Location</th>
+<th>Meters</th>
+<th>Feet</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Ground level</td>
+<td>2m</td>
+<td>~6ft</td>
+</tr>
+<tr>
+<td>1-story attic</td>
+<td>4m</td>
+<td>~13ft</td>
+</tr>
+<tr>
+<td>1-story roof</td>
+<td>5m</td>
+<td>~16ft</td>
+</tr>
+<tr>
+<td>2-story attic</td>
+<td>7m</td>
+<td>~23ft</td>
+</tr>
+<tr>
+<td>2-story roof</td>
+<td>8m</td>
+<td>~26ft</td>
+</tr>
+<tr>
+<td>3-story attic</td>
+<td>10m</td>
+<td>~33ft</td>
+</tr>
+<tr>
+<td>3-story roof</td>
+<td>11m</td>
+<td>~36ft</td>
+</tr>
+<tr>
+<td>Tower/mast</td>
+<td>15m+</td>
+<td>~50ft+</td>
+</tr>
+</tbody>
+</table>
+
+<div class="wpa-flow">
+<div class="wpa-flow-step">
+<div class="wpa-flow-num">4</div>
+<div class="wpa-flow-content">
+<div class="wpa-flow-q">Calculate coverage</div>
+<div class="wpa-flow-a">Click "Calculate" to see your predicted coverage area as a colored overlay.</div>
+</div>
+</div>
+</div>
+
+<div class="wpa-alert wpa-alert-info">
+<div class="wpa-alert-title">Interpreting the Results</div>
+<p>The colored overlay shows predicted <strong>signal strength (RSSI)</strong>. Brighter/warmer colors indicate stronger signals (reliable coverage), while darker/cooler colors indicate weaker signals (marginal coverage). Areas with no color have terrain blocking the path entirely.</p>
+<p style="margin-top: 12px;"><strong>Important:</strong> The tool uses NASA terrain data and doesn't account for trees, buildings, or other obstructions—real-world coverage will typically be <em>less</em> than predicted. Always verify with real-world testing.</p>
+</div>
+
+<h3>Physical Site Assessment</h3>
+
+<p>Online tools give you a starting point, but nothing beats a physical evaluation. Here's what to look for:</p>
+
+<div class="wpa-card">
+<div class="wpa-card-title">What Makes a Good Location</div>
+<ul>
+<li><strong>Clear horizon</strong> — Can you see the horizon in multiple directions? The more open sky visible, the better.</li>
+<li><strong>Higher than surroundings</strong> — Hilltops, ridgelines, and tall buildings naturally give better coverage.</li>
+<li><strong>Minimal nearby obstructions</strong> — Large trees within 50 feet, adjacent buildings, or metal structures can block signals.</li>
+<li><strong>360° views preferred</strong> — Even if you can only see in one direction, a node can still be useful—just understand its limitations.</li>
+</ul>
+</div>
+
+<div class="wpa-card wpa-card-danger">
+<div class="wpa-card-title">Red Flags to Watch For</div>
+<ul>
+<li><strong>Valley locations</strong> — Surrounded by higher terrain on all sides? Coverage will be very limited.</li>
+<li><strong>Dense tree canopy</strong> — If you can't see the sky, radio waves can't get through either.</li>
+<li><strong>Metal roofs/siding nearby</strong> — Metal reflects and blocks RF; this affects antenna placement options.</li>
+<li><strong>High-voltage power lines</strong> — Can introduce electrical noise that degrades reception.</li>
+</ul>
+</div>
+
+<h2 id="equipment">What You'll Need</h2>
+
+<p>Meshtastic is a <strong>DIY, bring-your-own-equipment</strong> hobby. WPAMesh is a community of operators—we don't provide hardware, but we're happy to help you choose the right gear and get it configured.</p>
+
+<div class="wpa-alert wpa-alert-warning">
+<div class="wpa-alert-title">This is Self-Funded</div>
+<p>You'll be purchasing and maintaining your own equipment. Costs range from $35 for a basic handheld to $150+ for a high-quality outdoor installation. Budget accordingly.</p>
+</div>
+
+<h3>Basic Equipment Checklist</h3>
+
+<table class="wpa-table">
+<thead>
+<tr>
+<th>Component</th>
+<th>Purpose</th>
+<th>Typical Cost</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Meshtastic Radio</td>
+<td>The actual node hardware (T-Beam, RAK, Heltec, etc.)</td>
+<td>$35-80</td>
+</tr>
+<tr>
+<td>Antenna</td>
+<td>Stock antennas work; outdoor antennas improve range significantly</td>
+<td>$0-50</td>
+</tr>
+<tr>
+<td>Enclosure</td>
+<td>Weatherproof box for outdoor installations</td>
+<td>$10-30</td>
+</tr>
+<tr>
+<td>Power</td>
+<td>USB power supply, battery, or solar panel depending on location</td>
+<td>$10-100</td>
+</tr>
+<tr>
+<td>Mounting</td>
+<td>Chimney mount, mast, pole clamp, etc.</td>
+<td>$20-50</td>
+</tr>
+</tbody>
+</table>
+
+<div class="wpa-note">
+<p><strong>Start Simple:</strong> You don't need to spend hundreds on your first node. A $35 Heltec with the stock antenna in an attic window is a perfectly valid way to start. You can always upgrade later once you understand your coverage and needs.</p>
+</div>
+
+<h2 id="faq">Frequently Asked Questions</h2>
+
+<div class="wpa-flow">
+<div class="wpa-flow-step">
+<div class="wpa-flow-num">?</div>
+<div class="wpa-flow-content">
+<div class="wpa-flow-q">Do I need a ham radio license?</div>
+<div class="wpa-flow-a">No. Meshtastic operates on the 906 MHz ISM band under FCC Part 15 rules—no license required for low-power operation.</div>
+</div>
+</div>
+<div class="wpa-flow-step">
+<div class="wpa-flow-num">?</div>
+<div class="wpa-flow-content">
+<div class="wpa-flow-q">Will this interfere with my WiFi, TV, or cell service?</div>
+<div class="wpa-flow-a">No. Meshtastic uses 906 MHz, which is completely separate from WiFi (2.4/5 GHz), cellular bands, and television frequencies. Power output is under 1 watt—comparable to a baby monitor.</div>
+</div>
+</div>
+<div class="wpa-flow-step">
+<div class="wpa-flow-num">?</div>
+<div class="wpa-flow-content">
+<div class="wpa-flow-q">How much power does it use?</div>
+<div class="wpa-flow-a">A typical node uses less than 1 watt—about the same as a phone charger. Solar-powered setups are common and can run indefinitely without grid power.</div>
+</div>
+</div>
+<div class="wpa-flow-step">
+<div class="wpa-flow-num">?</div>
+<div class="wpa-flow-content">
+<div class="wpa-flow-q">Is my rooftop location good enough?</div>
+<div class="wpa-flow-a">Use <a href="https://site.meshtastic.org/" target="_blank">site.meshtastic.org</a> to check. If you can see 10+ km of coverage in the directions that matter to you, it's probably worthwhile. Even limited coverage helps fill gaps in the mesh.</div>
+</div>
+</div>
+<div class="wpa-flow-step">
+<div class="wpa-flow-num">?</div>
+<div class="wpa-flow-content">
+<div class="wpa-flow-q">What kind of messages go through the network?</div>
+<div class="wpa-flow-a">Short text messages, GPS positions, and basic telemetry. Think SMS texting without cell towers. Common uses include outdoor recreation, emergency preparedness, and neighborhood communication during outages.</div>
+</div>
+</div>
+<div class="wpa-flow-step">
+<div class="wpa-flow-num">?</div>
+<div class="wpa-flow-content">
+<div class="wpa-flow-q">Do I have to maintain it myself?</div>
+<div class="wpa-flow-a">Yes—your equipment, your responsibility. That said, Meshtastic nodes are low-maintenance. Many run for months without attention. Firmware updates happen a few times a year and take 10 minutes.</div>
+</div>
+</div>
+</div>
+
+<h2 id="next-steps">Getting Started</h2>
+
+<p>Ready to participate? Here's the path forward:</p>
+
+<div class="wpa-flow">
+<h3>Your Next Steps</h3>
+<div class="wpa-flow-step">
+<div class="wpa-flow-num">1</div>
+<div class="wpa-flow-content">
+<div class="wpa-flow-q">Evaluate your location</div>
+<div class="wpa-flow-a">Use site.meshtastic.org and do a visual assessment of your property.</div>
+</div>
+</div>
+<div class="wpa-flow-step">
+<div class="wpa-flow-num">2</div>
+<div class="wpa-flow-content">
+<div class="wpa-flow-q">Join the community</div>
+<div class="wpa-flow-a">Our Discord is the best place to ask questions and get hardware recommendations.</div>
+</div>
+</div>
+<div class="wpa-flow-step">
+<div class="wpa-flow-num">3</div>
+<div class="wpa-flow-content">
+<div class="wpa-flow-q">Start with a portable</div>
+<div class="wpa-flow-a">A handheld device lets you learn the software before committing to a permanent installation.</div>
+</div>
+</div>
+<div class="wpa-flow-step">
+<div class="wpa-flow-num">4</div>
+<div class="wpa-flow-content">
+<div class="wpa-flow-q">Plan your installation</div>
+<div class="wpa-flow-a">Once you understand your coverage needs, plan your outdoor setup.</div>
+</div>
+</div>
+<div class="wpa-flow-step">
+<div class="wpa-flow-num">5</div>
+<div class="wpa-flow-content">
+<div class="wpa-flow-q">Configure for WPAMesh</div>
+<div class="wpa-flow-a">We'll help you set the right channel and settings to join the local mesh.</div>
+</div>
+</div>
+</div>
+
+<h2 id="references">References</h2>
+
+<div class="wpa-card">
+<div class="wpa-card-title">Site Planner Resources</div>
+<ul>
+<li><a href="https://site.meshtastic.org/" target="_blank">Meshtastic Site Planner</a> — The coverage simulation tool</li>
+<li><a href="https://meshtastic.org/docs/software/site-planner/" target="_blank">Site Planner Documentation</a> — Official usage guide</li>
+<li><a href="https://github.com/meshtastic/meshtastic-site-planner/blob/main/parameters.md" target="_blank">Parameter Reference</a> — Detailed parameter explanations</li>
+<li><a href="https://meshtastic.org/blog/meshtastic-site-planner-introduction/" target="_blank">Site Planner Introduction</a> — Blog post with tips</li>
+</ul>
+</div>
+
+<div class="wpa-contact">
+<h3>Join the WPA Mesh Community</h3>
+<p>Questions about your location? Need help choosing equipment? Want to see what coverage looks like in your area? We're here to help.</p>
+<div class="wpa-contact-btns">
+<a href="https://discord.gg/67xqYqaqXP" class="wpa-btn" target="_blank">Discord (PghMesh)</a>
+<a href="https://site.meshtastic.org/" class="wpa-btn" target="_blank">Coverage Simulator</a>
+</div>
+</div>
+
+</div>
+</div>
+
+<!-- Table of Contents - Right Side -->
+<aside class="wpa-toc-container">
+<nav class="wpa-toc">
+<div class="wpa-toc-title">On This Page</div>
+<ul class="wpa-toc-list">
+<li><a href="#overview">Why Location Matters</a></li>
+<li><a href="#site-survey">Evaluating Your Location</a></li>
+<li><a href="#equipment">What You'll Need</a></li>
+<li><a href="#faq">Frequently Asked Questions</a></li>
+<li><a href="#next-steps">Getting Started</a></li>
+<li><a href="#references">References</a></li>
+</ul>
+</nav>
+</aside>
+</div>
