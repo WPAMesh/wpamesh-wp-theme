@@ -1950,6 +1950,15 @@ html {
     background: linear-gradient(135deg, rgba(255, 184, 28, 0.08), var(--wpamesh-steel));
 }
 
+.wpa-card-danger {
+    border-left: 4px solid var(--wpamesh-rust);
+    background: linear-gradient(135deg, rgba(196, 92, 38, 0.08), var(--wpamesh-steel));
+}
+
+.wpa-card-danger .wpa-card-title {
+    color: var(--wpamesh-rust);
+}
+
 .wpa-card-title {
     font-family: 'Barlow Condensed', sans-serif;
     font-size: 1.1rem;
