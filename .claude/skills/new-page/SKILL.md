@@ -1,13 +1,17 @@
+---
+name: new-page
+description: Create a new WPAMesh guide preview page from a content brief. Use when the user wants to write a new documentation or guide page.
+argument-hint: <content-brief>
+allowed-tools: Read, Write, Glob
+---
+
 # /new-page - Create WPAMesh Preview Page
 
 Create a new preview page in `pages/previews/` based on user-provided content brief.
 
-## Triggers
-- `/new-page <brief>` - User provides topic/content description as argument
-
 ## Workflow
 
-1. **Parse the brief** - Extract topic, key sections, target audience from user input
+1. **Parse the brief** - Extract topic, key sections, target audience from $ARGUMENTS
 2. **Generate content** - Write full guide content (not placeholders) in WPAMesh voice
 3. **Create HTML file** - Use the preview page template structure
 4. **Save to `pages/previews/`** - Use kebab-case filename matching the topic

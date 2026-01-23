@@ -1,9 +1,12 @@
+---
+name: wp-convert
+description: Migrate preview HTML pages to WordPress format by converting CSS classes and stripping wrappers. Use when the user wants to convert a preview page or prepare content for WordPress.
+allowed-tools: Read, Write, Glob, Edit
+---
+
 # /wp-convert - Migrate Preview Pages to WordPress
 
 Auto-detect preview pages without WordPress versions and convert them.
-
-## Triggers
-- `/wp-convert` - Find and migrate all new preview pages
 
 ## Workflow
 
@@ -21,7 +24,7 @@ Auto-detect preview pages without WordPress versions and convert them.
 
 3. **Check for missing theme styles**
    - If preview uses classes not yet in theme CSS, add them to `assets/css/theme.css`
-   - Follow existing pattern in "Guide Page Styles" section (line ~1524)
+   - Follow existing pattern in "Guide Page Styles" section (line ~1417)
 
 4. **Report results**
    - List converted files
@@ -131,7 +134,7 @@ If a preview uses components not in `assets/css/theme.css`:
 
 1. Read the inline styles from the preview file
 2. Convert to `wpa-*` naming
-3. Add to theme.css in the "Guide Page Styles" section (after line 1524)
+3. Add to theme.css in the "Guide Page Styles" section (after line 1417)
 4. Use existing CSS custom properties: `--wpamesh-gold`, `--wpamesh-green`, etc.
 
 ## Filename Convention
