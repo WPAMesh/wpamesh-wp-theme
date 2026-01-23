@@ -1,0 +1,198 @@
+<!--
+================================================================================
+WPAMesh Getting Started Guide
+================================================================================
+WordPress Ready - Styles are in the WPAMesh theme (assets/css/theme.css)
+
+INSTRUCTIONS:
+1. Create a new Page in WordPress
+2. Switch to the Code Editor (⋮ menu → Code Editor) or use a Custom HTML block
+3. Paste this entire content (no inline styles needed - theme provides .wpa-* classes)
+4. Update/Publish
+
+NOTE: TOC scroll tracking requires the theme's guide-toc.js script to be enqueued.
+================================================================================
+-->
+
+<div class="wpa-page-layout">
+<div class="wpa-main-content">
+<div class="wpa-guide">
+
+<div class="wpa-intro">
+<p>Meshtastic is fun and easy to use. But in the beginning, it can be daunting! There are lots of new words and terminology which might be confusing. Use this guide to help get your device(s) up and running quickly.</p>
+</div>
+
+<h2 id="firmware">Firmware 🔢</h2>
+
+<div class="wpa-alert wpa-alert-danger">
+<div class="wpa-alert-title">⚠️ Firmware is Very Important!</div>
+<p>The device you ordered online <em>might</em> come with firmware preloaded, but the chance of it being the most up-to-date version is slim. To ensure your device's (and the greater mesh's) performance, you <strong>must keep your firmware up to date</strong>.</p>
+</div>
+
+<p>The Meshtastic developers tend to release updates on this schedule:</p>
+
+<table class="wpa-table">
+<thead>
+<tr>
+<th>Release Type</th>
+<th>Frequency</th>
+<th>Stability</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Beta</td>
+<td>Every 2-3 months</td>
+<td>Stable — update to these ASAP</td>
+</tr>
+<tr>
+<td>Alpha</td>
+<td>Every 2-3 weeks</td>
+<td>Experimental — may have issues</td>
+</tr>
+</tbody>
+</table>
+
+<p>You're welcome to try out the alpha releases, but they are experimental and likely unstable. You may experience minor issues while using them. <strong>Beta releases, however, should be updated to as soon as feasible.</strong></p>
+
+<div class="wpa-card wpa-card-highlight">
+<div class="wpa-card-title">⚡ How to Update Firmware</div>
+<p>Updating is easy—no special software needed. Just use the web-based flasher tool.</p>
+<div class="wpa-steps">
+<div class="wpa-steps-title">Steps</div>
+<ol>
+<li>Go to <a href="https://flasher.meshtastic.org" target="_blank">flasher.meshtastic.org</a></li>
+<li>Connect your device via USB</li>
+<li>Select your device type from the list</li>
+<li>Choose the latest <strong>Beta</strong> release (or Alpha if you're adventurous)</li>
+<li>Click Flash and wait for it to complete</li>
+</ol>
+</div>
+</div>
+
+<h2 id="out-of-box">Out of the Box 📦</h2>
+
+<p>Out of the box, your Meshtastic device is likely in LongFast mode without a region set. The app will make a pretty persistent effort to get you to set your region when a device is fresh out of the box.</p>
+
+<div class="wpa-alert wpa-alert-warning">
+<div class="wpa-alert-title">🌎 Set Your Region to US!</div>
+<p>When prompted, make sure to select <strong>"US"</strong> as your region. This ensures you're transmitting on the correct frequencies for the United States.</p>
+</div>
+
+<h3>Modem Preset &amp; Frequency</h3>
+
+<p>Your Meshtastic device should be in the <strong>LongFast</strong> modem preset out of the box. This is a setting available under your device's <em>LoRa</em> settings. Make sure this is the case if you aren't seeing any other nodes.</p>
+
+<p>This preset also governs your frequency, which corresponds to your <strong>Channel Slot</strong>:</p>
+
+<table class="wpa-table">
+<thead>
+<tr>
+<th>Setting</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Region</td>
+<td>US</td>
+</tr>
+<tr>
+<td>Modem Preset</td>
+<td>LongFast</td>
+</tr>
+<tr>
+<td>Channel Slot</td>
+<td>20</td>
+</tr>
+<tr>
+<td>Frequency</td>
+<td>906.875 MHz</td>
+</tr>
+</tbody>
+</table>
+
+<p>Generally, you should never have to change these settings—they're supposed to be set automatically. But some people (myself included) have witnessed situations where this is not the case, and the channel slot is not set automatically.</p>
+
+<div class="wpa-alert wpa-alert-info">
+<div class="wpa-alert-title">💡 Troubleshooting Tip</div>
+<p>If you're unsure whether your settings are correct, try setting the Channel Slot to <strong>0</strong> and saving the config. This should force the device to calculate the slot number based on the preset.</p>
+</div>
+
+<h2 id="channels">Channels 📺</h2>
+
+<p>Now that you have the settings in alignment with our local setup, you should check out your channels.</p>
+
+<p>Meshtastic has a maximum of <strong>8 channels per device</strong>, labeled 0-7. Channel 0 is the <strong>primary channel</strong>—this should be your LongFast channel.</p>
+
+<div class="wpa-card">
+<div class="wpa-card-title">📡 Why Channel 0 Matters</div>
+<p>The primary channel (slot 0) is where telemetry is shared. You must have LongFast as channel 0 for your node to broadcast its name, location, and other telemetry. Whatever channel is in slot 0 will serve this purpose.</p>
+</div>
+
+<div class="wpa-alert wpa-alert-danger">
+<div class="wpa-alert-title">🔑 Encryption Key Must Match!</div>
+<p>It's important that the primary channel's encryption key is set to <code>AQ==</code>. If this is not the case, your node will not decode any traffic on this channel, and nothing will work!</p>
+<p style="margin-top: 10px;">All of this should be already set up for you out of the box, so you shouldn't need to adjust these settings—but just in case, now you know what to look for.</p>
+</div>
+
+<table class="wpa-table">
+<thead>
+<tr>
+<th>Channel Setting</th>
+<th>Required Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Slot</td>
+<td>0 (Primary)</td>
+</tr>
+<tr>
+<td>Name</td>
+<td>LongFast</td>
+</tr>
+<tr>
+<td>Encryption Key</td>
+<td>AQ==</td>
+</tr>
+</tbody>
+</table>
+
+<div class="wpa-note">
+<p><strong>Note:</strong> You <em>can</em> move the LongFast channel to a different slot than 0. It just means your node won't broadcast its own telemetry there—you'll still decode others' telemetry though. This is useful if you'd like to share your precise location with friends and family, but not the greater mesh.</p>
+</div>
+
+<h2 id="done">You're Ready! 🎉</h2>
+
+<div class="wpa-summary">
+<h3>✓ That's It!</h3>
+<p>You should now be ready to communicate with the vast majority of the mesh in Western PA and beyond!</p>
+</div>
+
+<p>If you're not seeing other nodes after a while, check out our <a href="/guides/reaching-the-mesh/">How to Tell If You're Reaching the Mesh</a> guide for troubleshooting tips.</p>
+
+<p>Questions? Join us on Discord—we're happy to help!</p>
+
+<p style="margin-top: 24px;">
+<a href="https://discord.gg/67xqYqaqXP" class="wpa-cta" target="_blank">
+Join WPAMesh Discord
+</a>
+</p>
+
+</div>
+</div>
+
+<!-- Table of Contents - Right Side -->
+<aside class="wpa-toc-container">
+<nav class="wpa-toc">
+<div class="wpa-toc-title">On This Page</div>
+<ul class="wpa-toc-list">
+<li><a href="#firmware">Firmware</a></li>
+<li><a href="#out-of-box">Out of the Box</a></li>
+<li><a href="#channels">Channels</a></li>
+<li><a href="#done">You're Ready!</a></li>
+</ul>
+</nav>
+</aside>
+</div>

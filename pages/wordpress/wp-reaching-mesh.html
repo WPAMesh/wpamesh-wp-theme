@@ -1,0 +1,237 @@
+<!--
+================================================================================
+WPAMesh - How to Tell If You're Reaching the Mesh
+================================================================================
+WordPress Ready - Styles are in the WPAMesh theme (assets/css/theme.css)
+
+INSTRUCTIONS:
+1. Create a new Page in WordPress
+2. Switch to the Code Editor (⋮ menu → Code Editor) or use a Custom HTML block
+3. Paste this entire content (no inline styles needed - theme provides .wpa-* classes)
+4. Update/Publish
+
+NOTE: TOC scroll tracking requires the theme's guide-toc.js script to be enqueued.
+================================================================================
+-->
+
+<div class="wpa-page-layout">
+<div class="wpa-main-content">
+<div class="wpa-guide">
+
+<div class="wpa-quick-answer">
+<div class="wpa-quick-answer-title">📻 The Short Answer</div>
+<p>If you see other nodes in your node list, you're almost certainly reaching the mesh. For instant confirmation, check if your node appears on the <a href="https://map.wpamesh.net/firehose">Firehose page</a>—if it does, you're in!</p>
+</div>
+
+<h2 id="overview">Why It's Not Always Obvious</h2>
+
+<p>When you first set up a Meshtastic node, it can feel like shouting into the void. Unlike a repeater where you get an instant courtesy beep or ID, mesh networks are quieter. Your node might be working perfectly, but if no one happens to be sending messages right now, the radio will just sit there silently.</p>
+
+<div class="wpa-analogy">
+<div class="wpa-analogy-title">📡 For the Ham Operators</div>
+<p>Think of it like monitoring a quiet simplex frequency. Just because you don't hear traffic doesn't mean your radio isn't working—it just means no one's transmitting. The mesh is similar, except nodes do periodically beacon telemetry (like an automatic position report), so eventually you <em>will</em> hear something if you're in range.</p>
+</div>
+
+<p>There are three main ways to verify you're connected, ranging from "just wait" to "instant confirmation."</p>
+
+<h2 id="method-node-list">Method 1: Check Your Node List</h2>
+
+<div class="wpa-method">
+<div class="wpa-method-header">
+<span class="wpa-method-name">Watch for Incoming Telemetry</span>
+<span class="wpa-badge wpa-badge-green">Easiest</span>
+<span class="wpa-badge wpa-badge-gold">Takes Time</span>
+</div>
+<p class="wpa-method-desc">The simplest indicator is whether other nodes appear in your node list. When your radio receives telemetry from another node, it gets added to the list. If you can <em>hear</em> them, they can almost certainly hear <em>you</em>.</p>
+
+<div class="wpa-steps">
+<div class="wpa-steps-title">How to Check</div>
+<ol>
+<li>Open your Meshtastic app and connect to your node</li>
+<li>Go to the <strong>Nodes</strong> tab (or "Node List" depending on your app)</li>
+<li>If you see other nodes listed with signal strength (SNR) and distance, you're receiving their traffic</li>
+<li>The more nodes you see, the better your coverage</li>
+</ol>
+</div>
+
+<div class="wpa-pros-cons">
+<div class="wpa-pros">
+<div class="wpa-pros-title">✓ Pros</div>
+<ul>
+<li>No action required—just wait</li>
+<li>Shows signal quality (SNR)</li>
+<li>Gives you a sense of coverage</li>
+</ul>
+</div>
+<div class="wpa-cons">
+<div class="wpa-cons-title">⚠ Cons</div>
+<ul>
+<li>Can take hours—nodes only beacon every few hours by default</li>
+<li>Doesn't confirm <em>your</em> transmit works, only receive</li>
+</ul>
+</div>
+</div>
+</div>
+
+<div class="wpa-alert wpa-alert-info">
+<div class="wpa-alert-title">💡 Patience Required</div>
+<p>Most nodes broadcast their telemetry (position, battery, etc.) every <strong>few hours</strong>, not every few minutes. If you just turned on your node, give it some time. Go have lunch, and check back—you'll likely see a populated node list by then.</p>
+</div>
+
+<h2 id="method-test-message">Method 2: Send a Test Message</h2>
+
+<div class="wpa-method">
+<div class="wpa-method-header">
+<span class="wpa-method-name">Transmit on LongFast</span>
+</div>
+<p class="wpa-method-desc">Some folks like to send a quick "test" message on the default LongFast channel to see if anyone responds. This works, but use it sparingly—there are 350+ nodes on the WPA Mesh, and they'll <em>all</em> receive your message.</p>
+
+<div class="wpa-steps">
+<div class="wpa-steps-title">How to Do It</div>
+<ol>
+<li>Open the Meshtastic app and go to <strong>Messages</strong></li>
+<li>Select the <strong>LongFast</strong> channel (the default primary channel)</li>
+<li>Send a brief message like "Testing from [your location], new node"</li>
+<li>Wait for a reply or a 👍 reaction</li>
+</ol>
+</div>
+
+<div class="wpa-pros-cons">
+<div class="wpa-pros">
+<div class="wpa-pros-title">✓ Pros</div>
+<ul>
+<li>Confirms both TX and RX work</li>
+<li>Might get helpful tips from locals</li>
+</ul>
+</div>
+<div class="wpa-cons">
+<div class="wpa-cons-title">⚠ Cons</div>
+<ul>
+<li>Adds traffic to the mesh—use sparingly</li>
+<li>No guarantee anyone will reply</li>
+<li>Can be frustrating if you get silence</li>
+</ul>
+</div>
+</div>
+</div>
+
+<div class="wpa-alert wpa-alert-warning">
+<div class="wpa-alert-title">🙏 Please Don't Overdo It</div>
+<p>We get it—you want to know if your new setup works! But repeatedly sending "test" messages is like calling CQ on a repeater every 30 seconds. One or two tests is fine; spamming the channel will annoy the locals. If no one responds, it doesn't necessarily mean you're not reaching the mesh—people might just be busy or away from their phones.</p>
+</div>
+
+<h2 id="method-firehose">Method 3: Check the Firehose (Best Method)</h2>
+
+<div class="wpa-method wpa-method-best">
+<div class="wpa-method-header">
+<span class="wpa-method-name">Use the WPA Mesh Firehose</span>
+<span class="wpa-badge wpa-badge-blue">Instant Confirmation</span>
+</div>
+<p class="wpa-method-desc">This is the definitive test. The WPA Mesh runs MQTT gateways across Western Pennsylvania that listen to mesh traffic. The "Firehose" page shows <strong>all live traffic</strong> these gateways are seeing in real-time. If your node shows up there, you're reaching the mesh—period.</p>
+
+<div class="wpa-steps">
+<div class="wpa-steps-title">How to Do It</div>
+<ol>
+<li>Open <a href="https://map.wpamesh.net/firehose" target="_blank">map.wpamesh.net/firehose</a> in your browser</li>
+<li>Watch the live feed of packets scrolling by</li>
+<li>Send a message or wait for your node to beacon</li>
+<li>If your node name or ID appears in the list, <strong>you're on the mesh!</strong></li>
+</ol>
+</div>
+
+<div class="wpa-pros-cons">
+<div class="wpa-pros">
+<div class="wpa-pros-title">✓ Pros</div>
+<ul>
+<li>Instant, definitive confirmation</li>
+<li>Doesn't require anyone to reply</li>
+<li>Shows exactly what the mesh is "hearing"</li>
+<li>No need to spam test messages</li>
+</ul>
+</div>
+<div class="wpa-cons">
+<div class="wpa-cons-title">⚠ Cons</div>
+<ul>
+<li>Requires internet access to view the page</li>
+<li>Only shows traffic that reaches an MQTT gateway</li>
+</ul>
+</div>
+</div>
+</div>
+
+<div class="wpa-firehose">
+<h3>🔥 Check the Firehose Now</h3>
+<p>See all the live traffic flowing through the WPA Mesh. If your node appears here, you're connected!</p>
+<a href="https://map.wpamesh.net/firehose" class="wpa-firehose-btn" target="_blank">
+Open Live Firehose
+</a>
+</div>
+
+<div class="wpa-alert wpa-alert-success">
+<div class="wpa-alert-title">✓ Why This Works</div>
+<p>We have MQTT gateways scattered across Western PA—Pittsburgh, the surrounding counties, and beyond. These gateways listen to mesh traffic and forward it to our server. If <em>any</em> of these gateways can hear your node, it'll show up on the Firehose. This gives you broad coverage confirmation without relying on a single point of contact.</p>
+</div>
+
+<h2 id="troubleshooting">Troubleshooting</h2>
+
+<div class="wpa-trouble">
+<div class="wpa-trouble-q">I don't see any nodes in my list after several hours</div>
+<div class="wpa-trouble-a">
+<p>First, verify you're on the right settings: <strong>Region: US</strong>, <strong>Modem Preset: Long Fast</strong>. These must match the mesh or you won't hear anything.</p>
+<p>Next, check your antenna connection. A loose or missing antenna will severely limit your range—you might only reach nodes within a few hundred feet.</p>
+<p>Finally, consider your location. If you're in a valley, basement, or surrounded by hills, you may need to get your antenna higher or outdoors.</p>
+</div>
+</div>
+
+<div class="wpa-trouble">
+<div class="wpa-trouble-q">I see nodes but my messages don't seem to go through</div>
+<div class="wpa-trouble-a">
+<p>Check the Firehose to confirm your transmissions are being received. If they show up there, your messages <em>are</em> going through—people just might not be responding.</p>
+<p>Also verify you're sending to the right channel. Direct messages (DMs) require both nodes to be online simultaneously for delivery.</p>
+</div>
+</div>
+
+<div class="wpa-trouble">
+<div class="wpa-trouble-q">I can hear distant nodes but not nearby ones</div>
+<div class="wpa-trouble-a">
+<p>This is actually normal! LoRa signals can bounce off terrain and buildings in unexpected ways. You might have line-of-sight to a hilltop node 20 miles away while a node 2 miles away is blocked by a ridge.</p>
+<p>The mesh routing will find a path—that's the beauty of it.</p>
+</div>
+</div>
+
+<div class="wpa-trouble">
+<div class="wpa-trouble-q">My node shows up on the Firehose but I can't see other nodes</div>
+<div class="wpa-trouble-a">
+<p>This suggests your transmit is working but receive might have an issue, or the nodes near you haven't beaconed recently. Give it more time for telemetry to come in.</p>
+<p>If the problem persists, try power-cycling your node or re-flashing the firmware.</p>
+</div>
+</div>
+
+<h2 id="help">Still Need Help?</h2>
+
+<p>If you've tried everything and still can't get connected, hop on our Discord. There are plenty of folks happy to help troubleshoot—we've all been there with a new setup that just won't cooperate.</p>
+
+<div class="wpa-card">
+<div class="wpa-card-title">Join the Community</div>
+<p>The PghMesh Discord is the best place to get real-time help from local operators who know the terrain and the network.</p>
+<p><a href="https://discord.gg/67xqYqaqXP" target="_blank">Join Discord →</a></p>
+</div>
+
+</div>
+</div>
+
+<!-- Table of Contents - Right Side -->
+<aside class="wpa-toc-container">
+<nav class="wpa-toc">
+<div class="wpa-toc-title">On This Page</div>
+<ul class="wpa-toc-list">
+<li><a href="#overview">Why It's Not Always Obvious</a></li>
+<li><a href="#method-node-list">Method 1: Node List</a></li>
+<li><a href="#method-test-message">Method 2: Test Message</a></li>
+<li><a href="#method-firehose">Method 3: Firehose ⭐</a></li>
+<li><a href="#troubleshooting">Troubleshooting</a></li>
+<li><a href="#help">Still Need Help?</a></li>
+</ul>
+</nav>
+</aside>
+</div>

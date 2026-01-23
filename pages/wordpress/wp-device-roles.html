@@ -1,0 +1,284 @@
+<!--
+================================================================================
+WPAMesh Device Roles Guide
+================================================================================
+WordPress Ready - Styles are in the WPAMesh theme (assets/css/theme.css)
+
+INSTRUCTIONS:
+1. Create a new Page in WordPress
+2. Switch to the Code Editor (⋮ menu → Code Editor) or use a Custom HTML block
+3. Paste this entire content (no inline styles needed - theme provides .wpa-* classes)
+4. Update/Publish
+
+NOTE: TOC scroll tracking requires the theme's guide-toc.js script to be enqueued.
+================================================================================
+-->
+
+<div class="wpa-page-layout">
+<div class="wpa-main-content">
+<div class="wpa-guide">
+
+<div class="wpa-quick-answer">
+<div class="wpa-quick-answer-title">📻 The Short Answer</div>
+<p>If you're new to Meshtastic or just want your radio to work: <strong>leave it set to <code>CLIENT</code></strong> (the default). It will send, receive, and help relay messages for others automatically. That's the right choice for 95% of operators.</p>
+</div>
+
+<h2 id="overview">Why Device Roles Matter</h2>
+
+<p>When setting up your Meshtastic node, you'll notice several device role options. For most users joining WPAMesh, <strong>CLIENT</strong> or <strong>CLIENT_MUTE</strong> is the right choice.</p>
+
+<div class="wpa-alert wpa-alert-warning">
+<div class="wpa-alert-title">⚠️ Please Avoid ROUTER Roles Unless Coordinated</div>
+<p>Router roles fundamentally change how your node behaves on the mesh. Routers are expected to be <strong>always-on</strong>, strategically placed at high elevations with excellent coverage, and they take priority in relaying messages across the network.</p>
+<p>When too many nodes claim router status—especially portable or inconsistently powered ones—it actually <em>degrades</em> mesh performance rather than helping it.</p>
+</div>
+
+<div class="wpa-analogy">
+<div class="wpa-analogy-title">📡 Think of It This Way</div>
+<p>Imagine a room full of people all trying to be the one who relays messages. Instead of efficient communication, you get chaos and collisions. That's what happens when too many nodes are set to ROUTER—everyone's shouting over each other trying to "help," and the actual messages get lost in the noise.</p>
+</div>
+
+<p>The role you choose affects three things:</p>
+<ul>
+<li><strong>Routing behavior</strong> — Whether your node relays messages from others, and with what priority</li>
+<li><strong>Visibility</strong> — Whether other nodes can see you in their node list</li>
+<li><strong>Power usage</strong> — How aggressively the radio sleeps to save battery</li>
+</ul>
+
+<h2 id="quick-reference">Quick Reference Table</h2>
+
+<p>Here's the at-a-glance summary. The highlighted row is what most people should use:</p>
+
+<table class="wpa-table">
+<thead>
+<tr>
+<th>Role</th>
+<th>Relays Messages?</th>
+<th>Visible?</th>
+<th>Coordination?</th>
+</tr>
+</thead>
+<tbody>
+<tr class="highlight">
+<td>CLIENT ⭐</td>
+<td class="yes">✓ Smart relay</td>
+<td class="yes">✓ Yes</td>
+<td>No</td>
+</tr>
+<tr>
+<td>CLIENT_MUTE</td>
+<td class="no">✗ Never</td>
+<td class="yes">✓ Yes</td>
+<td>No</td>
+</tr>
+<tr>
+<td>CLIENT_BASE</td>
+<td class="yes">✓ Priority for favorites</td>
+<td class="yes">✓ Yes</td>
+<td>No</td>
+</tr>
+<tr>
+<td>CLIENT_HIDDEN</td>
+<td class="warn">~ Local only</td>
+<td class="no">✗ No</td>
+<td>No</td>
+</tr>
+<tr>
+<td>TRACKER</td>
+<td class="warn">~ When awake</td>
+<td class="yes">✓ Yes</td>
+<td>No</td>
+</tr>
+<tr>
+<td>SENSOR</td>
+<td class="warn">~ When awake</td>
+<td class="yes">✓ Yes</td>
+<td>No</td>
+</tr>
+<tr>
+<td>ROUTER</td>
+<td class="yes">✓ Always (priority)</td>
+<td class="yes">✓ Yes</td>
+<td class="danger">YES — Contact us</td>
+</tr>
+<tr>
+<td>ROUTER_LATE</td>
+<td class="yes">✓ Always (delayed)</td>
+<td class="yes">✓ Yes</td>
+<td class="danger">YES — Contact us</td>
+</tr>
+<tr>
+<td>REPEATER</td>
+<td class="yes">✓ Always (priority)</td>
+<td class="no">✗ No</td>
+<td class="danger">YES — Contact us</td>
+</tr>
+</tbody>
+</table>
+
+<h2 id="which-role">What Role Should You Pick?</h2>
+
+<div class="wpa-flow">
+<h3>Quick Recommendations</h3>
+
+<div class="wpa-flow-step">
+<div class="wpa-flow-num">1</div>
+<div class="wpa-flow-content">
+<div class="wpa-flow-q">CLIENT — Best for most users</div>
+<div class="wpa-flow-a">Your node sends, receives, and will still help relay messages when appropriate. This is the default and the right choice for the vast majority of setups.</div>
+</div>
+</div>
+
+<div class="wpa-flow-step">
+<div class="wpa-flow-num">2</div>
+<div class="wpa-flow-content">
+<div class="wpa-flow-q">CLIENT_MUTE — Good for listeners and portables</div>
+<div class="wpa-flow-a">Use this if you just want to listen, if you're in a well-covered area and don't need to participate in routing, or for portable nodes that move around.</div>
+</div>
+</div>
+
+<div class="wpa-flow-step">
+<div class="wpa-flow-num">3</div>
+<div class="wpa-flow-content">
+<div class="wpa-flow-q">CLIENT_BASE — Great for your rooftop node</div>
+<div class="wpa-flow-a">If you have a node on your roof or in your attic, this is ideal. You can add your base and portable nodes as favorites of each other, and <strong>0 hops will be consumed</strong> when your roof node rebroadcasts between them.</div>
+</div>
+</div>
+
+<div class="wpa-flow-step">
+<div class="wpa-flow-num">4</div>
+<div class="wpa-flow-content">
+<div class="wpa-flow-q">TRACKER or SENSOR — For dedicated devices</div>
+<div class="wpa-flow-a">Use these for single-purpose devices: <code>TRACKER</code> for GPS tracking, <code>SENSOR</code> for weather stations or environmental monitors.</div>
+</div>
+</div>
+
+</div>
+
+<h2 id="client-roles">Client Roles (Use These)</h2>
+
+<p>These are the roles for everyday use. No coordination needed—just pick the one that fits your situation.</p>
+
+<div class="wpa-role wpa-role-recommended">
+<div class="wpa-role-header">
+<span class="wpa-role-name">CLIENT</span>
+<span class="wpa-badge wpa-badge-blue">Default</span>
+<span class="wpa-badge wpa-badge-green">Recommended</span>
+</div>
+<p class="wpa-role-desc">The standard role for almost everyone. Your node sends and receives messages, and intelligently relays traffic for others when needed. It uses "smart" timing to avoid collisions—if it hears another node relay a message first, it won't duplicate the effort.</p>
+<div class="wpa-role-details">
+<div class="wpa-detail"><span class="wpa-detail-icon wpa-detail-yes">✓</span> Relays messages with collision avoidance</div>
+<div class="wpa-detail"><span class="wpa-detail-icon wpa-detail-yes">✓</span> Visible to other nodes</div>
+<div class="wpa-detail"><span class="wpa-detail-icon wpa-detail-yes">✓</span> Full Bluetooth/WiFi app support</div>
+<div class="wpa-detail"><span class="wpa-detail-icon wpa-detail-info">ℹ</span> May skip relay if another node already did</div>
+</div>
+<div class="wpa-role-usecases">
+<div class="wpa-usecases-title">Use For</div>
+<ul class="wpa-usecases-list">
+<li>📱 Handheld devices</li>
+<li>🏠 Home base stations</li>
+<li>🚗 Vehicle-mounted nodes</li>
+<li>🥾 Hiking, biking, outdoor use</li>
+</ul>
+</div>
+</div>
+
+<div class="wpa-role wpa-role-recommended">
+<div class="wpa-role-header">
+<span class="wpa-role-name">CLIENT_MUTE</span>
+<span class="wpa-badge wpa-badge-green">Low Impact</span>
+</div>
+<p class="wpa-role-desc">Same as CLIENT, but your node <em>never</em> relays messages for others. Use this when you're in an area with good coverage and don't need to contribute to the mesh relay—or when you have multiple nodes and want to reduce "self-competition."</p>
+<div class="wpa-role-details">
+<div class="wpa-detail"><span class="wpa-detail-icon wpa-detail-no">✗</span> Does NOT relay messages</div>
+<div class="wpa-detail"><span class="wpa-detail-icon wpa-detail-yes">✓</span> Sends and receives your traffic normally</div>
+<div class="wpa-detail"><span class="wpa-detail-icon wpa-detail-yes">✓</span> Visible to other nodes</div>
+<div class="wpa-detail"><span class="wpa-detail-icon wpa-detail-info">ℹ</span> Reduces your airtime footprint</div>
+</div>
+<div class="wpa-role-usecases">
+<div class="wpa-usecases-title">Use For</div>
+<ul class="wpa-usecases-list">
+<li>🏙️ Congested areas with many nodes</li>
+<li>📡 Near a strong base station</li>
+<li>🔋 Your "extra" devices</li>
+</ul>
+</div>
+</div>
+
+<div class="wpa-role wpa-role-recommended">
+<div class="wpa-role-header">
+<span class="wpa-role-name">CLIENT_BASE</span>
+<span class="wpa-badge wpa-badge-green">Multi-Device</span>
+</div>
+<p class="wpa-role-desc">Like CLIENT, but gives priority to relaying messages from nodes you've "favorited." Perfect if you have an attic/roof node and want it to prioritize your handheld or mobile.</p>
+<div class="wpa-role-details">
+<div class="wpa-detail"><span class="wpa-detail-icon wpa-detail-yes">✓</span> Priority relay for your favorited nodes</div>
+<div class="wpa-detail"><span class="wpa-detail-icon wpa-detail-yes">✓</span> Normal relay for everyone else</div>
+<div class="wpa-detail"><span class="wpa-detail-icon wpa-detail-info">ℹ</span> Favorite your other nodes from this device</div>
+</div>
+<div class="wpa-role-usecases">
+<div class="wpa-usecases-title">Use For</div>
+<ul class="wpa-usecases-list">
+<li>🏠 Your best home antenna position</li>
+<li>📻 Hub for your personal devices</li>
+</ul>
+</div>
+</div>
+
+<h2 id="infrastructure-roles">Want to Run a Router?</h2>
+
+<p>If you have a node in a great fixed location—solid power, excellent elevation, wide coverage—reach out to us! We'd love to talk about whether a router role makes sense for your setup and how it fits into the broader WPAMesh infrastructure.</p>
+
+<p><strong>Coordinated router placement is what makes a mesh network actually work well.</strong></p>
+
+<div class="wpa-alert wpa-alert-info">
+<div class="wpa-alert-title">🗺️ Not Sure If Your Location Qualifies?</div>
+<p>Punch your coordinates into <a href="https://site.meshtastic.org/" target="_blank">site.meshtastic.org</a>. Your proposed location should easily see <strong>75 kilometers or more</strong> if it's a good fit for a router role. If you're seeing less than that, a CLIENT role will serve you (and the mesh) better.</p>
+</div>
+
+<div class="wpa-card wpa-card-highlight">
+<div class="wpa-card-title">Infrastructure Requirements</div>
+<p>Running a router is a commitment. Here's what we look for in infrastructure maintainers:</p>
+<div class="wpa-steps">
+<div class="wpa-steps-title">Requirements</div>
+<ol>
+<li><strong>Excellent location</strong> — High elevation with wide coverage (75+ km viewshed)</li>
+<li><strong>Reliable power</strong> — Always-on, with backup power or solar if possible</li>
+<li><strong>Meshtastic knowledge</strong> — Well-versed in the software, ecosystem, and have a moderate understanding of RF theory</li>
+<li><strong>Commitment to updates</strong> — Prepared to update firmware regularly to ensure mesh health</li>
+<li><strong>Coordination</strong> — Willing to communicate with other infrastructure maintainers</li>
+</ol>
+</div>
+</div>
+
+<div class="wpa-alert wpa-alert-success">
+<div class="wpa-alert-title">✓ That's a Lot of Boxes to Check!</div>
+<p>We know! But don't worry—you can still support the mesh with a non-router role device if you can't meet all the requirements. A well-placed CLIENT node at your house still helps the network. Not everyone needs to be a router, and the mesh works better when most nodes <em>aren't</em> routers.</p>
+</div>
+
+<div class="wpa-contact">
+<h3>📡 Contact the WPA Mesh Coordinators</h3>
+<p>Questions about which role to use? Think you have a good location for a router? We're happy to help!</p>
+<div class="wpa-contact-btns">
+<a href="https://discord.gg/67xqYqaqXP" class="wpa-btn" target="_blank">Discord (PghMesh)</a>
+<a href="/information-for-router-owners/" class="wpa-btn">Contact Form</a>
+</div>
+</div>
+
+</div>
+</div>
+
+<!-- Table of Contents - Right Side -->
+<aside class="wpa-toc-container">
+<nav class="wpa-toc">
+<div class="wpa-toc-title">On This Page</div>
+<ul class="wpa-toc-list">
+<li><a href="#overview">Why Device Roles Matter</a></li>
+<li><a href="#quick-reference">Quick Reference Table</a></li>
+<li><a href="#which-role">What Role Should You Pick?</a></li>
+<li><a href="#client-roles">Client Roles (Use These)</a></li>
+<li><a href="#infrastructure-roles">Want to Run a Router?</a></li>
+</ul>
+</nav>
+</aside>
+</div>

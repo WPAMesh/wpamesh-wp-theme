@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Tell If You're Reaching the Mesh – WPAMesh.net</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* WPAMesh Theme Colors */
+            --sidebar-bg: #141414;
+            --sidebar-text: #a3a3a3;
+            --sidebar-heading: #e5e5e5;
+            --content-bg: #1a1a1a;
+            --content-text: #a3a3a3;
+            --content-heading: #e5e5e5;
+            --accent-orange: #d4a84b;
+            --accent-blue: #60a5fa;
+            --accent-green: #4ade80;
+            --accent-yellow: #fbbf24;
+            --accent-red: #f87171;
+            --border-color: #333333;
+            --muted-bg: #222222;
+            --link-color: #d4a84b;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--content-bg);
+            color: var(--content-text);
+            line-height: 1.8;
+            font-size: 17px;
+        }
+
+        a {
+            color: var(--link-color);
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        /* Layout with TOC */
+        .page-layout {
+            display: flex;
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            max-width: 800px;
+            padding: 0 24px;
+        }
+
+        .content-header {
+            padding: 48px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .content-header h1 {
+            font-size: 2.5rem;
+            color: var(--content-heading);
+            margin-bottom: 12px;
+            font-weight: 700;
+        }
+
+        .content-header .subtitle {
+            color: var(--sidebar-text);
+            font-size: 1.15rem;
+        }
+
+        .content-body {
+            padding: 40px 0;
+        }
+
+        /* Table of Contents - Right Side */
+        .toc-container {
+            width: 250px;
+            flex-shrink: 0;
+            padding-left: 32px;
+        }
+
+        .toc {
+            position: sticky;
+            top: 32px;
+            padding: 24px;
+            background: var(--sidebar-bg);
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            max-height: calc(100vh - 64px);
+            overflow-y: auto;
+        }
+
+        .toc-title {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--accent-orange);
+            margin-bottom: 16px;
+            font-weight: 600;
+        }
+
+        .toc-list {
+            list-style: none;
+        }
+
+        .toc-list li {
+            margin-bottom: 8px;
+        }
+
+        .toc-list a {
+            color: var(--sidebar-text);
+            font-size: 0.9rem;
+            display: block;
+            padding: 6px 12px;
+            border-radius: 4px;
+            border-left: 2px solid transparent;
+            transition: all 0.2s;
+        }
+
+        .toc-list a:hover {
+            color: var(--content-heading);
+            background: rgba(255, 255, 255, 0.05);
+            text-decoration: none;
+        }
+
+        .toc-list a.active {
+            color: var(--accent-orange);
+            border-left-color: var(--accent-orange);
+            background: rgba(212, 168, 75, 0.1);
+        }
+
+        /* Article Styles */
+        .article-content h2 {
+            font-size: 1.6rem;
+            color: var(--accent-orange);
+            margin: 56px 0 20px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid var(--border-color);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .article-content h2:first-child {
+            margin-top: 0;
+        }
+
+        .article-content h3 {
+            font-size: 1.25rem;
+            color: var(--content-heading);
+            margin: 40px 0 16px;
+            font-weight: 600;
+        }
+
+        .article-content p {
+            margin-bottom: 18px;
+        }
+
+        .article-content ul, .article-content ol {
+            margin-bottom: 18px;
+            padding-left: 28px;
+        }
+
+        .article-content li {
+            margin-bottom: 10px;
+        }
+
+        /* Quick Answer Box */
+        .quick-answer {
+            background: linear-gradient(135deg, rgba(212, 168, 75, 0.15), rgba(212, 168, 75, 0.05));
+            border: 2px solid var(--accent-orange);
+            border-radius: 12px;
+            padding: 28px 32px;
+            margin: 32px 0;
+        }
+
+        .quick-answer-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--accent-orange);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .quick-answer p {
+            font-size: 1.1rem;
+            margin: 0;
+            color: var(--content-heading);
+        }
+
+        .quick-answer code {
+            font-family: 'JetBrains Mono', monospace;
+            background: rgba(212, 168, 75, 0.2);
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 1rem;
+            color: var(--accent-orange);
+        }
+
+        /* Alert Boxes */
+        .alert {
+            padding: 24px 28px;
+            border-radius: 8px;
+            margin: 28px 0;
+            border-left: 4px solid;
+        }
+
+        .alert-info {
+            background: rgba(96, 165, 250, 0.1);
+            border-color: var(--accent-blue);
+        }
+
+        .alert-info .alert-title {
+            color: var(--accent-blue);
+        }
+
+        .alert-warning {
+            background: rgba(251, 191, 36, 0.1);
+            border-color: var(--accent-yellow);
+        }
+
+        .alert-warning .alert-title {
+            color: var(--accent-yellow);
+        }
+
+        .alert-success {
+            background: rgba(74, 222, 128, 0.1);
+            border-color: var(--accent-green);
+        }
+
+        .alert-success .alert-title {
+            color: var(--accent-green);
+        }
+
+        .alert-title {
+            font-weight: 600;
+            margin-bottom: 10px;
+            font-size: 1.05rem;
+        }
+
+        .alert p {
+            margin: 0;
+        }
+
+        /* Ham Radio Analogy Box */
+        .analogy-box {
+            background: var(--sidebar-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 24px 28px;
+            margin: 28px 0;
+        }
+
+        .analogy-box h4 {
+            color: var(--accent-orange);
+            margin-bottom: 12px;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .analogy-box p {
+            margin: 0;
+            font-size: 0.95rem;
+        }
+
+        /* Method Cards */
+        .method-card {
+            background: var(--muted-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 28px;
+            margin-bottom: 24px;
+        }
+
+        .method-card.recommended {
+            border-color: var(--accent-green);
+            border-width: 2px;
+            background: linear-gradient(135deg, rgba(0, 186, 124, 0.08), var(--muted-bg));
+        }
+
+        .method-card.primary {
+            border-color: var(--accent-blue);
+            border-width: 2px;
+            background: linear-gradient(135deg, rgba(29, 155, 240, 0.08), var(--muted-bg));
+        }
+
+        .method-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 14px;
+            flex-wrap: wrap;
+        }
+
+        .method-name {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--content-heading);
+        }
+
+        .method-badge {
+            font-size: 0.7rem;
+            padding: 5px 12px;
+            border-radius: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .badge-easy {
+            background: rgba(0, 186, 124, 0.2);
+            color: var(--accent-green);
+        }
+
+        .badge-best {
+            background: rgba(29, 155, 240, 0.2);
+            color: var(--accent-blue);
+        }
+
+        .badge-slow {
+            background: rgba(255, 173, 31, 0.2);
+            color: var(--accent-yellow);
+        }
+
+        .method-description {
+            color: var(--content-text);
+            margin-bottom: 18px;
+            font-size: 1rem;
+            line-height: 1.7;
+        }
+
+        .method-steps {
+            background: var(--sidebar-bg);
+            border-radius: 6px;
+            padding: 20px 24px;
+        }
+
+        .method-steps-title {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--sidebar-text);
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+
+        .method-steps ol {
+            margin: 0;
+            padding-left: 20px;
+        }
+
+        .method-steps li {
+            margin-bottom: 8px;
+            color: var(--content-text);
+        }
+
+        .method-steps li:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Firehose CTA */
+        .firehose-cta {
+            background: linear-gradient(135deg, rgba(212, 168, 75, 0.15), rgba(212, 168, 75, 0.05));
+            border: 2px solid var(--accent-orange);
+            border-radius: 12px;
+            padding: 32px;
+            margin: 32px 0;
+            text-align: center;
+        }
+
+        .firehose-cta h3 {
+            color: var(--content-heading);
+            margin-bottom: 12px;
+            font-size: 1.3rem;
+        }
+
+        .firehose-cta p {
+            color: var(--content-text);
+            margin-bottom: 20px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .firehose-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 28px;
+            background: var(--accent-orange);
+            border-radius: 8px;
+            color: var(--content-bg);
+            font-weight: 600;
+            font-size: 1.05rem;
+            transition: background 0.2s;
+        }
+
+        .firehose-btn:hover {
+            background: #e0b85c;
+            text-decoration: none;
+        }
+
+        /* Pros/Cons */
+        .pros-cons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-top: 18px;
+        }
+
+        .pros, .cons {
+            background: var(--sidebar-bg);
+            border-radius: 6px;
+            padding: 16px 20px;
+        }
+
+        .pros-title, .cons-title {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .pros-title {
+            color: var(--accent-green);
+        }
+
+        .cons-title {
+            color: var(--accent-yellow);
+        }
+
+        .pros ul, .cons ul {
+            margin: 0;
+            padding-left: 18px;
+            font-size: 0.9rem;
+        }
+
+        .pros li, .cons li {
+            margin-bottom: 6px;
+        }
+
+        /* Troubleshooting */
+        .troubleshoot-item {
+            background: var(--muted-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 24px 28px;
+            margin-bottom: 20px;
+        }
+
+        .troubleshoot-question {
+            font-weight: 600;
+            color: var(--content-heading);
+            margin-bottom: 12px;
+            font-size: 1.05rem;
+        }
+
+        .troubleshoot-answer {
+            color: var(--content-text);
+        }
+
+        .troubleshoot-answer p {
+            margin-bottom: 12px;
+        }
+
+        .troubleshoot-answer p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Footer */
+        .content-footer {
+            padding: 36px 0;
+            border-top: 1px solid var(--border-color);
+            font-size: 0.9rem;
+            color: var(--sidebar-text);
+            margin-top: 48px;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 24px;
+            margin-bottom: 14px;
+            flex-wrap: wrap;
+        }
+
+        /* Responsive */
+        @media (max-width: 1000px) {
+            .toc-container {
+                display: none;
+            }
+
+            .main-content {
+                max-width: 100%;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .content-header {
+                padding: 32px 0;
+            }
+
+            .content-header h1 {
+                font-size: 1.8rem;
+            }
+
+            .pros-cons {
+                grid-template-columns: 1fr;
+            }
+
+            .quick-answer, .firehose-cta {
+                padding: 20px 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="page-layout">
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="content-header">
+                <h1>How to Tell If You're Reaching the Mesh</h1>
+                <p class="subtitle">Three ways to verify your node is connected to the WPA Mesh network</p>
+            </header>
+
+            <div class="content-body">
+                <article class="article-content">
+
+                    <!-- SECTION: Quick Answer -->
+                    <section id="quick-answer">
+                        <div class="quick-answer">
+                            <div class="quick-answer-title">📻 The Short Answer</div>
+                            <p>If you see other nodes in your node list, you're almost certainly reaching the mesh. For instant confirmation, check if your node appears on the <a href="https://map.wpamesh.net/firehose">Firehose page</a>—if it does, you're in!</p>
+                        </div>
+                    </section>
+
+                    <!-- SECTION: Overview -->
+                    <h2 id="overview">Why It's Not Always Obvious</h2>
+                    
+                    <p>When you first set up a Meshtastic node, it can feel like shouting into the void. Unlike a repeater where you get an instant courtesy beep or ID, mesh networks are quieter. Your node might be working perfectly, but if no one happens to be sending messages right now, the radio will just sit there silently.</p>
+
+                    <div class="analogy-box">
+                        <h4>📡 For the Ham Operators</h4>
+                        <p>Think of it like monitoring a quiet simplex frequency. Just because you don't hear traffic doesn't mean your radio isn't working—it just means no one's transmitting. The mesh is similar, except nodes do periodically beacon telemetry (like an automatic position report), so eventually you <em>will</em> hear something if you're in range.</p>
+                    </div>
+
+                    <p>There are three main ways to verify you're connected, ranging from "just wait" to "instant confirmation."</p>
+
+                    <!-- SECTION: Method 1 - Node List -->
+                    <h2 id="method-node-list">Method 1: Check Your Node List</h2>
+
+                    <div class="method-card recommended">
+                        <div class="method-header">
+                            <span class="method-name">Watch for Incoming Telemetry</span>
+                            <span class="method-badge badge-easy">Easiest</span>
+                            <span class="method-badge badge-slow">Takes Time</span>
+                        </div>
+                        <p class="method-description">The simplest indicator is whether other nodes appear in your node list. When your radio receives telemetry from another node, it gets added to the list. If you can <em>hear</em> them, they can almost certainly hear <em>you</em>.</p>
+                        
+                        <div class="method-steps">
+                            <div class="method-steps-title">How to Check</div>
+                            <ol>
+                                <li>Open your Meshtastic app and connect to your node</li>
+                                <li>Go to the <strong>Nodes</strong> tab (or "Node List" depending on your app)</li>
+                                <li>If you see other nodes listed with signal strength (SNR) and distance, you're receiving their traffic</li>
+                                <li>The more nodes you see, the better your coverage</li>
+                            </ol>
+                        </div>
+
+                        <div class="pros-cons">
+                            <div class="pros">
+                                <div class="pros-title">✓ Pros</div>
+                                <ul>
+                                    <li>No action required—just wait</li>
+                                    <li>Shows signal quality (SNR)</li>
+                                    <li>Gives you a sense of coverage</li>
+                                </ul>
+                            </div>
+                            <div class="cons">
+                                <div class="cons-title">⚠ Cons</div>
+                                <ul>
+                                    <li>Can take hours—nodes only beacon every few hours by default</li>
+                                    <li>Doesn't confirm <em>your</em> transmit works, only receive</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="alert alert-info">
+                        <div class="alert-title">💡 Patience Required</div>
+                        <p>Most nodes broadcast their telemetry (position, battery, etc.) every <strong>few hours</strong>, not every few minutes. If you just turned on your node, give it some time. Go have lunch, and check back—you'll likely see a populated node list by then.</p>
+                    </div>
+
+                    <!-- SECTION: Method 2 - Test Message -->
+                    <h2 id="method-test-message">Method 2: Send a Test Message</h2>
+
+                    <div class="method-card">
+                        <div class="method-header">
+                            <span class="method-name">Transmit on LongFast</span>
+                        </div>
+                        <p class="method-description">Some folks like to send a quick "test" message on the default LongFast channel to see if anyone responds. This works, but use it sparingly—there are 350+ nodes on the WPA Mesh, and they'll <em>all</em> receive your message.</p>
+                        
+                        <div class="method-steps">
+                            <div class="method-steps-title">How to Do It</div>
+                            <ol>
+                                <li>Open the Meshtastic app and go to <strong>Messages</strong></li>
+                                <li>Select the <strong>LongFast</strong> channel (the default primary channel)</li>
+                                <li>Send a brief message like "Testing from [your location], new node"</li>
+                                <li>Wait for a reply or a 👍 reaction</li>
+                            </ol>
+                        </div>
+
+                        <div class="pros-cons">
+                            <div class="pros">
+                                <div class="pros-title">✓ Pros</div>
+                                <ul>
+                                    <li>Confirms both TX and RX work</li>
+                                    <li>Might get helpful tips from locals</li>
+                                </ul>
+                            </div>
+                            <div class="cons">
+                                <div class="cons-title">⚠ Cons</div>
+                                <ul>
+                                    <li>Adds traffic to the mesh—use sparingly</li>
+                                    <li>No guarantee anyone will reply</li>
+                                    <li>Can be frustrating if you get silence</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="alert alert-warning">
+                        <div class="alert-title">🙏 Please Don't Overdo It</div>
+                        <p>We get it—you want to know if your new setup works! But repeatedly sending "test" messages is like calling CQ on a repeater every 30 seconds. One or two tests is fine; spamming the channel will annoy the locals. If no one responds, it doesn't necessarily mean you're not reaching the mesh—people might just be busy or away from their phones.</p>
+                    </div>
+
+                    <!-- SECTION: Method 3 - Firehose -->
+                    <h2 id="method-firehose">Method 3: Check the Firehose (Best Method)</h2>
+
+                    <div class="method-card primary">
+                        <div class="method-header">
+                            <span class="method-name">Use the WPA Mesh Firehose</span>
+                            <span class="method-badge badge-best">Instant Confirmation</span>
+                        </div>
+                        <p class="method-description">This is the definitive test. The WPA Mesh runs MQTT gateways across Western Pennsylvania that listen to mesh traffic. The "Firehose" page shows <strong>all live traffic</strong> these gateways are seeing in real-time. If your node shows up there, you're reaching the mesh—period.</p>
+                        
+                        <div class="method-steps">
+                            <div class="method-steps-title">How to Do It</div>
+                            <ol>
+                                <li>Open <a href="https://map.wpamesh.net/firehose" target="_blank">map.wpamesh.net/firehose</a> in your browser</li>
+                                <li>Watch the live feed of packets scrolling by</li>
+                                <li>Send a message or wait for your node to beacon</li>
+                                <li>If your node name or ID appears in the list, <strong>you're on the mesh!</strong></li>
+                            </ol>
+                        </div>
+
+                        <div class="pros-cons">
+                            <div class="pros">
+                                <div class="pros-title">✓ Pros</div>
+                                <ul>
+                                    <li>Instant, definitive confirmation</li>
+                                    <li>Doesn't require anyone to reply</li>
+                                    <li>Shows exactly what the mesh is "hearing"</li>
+                                    <li>No need to spam test messages</li>
+                                </ul>
+                            </div>
+                            <div class="cons">
+                                <div class="cons-title">⚠ Cons</div>
+                                <ul>
+                                    <li>Requires internet access to view the page</li>
+                                    <li>Only shows traffic that reaches an MQTT gateway</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="firehose-cta">
+                        <h3>🔥 Check the Firehose Now</h3>
+                        <p>See all the live traffic flowing through the WPA Mesh. If your node appears here, you're connected and your messages are reaching the network.</p>
+                        <a href="https://map.wpamesh.net/firehose" target="_blank" class="firehose-btn">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="10,8 16,12 10,16 10,8"/></svg>
+                            Open Live Firehose
+                        </a>
+                    </div>
+
+                    <div class="alert alert-success">
+                        <div class="alert-title">✓ Why This Works</div>
+                        <p>We have MQTT gateways scattered across Western PA—Pittsburgh, the surrounding counties, and beyond. These gateways listen to mesh traffic and forward it to our server. If <em>any</em> of these gateways can hear your node, it'll show up on the Firehose. This gives you broad coverage confirmation without relying on a single point of contact.</p>
+                    </div>
+
+                    <!-- SECTION: Troubleshooting -->
+                    <h2 id="troubleshooting">Troubleshooting</h2>
+
+                    <div class="troubleshoot-item">
+                        <div class="troubleshoot-question">I don't see any nodes in my list after several hours</div>
+                        <div class="troubleshoot-answer">
+                            <p>First, verify you're on the right settings: <strong>Region: US</strong>, <strong>Modem Preset: Long Fast</strong>. These must match the mesh or you won't hear anything.</p>
+                            <p>Next, check your antenna connection. A loose or missing antenna will severely limit your range—you might only reach nodes within a few hundred feet.</p>
+                            <p>Finally, consider your location. If you're in a valley, basement, or surrounded by hills, you may need to get your antenna higher or outdoors.</p>
+                        </div>
+                    </div>
+
+                    <div class="troubleshoot-item">
+                        <div class="troubleshoot-question">I see nodes but my messages don't seem to go through</div>
+                        <div class="troubleshoot-answer">
+                            <p>Check the Firehose to confirm your transmissions are being received. If they show up there, your messages <em>are</em> going through—people just might not be responding.</p>
+                            <p>Also verify you're sending to the right channel. Direct messages (DMs) require both nodes to be online simultaneously for delivery.</p>
+                        </div>
+                    </div>
+
+                    <div class="troubleshoot-item">
+                        <div class="troubleshoot-question">I can hear distant nodes but not nearby ones</div>
+                        <div class="troubleshoot-answer">
+                            <p>This is actually normal! LoRa signals can bounce off terrain and buildings in unexpected ways. You might have line-of-sight to a hilltop node 20 miles away while a node 2 miles away is blocked by a ridge.</p>
+                            <p>The mesh routing will find a path—that's the beauty of it.</p>
+                        </div>
+                    </div>
+
+                    <div class="troubleshoot-item">
+                        <div class="troubleshoot-question">My node shows up on the Firehose but I can't see other nodes</div>
+                        <div class="troubleshoot-answer">
+                            <p>This suggests your transmit is working but receive might have an issue, or the nodes near you haven't beaconed recently. Give it more time for telemetry to come in.</p>
+                            <p>If the problem persists, try power-cycling your node or re-flashing the firmware.</p>
+                        </div>
+                    </div>
+
+                    <!-- SECTION: Still Need Help -->
+                    <h2 id="help">Still Need Help?</h2>
+
+                    <p>If you've tried everything and still can't get connected, hop on our Discord. There are plenty of folks happy to help troubleshoot—we've all been there with a new setup that just won't cooperate.</p>
+
+                    <div class="method-card">
+                        <div class="method-header">
+                            <span class="method-name">Join the Community</span>
+                        </div>
+                        <p class="method-description">The PghMesh Discord is the best place to get real-time help from local operators who know the terrain and the network.</p>
+                        <p style="margin-bottom: 0;"><a href="https://discord.gg/67xqYqaqXP" target="_blank">Join Discord →</a></p>
+                    </div>
+
+                    <footer class="content-footer">
+                        <div class="footer-links">
+                            <a href="https://wpamesh.net">WPAMesh Home</a>
+                            <a href="https://map.wpamesh.net/map">Live Mesh Map</a>
+                            <a href="https://map.wpamesh.net/firehose">Firehose</a>
+                            <a href="https://meshtastic.org/docs/">Meshtastic Docs</a>
+                        </div>
+                        <p>© 2025 WPAMesh · Not affiliated with Meshtastic LLC</p>
+                    </footer>
+
+                </article>
+            </div>
+        </main>
+
+        <!-- Table of Contents - Right Side -->
+        <aside class="toc-container">
+            <nav class="toc">
+                <div class="toc-title">On This Page</div>
+                <ul class="toc-list">
+                    <li><a href="#quick-answer">The Short Answer</a></li>
+                    <li><a href="#overview">Why It's Not Always Obvious</a></li>
+                    <li><a href="#method-node-list">Method 1: Node List</a></li>
+                    <li><a href="#method-test-message">Method 2: Test Message</a></li>
+                    <li><a href="#method-firehose">Method 3: Firehose ⭐</a></li>
+                    <li><a href="#troubleshooting">Troubleshooting</a></li>
+                    <li><a href="#help">Still Need Help?</a></li>
+                </ul>
+            </nav>
+        </aside>
+    </div>
+
+    <script>
+        // Highlight current section in TOC while scrolling
+        document.addEventListener('DOMContentLoaded', function() {
+            const tocLinks = document.querySelectorAll('.toc-list a');
+            const sections = [];
+            
+            tocLinks.forEach(link => {
+                const id = link.getAttribute('href').substring(1);
+                const section = document.getElementById(id);
+                if (section) {
+                    sections.push({ id, element: section, link });
+                }
+            });
+
+            function updateActiveLink() {
+                const scrollPos = window.scrollY + 100;
+                
+                let currentSection = sections[0];
+                
+                for (const section of sections) {
+                    if (section.element.offsetTop <= scrollPos) {
+                        currentSection = section;
+                    }
+                }
+                
+                tocLinks.forEach(link => link.classList.remove('active'));
+                if (currentSection) {
+                    currentSection.link.classList.add('active');
+                }
+            }
+
+            window.addEventListener('scroll', updateActiveLink);
+            updateActiveLink();
+        });
+    </script>
+</body>
+</html>

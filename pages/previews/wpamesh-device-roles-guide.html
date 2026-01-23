@@ -1,0 +1,1232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Device Roles Guide – WPAMesh.net</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* WPAMesh Theme Colors */
+            --sidebar-bg: #141414;
+            --sidebar-text: #a3a3a3;
+            --sidebar-heading: #e5e5e5;
+            --content-bg: #1a1a1a;
+            --content-text: #a3a3a3;
+            --content-heading: #e5e5e5;
+            --accent-orange: #d4a84b;
+            --accent-blue: #60a5fa;
+            --accent-green: #4ade80;
+            --accent-yellow: #fbbf24;
+            --accent-red: #f87171;
+            --border-color: #333333;
+            --muted-bg: #222222;
+            --link-color: #d4a84b;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--content-bg);
+            color: var(--content-text);
+            line-height: 1.8;
+            font-size: 17px;
+        }
+
+        a {
+            color: var(--link-color);
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        /* Layout with TOC */
+        .page-layout {
+            display: flex;
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            max-width: 800px;
+            padding: 0 24px;
+        }
+
+        .content-header {
+            padding: 48px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .content-header h1 {
+            font-size: 2.5rem;
+            color: var(--content-heading);
+            margin-bottom: 12px;
+            font-weight: 700;
+        }
+
+        .content-header .subtitle {
+            color: var(--sidebar-text);
+            font-size: 1.15rem;
+        }
+
+        .content-body {
+            padding: 40px 0;
+        }
+
+        /* Table of Contents - Right Side */
+        .toc-container {
+            width: 250px;
+            flex-shrink: 0;
+            padding-left: 32px;
+        }
+
+        .toc {
+            position: sticky;
+            top: 32px;
+            padding: 24px;
+            background: var(--sidebar-bg);
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            max-height: calc(100vh - 64px);
+            overflow-y: auto;
+        }
+
+        .toc-title {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--accent-orange);
+            margin-bottom: 16px;
+            font-weight: 600;
+        }
+
+        .toc-list {
+            list-style: none;
+        }
+
+        .toc-list li {
+            margin-bottom: 8px;
+        }
+
+        .toc-list a {
+            color: var(--sidebar-text);
+            font-size: 0.9rem;
+            display: block;
+            padding: 6px 12px;
+            border-radius: 4px;
+            border-left: 2px solid transparent;
+            transition: all 0.2s;
+        }
+
+        .toc-list a:hover {
+            color: var(--content-heading);
+            background: rgba(255, 255, 255, 0.05);
+            text-decoration: none;
+        }
+
+        .toc-list a.active {
+            color: var(--accent-orange);
+            border-left-color: var(--accent-orange);
+            background: rgba(212, 168, 75, 0.1);
+        }
+
+        .toc-list .toc-sub {
+            padding-left: 16px;
+            font-size: 0.85rem;
+        }
+
+        /* Article Styles */
+        .article-content h2 {
+            font-size: 1.6rem;
+            color: var(--accent-orange);
+            margin: 56px 0 20px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid var(--border-color);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .article-content h2:first-child {
+            margin-top: 0;
+        }
+
+        .article-content h3 {
+            font-size: 1.25rem;
+            color: var(--content-heading);
+            margin: 40px 0 16px;
+            font-weight: 600;
+        }
+
+        .article-content p {
+            margin-bottom: 18px;
+        }
+
+        .article-content ul, .article-content ol {
+            margin-bottom: 18px;
+            padding-left: 28px;
+        }
+
+        .article-content li {
+            margin-bottom: 10px;
+        }
+
+        /* Quick Answer Box - Prominent */
+        .quick-answer {
+            background: linear-gradient(135deg, rgba(212, 168, 75, 0.15), rgba(212, 168, 75, 0.05));
+            border: 2px solid var(--accent-orange);
+            border-radius: 12px;
+            padding: 28px 32px;
+            margin: 32px 0;
+        }
+
+        .quick-answer-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--accent-orange);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .quick-answer p {
+            font-size: 1.1rem;
+            margin: 0;
+            color: var(--content-heading);
+        }
+
+        .quick-answer code {
+            font-family: 'JetBrains Mono', monospace;
+            background: rgba(212, 168, 75, 0.2);
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 1rem;
+            color: var(--accent-orange);
+        }
+
+        /* Alert Boxes */
+        .alert {
+            padding: 24px 28px;
+            border-radius: 8px;
+            margin: 28px 0;
+            border-left: 4px solid;
+        }
+
+        .alert-warning {
+            background: rgba(251, 191, 36, 0.1);
+            border-color: var(--accent-yellow);
+        }
+
+        .alert-warning .alert-title {
+            color: var(--accent-yellow);
+        }
+
+        .alert-danger {
+            background: rgba(248, 113, 113, 0.1);
+            border-color: var(--accent-red);
+        }
+
+        .alert-danger .alert-title {
+            color: var(--accent-red);
+        }
+
+        .alert-info {
+            background: rgba(96, 165, 250, 0.1);
+            border-color: var(--accent-blue);
+        }
+
+        .alert-info .alert-title {
+            color: var(--accent-blue);
+        }
+
+        .alert-success {
+            background: rgba(74, 222, 128, 0.1);
+            border-color: var(--accent-green);
+        }
+
+        .alert-success .alert-title {
+            color: var(--accent-green);
+        }
+
+        /* Method Cards */
+        .method-card {
+            background: var(--muted-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 28px;
+            margin-bottom: 24px;
+        }
+
+        .method-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 14px;
+            flex-wrap: wrap;
+        }
+
+        .method-name {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--content-heading);
+        }
+
+        .method-description {
+            color: var(--content-text);
+            margin-bottom: 18px;
+            font-size: 1rem;
+            line-height: 1.7;
+        }
+
+        .method-steps {
+            background: var(--sidebar-bg);
+            border-radius: 6px;
+            padding: 20px 24px;
+        }
+
+        .method-steps-title {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--sidebar-text);
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+
+        .method-steps ol {
+            margin: 0;
+            padding-left: 20px;
+        }
+
+        .method-steps li {
+            margin-bottom: 8px;
+            color: var(--content-text);
+        }
+
+        .method-steps li:last-child {
+            margin-bottom: 0;
+        }
+
+        .alert-title {
+            font-weight: 600;
+            margin-bottom: 10px;
+            font-size: 1.05rem;
+        }
+
+        .alert p {
+            margin: 0;
+        }
+
+        .alert ul {
+            margin: 14px 0 0;
+            padding-left: 24px;
+        }
+
+        .alert li {
+            margin-bottom: 6px;
+        }
+
+        /* Comparison Table - Moved Up */
+        .table-wrapper {
+            overflow-x: auto;
+            margin: 28px 0;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.95rem;
+        }
+
+        th, td {
+            padding: 14px 18px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        th {
+            background: var(--sidebar-bg);
+            font-weight: 600;
+            color: var(--content-heading);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        td:first-child {
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 500;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:hover td {
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .table-yes { color: var(--accent-green); font-weight: 500; }
+        .table-no { color: var(--accent-red); font-weight: 500; }
+        .table-partial { color: var(--accent-yellow); font-weight: 500; }
+        .table-danger { color: var(--accent-red); font-weight: 700; }
+
+        .table-highlight {
+            background: rgba(0, 186, 124, 0.1) !important;
+        }
+
+        /* Role Cards - Cleaner */
+        .role-section {
+            margin: 32px 0;
+        }
+
+        .role-card {
+            background: var(--muted-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 28px;
+            margin-bottom: 24px;
+        }
+
+        .role-card.recommended {
+            border-color: var(--accent-green);
+            border-width: 2px;
+            background: linear-gradient(135deg, rgba(0, 186, 124, 0.08), var(--muted-bg));
+        }
+
+        .role-card.caution {
+            border-color: var(--accent-yellow);
+            border-width: 2px;
+        }
+
+        .role-card.danger {
+            border-color: var(--accent-red);
+            border-width: 2px;
+        }
+
+        .role-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 14px;
+            flex-wrap: wrap;
+        }
+
+        .role-name {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--content-heading);
+        }
+
+        .role-badge {
+            font-size: 0.7rem;
+            padding: 5px 12px;
+            border-radius: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .badge-recommended {
+            background: rgba(0, 186, 124, 0.2);
+            color: var(--accent-green);
+        }
+
+        .badge-default {
+            background: rgba(29, 155, 240, 0.2);
+            color: var(--accent-blue);
+        }
+
+        .badge-specialized {
+            background: rgba(120, 86, 255, 0.2);
+            color: #a78bfa;
+        }
+
+        .badge-caution {
+            background: rgba(255, 173, 31, 0.2);
+            color: var(--accent-yellow);
+        }
+
+        .badge-danger {
+            background: rgba(244, 33, 46, 0.2);
+            color: var(--accent-red);
+        }
+
+        .role-description {
+            color: var(--content-text);
+            margin-bottom: 18px;
+            font-size: 1rem;
+            line-height: 1.7;
+        }
+
+        .role-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 12px;
+        }
+
+        .detail-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            font-size: 0.95rem;
+        }
+
+        .detail-icon {
+            flex-shrink: 0;
+            width: 20px;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .detail-icon.yes { color: var(--accent-green); }
+        .detail-icon.no { color: var(--accent-red); }
+        .detail-icon.info { color: var(--accent-blue); }
+        .detail-icon.warn { color: var(--accent-yellow); }
+
+        .role-usecases {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .usecases-label {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--sidebar-text);
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .usecases-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .usecases-list li {
+            background: var(--sidebar-bg);
+            border: 1px solid var(--border-color);
+            padding: 8px 14px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            margin: 0;
+        }
+
+        /* Decision Flow */
+        .decision-flow {
+            background: var(--muted-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 32px;
+            margin: 32px 0;
+        }
+
+        .decision-flow h3 {
+            margin-top: 0;
+            margin-bottom: 24px;
+            color: var(--content-heading);
+        }
+
+        .flow-step {
+            display: flex;
+            gap: 18px;
+            margin-bottom: 24px;
+            align-items: flex-start;
+        }
+
+        .flow-step:last-child {
+            margin-bottom: 0;
+        }
+
+        .step-number {
+            width: 36px;
+            height: 36px;
+            background: var(--accent-orange);
+            color: var(--content-bg);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1rem;
+            flex-shrink: 0;
+        }
+
+        .step-content {
+            flex: 1;
+            padding-top: 4px;
+        }
+
+        .step-question {
+            font-weight: 600;
+            color: var(--content-heading);
+            margin-bottom: 6px;
+            font-size: 1.05rem;
+        }
+
+        .step-answer {
+            color: var(--content-text);
+        }
+
+        .step-answer code {
+            font-family: 'JetBrains Mono', monospace;
+            background: rgba(212, 168, 75, 0.2);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            color: var(--accent-orange);
+        }
+
+        /* Ham Radio Analogy Box */
+        .analogy-box {
+            background: var(--sidebar-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 24px 28px;
+            margin: 28px 0;
+        }
+
+        .analogy-box h4 {
+            color: var(--accent-orange);
+            margin-bottom: 12px;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .analogy-box p {
+            margin: 0;
+            font-size: 0.95rem;
+        }
+
+        /* Contact Box */
+        .contact-box {
+            background: linear-gradient(135deg, #1d3a5c, #0f1419);
+            color: white;
+            border-radius: 8px;
+            padding: 36px;
+            margin: 40px 0;
+            text-align: center;
+            border: 1px solid var(--border-color);
+        }
+
+        .contact-box h3 {
+            color: white;
+            margin-bottom: 14px;
+            font-size: 1.3rem;
+        }
+
+        .contact-box p {
+            color: var(--sidebar-text);
+            margin-bottom: 24px;
+            font-size: 1.05rem;
+        }
+
+        .contact-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 14px;
+            flex-wrap: wrap;
+        }
+
+        .contact-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 6px;
+            color: white;
+            font-weight: 500;
+            transition: background 0.2s;
+        }
+
+        .contact-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            text-decoration: none;
+        }
+
+        /* Footer */
+        .content-footer {
+            padding: 36px 0;
+            border-top: 1px solid var(--border-color);
+            font-size: 0.9rem;
+            color: var(--sidebar-text);
+            margin-top: 48px;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 24px;
+            margin-bottom: 14px;
+            flex-wrap: wrap;
+        }
+
+        /* Responsive */
+        @media (max-width: 1000px) {
+            .toc-container {
+                display: none;
+            }
+
+            .main-content {
+                max-width: 100%;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .content-header {
+                padding: 32px 0;
+            }
+
+            .content-header h1 {
+                font-size: 1.8rem;
+            }
+
+            .role-details {
+                grid-template-columns: 1fr;
+            }
+
+            .quick-answer {
+                padding: 20px 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="page-layout">
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="content-header">
+                <h1>Device Roles Guide</h1>
+                <p class="subtitle">A plain-English guide to Meshtastic device roles for the WPA Mesh network</p>
+            </header>
+
+            <div class="content-body">
+                <article class="article-content">
+
+                    <!-- SECTION: Quick Answer -->
+                    <section id="quick-answer">
+                        <div class="quick-answer">
+                            <div class="quick-answer-title">📻 The Short Answer</div>
+                            <p>If you're new to Meshtastic or just want your radio to work: <strong>leave it set to <code>CLIENT</code></strong> (the default). It will send, receive, and help relay messages for others automatically. That's the right choice for 95% of operators.</p>
+                        </div>
+                    </section>
+
+                    <!-- SECTION: Overview -->
+                    <h2 id="overview">Why Device Roles Matter</h2>
+                    
+                    <p>When setting up your Meshtastic node, you'll notice several device role options. For most users joining WPAMesh, <strong>CLIENT</strong> or <strong>CLIENT_MUTE</strong> is the right choice.</p>
+
+                    <div class="alert alert-warning">
+                        <div class="alert-title">⚠️ Please Avoid ROUTER Roles Unless Coordinated</div>
+                        <p>Router roles fundamentally change how your node behaves on the mesh. Routers are expected to be <strong>always-on</strong>, strategically placed at high elevations with excellent coverage, and they take priority in relaying messages across the network.</p>
+                        <p style="margin-top: 12px;">When too many nodes claim router status—especially portable or inconsistently powered ones—it actually <em>degrades</em> mesh performance rather than helping it.</p>
+                    </div>
+
+                    <div class="analogy-box">
+                        <h4>📡 Think of It This Way</h4>
+                        <p>Imagine a room full of people all trying to be the one who relays messages. Instead of efficient communication, you get chaos and collisions. That's what happens when too many nodes are set to ROUTER—everyone's shouting over each other trying to "help," and the actual messages get lost in the noise.</p>
+                    </div>
+
+                    <p>The role you choose affects three things:</p>
+                    <ul>
+                        <li><strong>Routing behavior</strong> — Whether your node relays messages from others, and with what priority</li>
+                        <li><strong>Visibility</strong> — Whether other nodes can see you in their node list</li>
+                        <li><strong>Power usage</strong> — How aggressively the radio sleeps to save battery</li>
+                    </ul>
+
+                    <!-- SECTION: Quick Reference Table -->
+                    <h2 id="quick-reference">Quick Reference Table</h2>
+                    
+                    <p>Here's the at-a-glance summary. The highlighted row is what most people should use:</p>
+
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Role</th>
+                                    <th>Relays Messages?</th>
+                                    <th>Visible?</th>
+                                    <th>Coordination?</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="table-highlight">
+                                    <td>CLIENT ⭐</td>
+                                    <td class="table-yes">✓ Smart relay</td>
+                                    <td class="table-yes">✓ Yes</td>
+                                    <td>No</td>
+                                </tr>
+                                <tr>
+                                    <td>CLIENT_MUTE</td>
+                                    <td class="table-no">✗ Never</td>
+                                    <td class="table-yes">✓ Yes</td>
+                                    <td>No</td>
+                                </tr>
+                                <tr>
+                                    <td>CLIENT_BASE</td>
+                                    <td class="table-yes">✓ Priority for favorites</td>
+                                    <td class="table-yes">✓ Yes</td>
+                                    <td>No</td>
+                                </tr>
+                                <tr>
+                                    <td>CLIENT_HIDDEN</td>
+                                    <td class="table-partial">~ Local only</td>
+                                    <td class="table-no">✗ No</td>
+                                    <td>No</td>
+                                </tr>
+                                <tr>
+                                    <td>TRACKER</td>
+                                    <td class="table-partial">~ When awake</td>
+                                    <td class="table-yes">✓ Yes</td>
+                                    <td>No</td>
+                                </tr>
+                                <tr>
+                                    <td>SENSOR</td>
+                                    <td class="table-partial">~ When awake</td>
+                                    <td class="table-yes">✓ Yes</td>
+                                    <td>No</td>
+                                </tr>
+                                <tr>
+                                    <td>ROUTER</td>
+                                    <td class="table-yes">✓ Always (priority)</td>
+                                    <td class="table-yes">✓ Yes</td>
+                                    <td class="table-danger">YES — Contact us first</td>
+                                </tr>
+                                <tr>
+                                    <td>ROUTER_LATE</td>
+                                    <td class="table-yes">✓ Always (delayed)</td>
+                                    <td class="table-yes">✓ Yes</td>
+                                    <td class="table-danger">YES — Contact us first</td>
+                                </tr>
+                                <tr>
+                                    <td>REPEATER</td>
+                                    <td class="table-yes">✓ Always (priority)</td>
+                                    <td class="table-no">✗ No</td>
+                                    <td class="table-danger">YES — Contact us first</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- SECTION: Which Role -->
+                    <h2 id="which-role">What Role Should You Pick?</h2>
+
+                    <div class="decision-flow">
+                        <h3>Quick Recommendations</h3>
+                        <div class="flow-step">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                <div class="step-question">CLIENT — Best for most users</div>
+                                <div class="step-answer">Your node sends, receives, and will still help relay messages when appropriate. This is the default and the right choice for the vast majority of setups.</div>
+                            </div>
+                        </div>
+                        <div class="flow-step">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                <div class="step-question">CLIENT_MUTE — Good for listeners and portables</div>
+                                <div class="step-answer">Use this if you just want to listen, if you're in a well-covered area and don't need to participate in routing, or for portable nodes that move around.</div>
+                            </div>
+                        </div>
+                        <div class="flow-step">
+                            <div class="step-number">3</div>
+                            <div class="step-content">
+                                <div class="step-question">CLIENT_BASE — Great for your rooftop node</div>
+                                <div class="step-answer">If you have a node on your roof or in your attic, this is ideal. You can add your base and portable nodes as favorites of each other, and <strong>0 hops will be consumed</strong> when your roof node rebroadcasts between them.</div>
+                            </div>
+                        </div>
+                        <div class="flow-step">
+                            <div class="step-number">4</div>
+                            <div class="step-content">
+                                <div class="step-question">TRACKER or SENSOR — For dedicated devices</div>
+                                <div class="step-answer">Use these for single-purpose devices: <code>TRACKER</code> for GPS tracking, <code>SENSOR</code> for weather stations or environmental monitors.</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- SECTION: Client Roles -->
+                    <h2 id="client-roles">Client Roles (Use These)</h2>
+                    
+                    <p>These are the roles for everyday use. No coordination needed—just pick the one that fits your situation.</p>
+
+                    <div class="role-section">
+                        <div class="role-card recommended" id="role-client">
+                            <div class="role-header">
+                                <span class="role-name">CLIENT</span>
+                                <span class="role-badge badge-default">Default</span>
+                                <span class="role-badge badge-recommended">Recommended</span>
+                            </div>
+                            <p class="role-description">The standard role for almost everyone. Your node sends and receives messages, and intelligently relays traffic for others when needed. It uses "smart" timing to avoid collisions—if it hears another node relay a message first, it won't duplicate the effort.</p>
+                            <div class="role-details">
+                                <div class="detail-item"><span class="detail-icon yes">✓</span> Relays messages with collision avoidance</div>
+                                <div class="detail-item"><span class="detail-icon yes">✓</span> Visible to other nodes</div>
+                                <div class="detail-item"><span class="detail-icon yes">✓</span> Full Bluetooth/WiFi app support</div>
+                                <div class="detail-item"><span class="detail-icon info">ℹ</span> May skip relay if another node already did</div>
+                            </div>
+                            <div class="role-usecases">
+                                <div class="usecases-label">Use For</div>
+                                <ul class="usecases-list">
+                                    <li>📱 Handheld devices</li>
+                                    <li>🏠 Home base stations</li>
+                                    <li>🚗 Vehicle-mounted nodes</li>
+                                    <li>🥾 Hiking, biking, outdoor use</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="role-card recommended" id="role-client-mute">
+                            <div class="role-header">
+                                <span class="role-name">CLIENT_MUTE</span>
+                                <span class="role-badge badge-recommended">Low Impact</span>
+                            </div>
+                            <p class="role-description">Same as CLIENT, but your node <em>never</em> relays messages for others. Use this when you're in an area with good coverage and don't need to contribute to the mesh relay—or when you have multiple nodes and want to reduce "self-competition."</p>
+                            <div class="role-details">
+                                <div class="detail-item"><span class="detail-icon no">✗</span> Does NOT relay messages</div>
+                                <div class="detail-item"><span class="detail-icon yes">✓</span> Sends and receives your traffic normally</div>
+                                <div class="detail-item"><span class="detail-icon yes">✓</span> Visible to other nodes</div>
+                                <div class="detail-item"><span class="detail-icon info">ℹ</span> Reduces your airtime footprint</div>
+                            </div>
+                            <div class="role-usecases">
+                                <div class="usecases-label">Use For</div>
+                                <ul class="usecases-list">
+                                    <li>🏙️ Congested areas with many nodes</li>
+                                    <li>📡 Near a strong base station</li>
+                                    <li>🔋 Your "extra" devices</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="role-card recommended" id="role-client-base">
+                            <div class="role-header">
+                                <span class="role-name">CLIENT_BASE</span>
+                                <span class="role-badge badge-recommended">Multi-Device</span>
+                            </div>
+                            <p class="role-description">Like CLIENT, but gives priority to relaying messages from nodes you've "favorited." Perfect if you have an attic/roof node and want it to prioritize your handheld or mobile.</p>
+                            <div class="role-details">
+                                <div class="detail-item"><span class="detail-icon yes">✓</span> Priority relay for your favorited nodes</div>
+                                <div class="detail-item"><span class="detail-icon yes">✓</span> Normal relay for everyone else</div>
+                                <div class="detail-item"><span class="detail-icon info">ℹ</span> Favorite your other nodes from this device</div>
+                            </div>
+                            <div class="role-usecases">
+                                <div class="usecases-label">Use For</div>
+                                <ul class="usecases-list">
+                                    <li>🏠 Your best home antenna position</li>
+                                    <li>📻 Hub for your personal devices</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="role-card" id="role-client-hidden">
+                            <div class="role-header">
+                                <span class="role-name">CLIENT_HIDDEN</span>
+                                <span class="role-badge badge-specialized">Stealth</span>
+                            </div>
+                            <p class="role-description">Minimizes all broadcasts and doesn't appear in other nodes' lists. Only transmits when directly addressed. For situations where you want to stay off the radar or maximize battery life.</p>
+                            <div class="role-details">
+                                <div class="detail-item"><span class="detail-icon info">ℹ</span> Only broadcasts when necessary</div>
+                                <div class="detail-item"><span class="detail-icon no">✗</span> Does NOT appear in node lists</div>
+                                <div class="detail-item"><span class="detail-icon yes">✓</span> Still relays locally if needed</div>
+                            </div>
+                            <div class="role-usecases">
+                                <div class="usecases-label">Use For</div>
+                                <ul class="usecases-list">
+                                    <li>🥷 Low-profile operation</li>
+                                    <li>🔋 Maximum power savings</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- SECTION: Specialized Roles -->
+                    <h2 id="specialized-roles">Specialized Roles</h2>
+                    
+                    <p>These are for specific use cases like tracking or sensor data. They optimize power and prioritize certain types of data.</p>
+
+                    <div class="role-section">
+                        <div class="role-card" id="role-tracker">
+                            <div class="role-header">
+                                <span class="role-name">TRACKER</span>
+                                <span class="role-badge badge-specialized">GPS</span>
+                            </div>
+                            <p class="role-description">Prioritizes sending GPS position updates. The device will sleep between position broadcasts to save power, waking up just long enough to get a fix and transmit.</p>
+                            <div class="role-details">
+                                <div class="detail-item"><span class="detail-icon yes">✓</span> High-priority position packets</div>
+                                <div class="detail-item"><span class="detail-icon yes">✓</span> Participates in relay when awake</div>
+                                <div class="detail-item"><span class="detail-icon info">ℹ</span> Sleeps between position updates</div>
+                            </div>
+                            <div class="role-usecases">
+                                <div class="usecases-label">Use For</div>
+                                <ul class="usecases-list">
+                                    <li>📦 Asset tracking</li>
+                                    <li>🚗 Vehicle tracking</li>
+                                    <li>🐕 Pet trackers</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="role-card" id="role-sensor">
+                            <div class="role-header">
+                                <span class="role-name">SENSOR</span>
+                                <span class="role-badge badge-specialized">Telemetry</span>
+                            </div>
+                            <p class="role-description">Prioritizes sending telemetry data (temperature, humidity, barometric pressure, etc.). Sleeps between readings to extend battery life on remote sensor nodes.</p>
+                            <div class="role-details">
+                                <div class="detail-item"><span class="detail-icon yes">✓</span> High-priority telemetry packets</div>
+                                <div class="detail-item"><span class="detail-icon yes">✓</span> Participates in relay when awake</div>
+                                <div class="detail-item"><span class="detail-icon info">ℹ</span> Sleeps between telemetry intervals</div>
+                            </div>
+                            <div class="role-usecases">
+                                <div class="usecases-label">Use For</div>
+                                <ul class="usecases-list">
+                                    <li>🌡️ Weather stations</li>
+                                    <li>💨 Air quality monitors</li>
+                                    <li>🌱 Remote environmental sensors</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="role-card" id="role-tak">
+                            <div class="role-header">
+                                <span class="role-name">TAK / TAK_TRACKER</span>
+                                <span class="role-badge badge-specialized">ATAK</span>
+                            </div>
+                            <p class="role-description">Optimized for integration with ATAK (Android Team Awareness Kit). Reduces routine Meshtastic broadcasts to prioritize the Cursor-on-Target (CoT) data stream.</p>
+                            <div class="role-details">
+                                <div class="detail-item"><span class="detail-icon yes">✓</span> Optimized for ATAK EUD connection</div>
+                                <div class="detail-item"><span class="detail-icon yes">✓</span> TAK_TRACKER adds automatic PLI</div>
+                                <div class="detail-item"><span class="detail-icon info">ℹ</span> Reduces routine mesh traffic</div>
+                            </div>
+                            <div class="role-usecases">
+                                <div class="usecases-label">Use For</div>
+                                <ul class="usecases-list">
+                                    <li>🗺️ ATAK/WinTAK users</li>
+                                    <li>👥 Team situational awareness</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- SECTION: Infrastructure Roles -->
+                    <h2 id="infrastructure-roles">Want to Run a Router?</h2>
+
+                    <p>If you have a node in a great fixed location—solid power, excellent elevation, wide coverage—reach out to us! We'd love to talk about whether a router role makes sense for your setup and how it fits into the broader WPAMesh infrastructure.</p>
+                    
+                    <p><strong>Coordinated router placement is what makes a mesh network actually work well.</strong></p>
+
+                    <div class="alert alert-info">
+                        <div class="alert-title">🗺️ Not Sure If Your Location Qualifies?</div>
+                        <p>Punch your coordinates into <a href="https://site.meshtastic.org/" target="_blank">site.meshtastic.org</a>. Your proposed location should easily see <strong>75 kilometers or more</strong> if it's a good fit for a router role. If you're seeing less than that, a CLIENT role will serve you (and the mesh) better.</p>
+                    </div>
+
+                    <div class="method-card">
+                        <div class="method-header">
+                            <span class="method-name">Infrastructure Requirements</span>
+                        </div>
+                        <p class="method-description">Running a router is a commitment. Here's what we look for in infrastructure maintainers:</p>
+                        
+                        <div class="method-steps">
+                            <div class="method-steps-title">Requirements</div>
+                            <ol>
+                                <li><strong>Excellent location</strong> — High elevation with wide coverage (75+ km viewshed)</li>
+                                <li><strong>Reliable power</strong> — Always-on, with backup power or solar if possible</li>
+                                <li><strong>Meshtastic knowledge</strong> — Well-versed in the software, ecosystem, and have a moderate understanding of RF theory</li>
+                                <li><strong>Commitment to updates</strong> — Prepared to update firmware regularly to ensure mesh health as performance-improving updates become available</li>
+                                <li><strong>Coordination</strong> — Willing to communicate with other infrastructure maintainers</li>
+                            </ol>
+                        </div>
+                    </div>
+
+                    <div class="alert alert-success">
+                        <div class="alert-title">✓ That's a Lot of Boxes to Check!</div>
+                        <p>We know! But don't worry—you can still support the mesh with a non-router role device if you can't meet all the requirements. A well-placed CLIENT node at your house still helps the network. Not everyone needs to be a router, and the mesh works better when most nodes <em>aren't</em> routers.</p>
+                    </div>
+
+                    <p>Below are the infrastructure roles for reference. <strong>Please coordinate with us before using any of these.</strong></p>
+
+                    <div class="role-section">
+                        <div class="role-card danger" id="role-router">
+                            <div class="role-header">
+                                <span class="role-name">ROUTER</span>
+                                <span class="role-badge badge-danger">Coordination Required</span>
+                            </div>
+                            <p class="role-description">An infrastructure node that <em>always</em> relays messages and gets priority over regular clients. It "cuts in line" to rebroadcast before other nodes. <strong>Only use this if your location has been vetted by the mesh coordinators.</strong></p>
+                            <div class="role-details">
+                                <div class="detail-item"><span class="detail-icon warn">⚠</span> Always relays (takes priority)</div>
+                                <div class="detail-item"><span class="detail-icon yes">✓</span> Visible in node lists</div>
+                                <div class="detail-item"><span class="detail-icon info">ℹ</span> Reduced telemetry broadcasts</div>
+                                <div class="detail-item"><span class="detail-icon info">ℹ</span> Power saving enabled by default</div>
+                            </div>
+                            <div class="role-usecases">
+                                <div class="usecases-label">Location Requirements</div>
+                                <ul class="usecases-list">
+                                    <li>⛰️ Mountain peaks</li>
+                                    <li>🗼 Tall towers (15-20ft+ above surroundings)</li>
+                                    <li>🏙️ High-rises with clear line-of-sight</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="role-card caution" id="role-router-late">
+                            <div class="role-header">
+                                <span class="role-name">ROUTER_LATE</span>
+                                <span class="role-badge badge-caution">Coordination Required</span>
+                            </div>
+                            <p class="role-description">Like ROUTER, but waits for other nodes to relay first. Intended for "backup" infrastructure—filling gaps that primary routers don't cover. Still requires coordinator approval.</p>
+                            <div class="role-details">
+                                <div class="detail-item"><span class="detail-icon info">ℹ</span> Always relays, but waits for others first</div>
+                                <div class="detail-item"><span class="detail-icon yes">✓</span> Visible in node lists</div>
+                                <div class="detail-item"><span class="detail-icon warn">⚠</span> For backup coverage, not primary</div>
+                            </div>
+                            <div class="role-usecases">
+                                <div class="usecases-label">Use For</div>
+                                <ul class="usecases-list">
+                                    <li>🌄 Filling coverage gaps</li>
+                                    <li>📡 Secondary infrastructure</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="role-card danger" id="role-repeater">
+                            <div class="role-header">
+                                <span class="role-name">REPEATER</span>
+                                <span class="role-badge badge-danger">Coordination Required</span>
+                            </div>
+                            <p class="role-description">Like ROUTER, but completely silent—no telemetry, no node info, not visible in node lists. A pure relay station. For remote infrastructure sites where you want zero overhead.</p>
+                            <div class="role-details">
+                                <div class="detail-item"><span class="detail-icon warn">⚠</span> Always relays (takes priority)</div>
+                                <div class="detail-item"><span class="detail-icon no">✗</span> NOT visible in node lists</div>
+                                <div class="detail-item"><span class="detail-icon no">✗</span> No telemetry or own broadcasts</div>
+                            </div>
+                            <div class="role-usecases">
+                                <div class="usecases-label">Use For</div>
+                                <ul class="usecases-list">
+                                    <li>🏔️ Remote mountain sites</li>
+                                    <li>📻 Dedicated relay-only stations</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- SECTION: Contact -->
+                    <h2 id="contact">Need Help or Have a Router Site?</h2>
+
+                    <div class="contact-box">
+                        <h3>📡 Contact the WPA Mesh Coordinators</h3>
+                        <p>Questions about which role to use? Think you have a good location for a router? We're happy to help—that's what we're here for.</p>
+                        <div class="contact-buttons">
+                            <a href="https://discord.gg/67xqYqaqXP" class="contact-btn">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>
+                                Discord (PghMesh)
+                            </a>
+                            <a href="https://wpamesh.net/information-for-router-owners/" class="contact-btn">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                                Contact Form
+                            </a>
+                        </div>
+                    </div>
+
+                    <footer class="content-footer">
+                        <div class="footer-links">
+                            <a href="https://meshtastic.org/docs/configuration/radio/device/">Official Meshtastic Docs</a>
+                            <a href="https://meshtastic.org/blog/choosing-the-right-device-role/">Meshtastic Role Guide</a>
+                            <a href="https://meshtastic.org/docs/configuration/tips/">Configuration Tips</a>
+                        </div>
+                        <p>© 2025 WPAMesh · Not affiliated with Meshtastic LLC</p>
+                    </footer>
+
+                </article>
+            </div>
+        </main>
+
+        <!-- Table of Contents - Right Side -->
+        <aside class="toc-container">
+            <nav class="toc">
+                <div class="toc-title">On This Page</div>
+                <ul class="toc-list">
+                    <li><a href="#quick-answer">The Short Answer</a></li>
+                    <li><a href="#overview">What Are Device Roles?</a></li>
+                    <li><a href="#quick-reference">Quick Reference Table</a></li>
+                    <li><a href="#which-role">Which Role Should I Choose?</a></li>
+                    <li><a href="#client-roles">Client Roles (Use These)</a></li>
+                    <li class="toc-sub"><a href="#role-client">CLIENT</a></li>
+                    <li class="toc-sub"><a href="#role-client-mute">CLIENT_MUTE</a></li>
+                    <li class="toc-sub"><a href="#role-client-base">CLIENT_BASE</a></li>
+                    <li class="toc-sub"><a href="#role-client-hidden">CLIENT_HIDDEN</a></li>
+                    <li><a href="#specialized-roles">Specialized Roles</a></li>
+                    <li class="toc-sub"><a href="#role-tracker">TRACKER</a></li>
+                    <li class="toc-sub"><a href="#role-sensor">SENSOR</a></li>
+                    <li class="toc-sub"><a href="#role-tak">TAK</a></li>
+                    <li><a href="#infrastructure-roles">Want to Run a Router?</a></li>
+                    <li class="toc-sub"><a href="#role-router">ROUTER</a></li>
+                    <li class="toc-sub"><a href="#role-router-late">ROUTER_LATE</a></li>
+                    <li class="toc-sub"><a href="#role-repeater">REPEATER</a></li>
+                    <li><a href="#contact">Need Help?</a></li>
+                </ul>
+            </nav>
+        </aside>
+    </div>
+
+    <script>
+        // Highlight current section in TOC while scrolling
+        document.addEventListener('DOMContentLoaded', function() {
+            const tocLinks = document.querySelectorAll('.toc-list a');
+            const sections = [];
+            
+            tocLinks.forEach(link => {
+                const id = link.getAttribute('href').substring(1);
+                const section = document.getElementById(id);
+                if (section) {
+                    sections.push({ id, element: section, link });
+                }
+            });
+
+            function updateActiveLink() {
+                const scrollPos = window.scrollY + 100;
+                
+                let currentSection = sections[0];
+                
+                for (const section of sections) {
+                    if (section.element.offsetTop <= scrollPos) {
+                        currentSection = section;
+                    }
+                }
+                
+                tocLinks.forEach(link => link.classList.remove('active'));
+                if (currentSection) {
+                    currentSection.link.classList.add('active');
+                }
+            }
+
+            window.addEventListener('scroll', updateActiveLink);
+            updateActiveLink();
+        });
+    </script>
+</body>
+</html>
