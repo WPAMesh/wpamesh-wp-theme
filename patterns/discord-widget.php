@@ -19,7 +19,7 @@
 
 <!-- wp:buttons {"layout":{"type":"flex","justifyContent":"center"}} -->
 <div class="wp-block-buttons"><!-- wp:button {"className":"wpamesh-discord-btn"} -->
-<div class="wpamesh-discord-btn wp-block-button"><a class="wp-block-button__link wp-element-button" href="https://discord.gg/67xqYqaqXP" target="_blank" rel="noreferrer noopener">Join Discord</a></div>
+<div class="wpamesh-discord-btn wp-block-button"><a class="wp-block-button__link wp-element-button" href="https://wpamesh.net/discord-access/" target="_blank" rel="noreferrer noopener">Join Discord</a></div>
 <!-- /wp:button --></div>
 <!-- /wp:buttons --></div>
 <!-- /wp:group --></div>
