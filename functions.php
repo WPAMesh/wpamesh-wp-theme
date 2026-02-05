@@ -750,6 +750,11 @@ function wpamesh_deactivate_cron() {
     if ( $timestamp ) {
         wp_unschedule_event( $timestamp, 'wpamesh_refresh_sidebar_stats' );
     }
+
+    $timestamp = wp_next_scheduled( 'wpamesh_refresh_discord_widget' );
+    if ( $timestamp ) {
+        wp_unschedule_event( $timestamp, 'wpamesh_refresh_discord_widget' );
+    }
 }
 add_action( 'switch_theme', 'wpamesh_deactivate_cron' );
 
@@ -799,6 +804,11 @@ add_action( 'wp_enqueue_scripts', function() {
     wp_localize_script( 'wpamesh-sidebar-stats', 'wpameshStats', array(
         'ajaxUrl' => admin_url( 'admin-ajax.php' ),
         'action'  => 'wpamesh_sidebar_stats',
+    ) );
+
+    wp_localize_script( 'wpamesh-sidebar-stats', 'wpameshDiscord', array(
+        'ajaxUrl' => admin_url( 'admin-ajax.php' ),
+        'action'  => 'wpamesh_discord_widget',
     ) );
 
     // Node list script
@@ -1489,6 +1499,126 @@ function wpamesh_node_list_shortcode( $atts ) {
 
 /**
  * =============================================================================
+ * Discord Widget - Online Member Count with Background Refresh
+ * =============================================================================
+ * Fetches online member count from Discord's public widget API.
+ * Uses WP-Cron for background refresh so page loads never block on API calls.
+ */
+
+/**
+ * Get Discord widget data from cache
+ *
+ * Returns cached data immediately. If cache is empty, returns defaults
+ * and schedules a background refresh.
+ *
+ * @return array Widget data with online_count and last_updated
+ */
+function wpamesh_get_discord_widget_data() {
+    $cached = get_transient( 'wpamesh_discord_widget' );
+
+    if ( false !== $cached ) {
+        return $cached;
+    }
+
+    // Schedule background refresh if not already pending
+    if ( ! wp_next_scheduled( 'wpamesh_refresh_discord_widget' ) ) {
+        wp_schedule_single_event( time(), 'wpamesh_refresh_discord_widget' );
+    }
+
+    return array(
+        'online_count' => null,
+        'last_updated' => null,
+    );
+}
+
+/**
+ * Refresh Discord widget data in background
+ *
+ * Called by WP-Cron. Fetches online count from Discord's widget API.
+ *
+ * @return array Widget data
+ */
+function wpamesh_do_refresh_discord_widget() {
+    $guild_id = wpamesh_get_discord_guild_id();
+    if ( empty( $guild_id ) ) {
+        return array(
+            'online_count' => null,
+            'last_updated' => null,
+        );
+    }
+
+    $response = wp_remote_get( 'https://discord.com/api/guilds/' . urlencode( $guild_id ) . '/widget.json', array(
+        'timeout' => 10,
+        'headers' => array(
+            'Accept' => 'application/json',
+        ),
+    ) );
+
+    if ( is_wp_error( $response ) ) {
+        return array(
+            'online_count' => null,
+            'last_updated' => null,
+        );
+    }
+
+    $code = wp_remote_retrieve_response_code( $response );
+    if ( $code !== 200 ) {
+        return array(
+            'online_count' => null,
+            'last_updated' => null,
+        );
+    }
+
+    $body = json_decode( wp_remote_retrieve_body( $response ), true );
+    if ( ! is_array( $body ) || ! isset( $body['presence_count'] ) ) {
+        return array(
+            'online_count' => null,
+            'last_updated' => null,
+        );
+    }
+
+    $data = array(
+        'online_count' => intval( $body['presence_count'] ),
+        'last_updated' => time(),
+    );
+
+    set_transient( 'wpamesh_discord_widget', $data, 20 * MINUTE_IN_SECONDS );
+
+    return $data;
+}
+add_action( 'wpamesh_refresh_discord_widget', 'wpamesh_do_refresh_discord_widget' );
+
+/**
+ * Schedule recurring Discord widget refresh
+ */
+function wpamesh_schedule_discord_widget_refresh() {
+    if ( ! wp_next_scheduled( 'wpamesh_refresh_discord_widget' ) ) {
+        wp_schedule_event( time(), 'wpamesh_fifteen_minutes', 'wpamesh_refresh_discord_widget' );
+    }
+}
+add_action( 'init', 'wpamesh_schedule_discord_widget_refresh' );
+
+/**
+ * AJAX endpoint for Discord widget data
+ */
+add_action( 'wp_ajax_wpamesh_discord_widget', 'wpamesh_ajax_discord_widget' );
+add_action( 'wp_ajax_nopriv_wpamesh_discord_widget', 'wpamesh_ajax_discord_widget' );
+
+function wpamesh_ajax_discord_widget() {
+    $data = wpamesh_get_discord_widget_data();
+
+    // If cache is empty, do a synchronous refresh (AJAX is already async)
+    if ( $data['last_updated'] === null ) {
+        $data = wpamesh_do_refresh_discord_widget();
+    }
+
+    wp_send_json_success( array(
+        'online_count' => $data['online_count'],
+    ) );
+}
+
+/**
+ * =============================================================================
  * Discord Notifications
  * =============================================================================
  * Sends Discord webhook notifications when posts in specific categories are published.
@@ -1515,10 +1645,30 @@ function wpamesh_get_discord_webhook() {
 }
 
 /**
+ * Get Discord guild ID for widget API
+ */
+function wpamesh_get_discord_guild_id() {
+    if ( defined( 'WPAMESH_DISCORD_GUILD_ID' ) && WPAMESH_DISCORD_GUILD_ID ) {
+        return WPAMESH_DISCORD_GUILD_ID;
+    }
+    $option = get_option( 'wpamesh_discord_guild_id', '' );
+    if ( ! empty( $option ) ) {
+        return $option;
+    }
+    return apply_filters( 'wpamesh_discord_guild_id', '' );
+}
+
+/**
  * Register Discord settings in admin
  */
 add_action( 'admin_init', function() {
     // Register the setting
+    register_setting( 'general', 'wpamesh_discord_guild_id', array(
+        'type'              => 'string',
+        'sanitize_callback' => 'sanitize_text_field',
+        'default'           => '',
+    ) );
+
     register_setting( 'general', 'wpamesh_discord_webhook', array(
         'type'              => 'string',
         'sanitize_callback' => 'esc_url_raw',
@@ -1534,11 +1684,37 @@ add_action( 'admin_init', function() {
     // Add settings section
     add_settings_section(
         'wpamesh_discord_section',
-        __( 'Discord Notifications', 'wpamesh' ),
+        __( 'Discord Integration', 'wpamesh' ),
         function() {
-            echo '<p>' . esc_html__( 'Configure Discord webhook notifications for new posts.', 'wpamesh' ) . '</p>';
+            echo '<p>' . esc_html__( 'Configure Discord widget and webhook notifications.', 'wpamesh' ) . '</p>';
         },
         'general'
+    );
+
+    // Guild ID field
+    add_settings_field(
+        'wpamesh_discord_guild_id',
+        __( 'Discord Guild ID', 'wpamesh' ),
+        function() {
+            $value = get_option( 'wpamesh_discord_guild_id', '' );
+            $disabled = defined( 'WPAMESH_DISCORD_GUILD_ID' ) && WPAMESH_DISCORD_GUILD_ID;
+            ?>
+            <input type="text"
+                   name="wpamesh_discord_guild_id"
+                   id="wpamesh_discord_guild_id"
+                   value="<?php echo esc_attr( $disabled ? WPAMESH_DISCORD_GUILD_ID : $value ); ?>"
+                   class="regular-text"
+                   <?php echo $disabled ? 'disabled' : ''; ?>
+            />
+            <?php if ( $disabled ) : ?>
+            <p class="description"><?php esc_html_e( 'Set via WPAMESH_DISCORD_GUILD_ID constant in wp-config.php', 'wpamesh' ); ?></p>
+            <?php else : ?>
+            <p class="description"><?php esc_html_e( 'Server Settings → Engagement → Server Widget → Server ID. Required for live member count.', 'wpamesh' ); ?></p>
+            <?php endif; ?>
+            <?php
+        },
+        'general',
+        'wpamesh_discord_section'
     );
 
     // Webhook URL field

@@ -663,7 +663,8 @@ html {
 }
 
 /* Stat box update animation */
-.wpamesh-stat-box .number.wpamesh-stat-updated {
+.wpamesh-stat-box .number.wpamesh-stat-updated,
+.wpamesh-discord-widget .online.wpamesh-stat-updated {
     animation: wpamesh-stat-pulse 0.3s ease-out;
 }
 

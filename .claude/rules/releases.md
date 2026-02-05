@@ -12,14 +12,17 @@ This is required to bust CDN caches - the site uses Cloudflare caching.
 
 ## Creating a Zip
 
+The zip filename **must** be `wpamesh-theme.zip` (matching the installed folder name in `wp-content/themes/`). This allows WordPress to detect it as an update and offer "Replace current with uploaded" instead of creating a duplicate.
+
 ```bash
-zip -r ../wpamesh-theme-X.Y.Z.zip . -x "*.git*" -x "*.DS_Store" -x "scripts/*" -x "*.baked"
+zip -r ../wpamesh-theme.zip . -x "*.git*" -x "*.DS_Store" -x "scripts/*" -x "*.baked" -x "pages/previews/*"
 ```
 
 Exclude:
 - `.git/` - Version control
 - `scripts/` - Development utilities
 - `*.baked` - Temporary preview files
+- `pages/previews/` - Standalone HTML previews (not needed in production)
 
 ## WAF Considerations
 

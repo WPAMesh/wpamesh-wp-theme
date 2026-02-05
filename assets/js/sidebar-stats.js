@@ -91,14 +91,63 @@
         });
     }
 
+    /**
+     * Fetch Discord online count and update widget
+     */
+    function refreshDiscord() {
+        if ( typeof wpameshDiscord === 'undefined' || ! wpameshDiscord.ajaxUrl ) {
+            return;
+        }
+
+        var el = document.querySelector( '[data-discord-online]' );
+        if ( ! el ) {
+            return;
+        }
+
+        var xhr = new XMLHttpRequest();
+        xhr.open( 'POST', wpameshDiscord.ajaxUrl, true );
+        xhr.setRequestHeader( 'Content-Type', 'application/x-www-form-urlencoded' );
+
+        xhr.onreadystatechange = function() {
+            if ( xhr.readyState !== 4 || xhr.status !== 200 ) {
+                return;
+            }
+
+            try {
+                var response = JSON.parse( xhr.responseText );
+                if ( response.success && response.data && response.data.online_count !== null ) {
+                    var count = response.data.online_count;
+                    var text = count === 1 ? count + ' member online' : count + ' members online';
+                    el.textContent = text;
+                    el.classList.add( 'wpamesh-stat-updated' );
+                    setTimeout( function() {
+                        el.classList.remove( 'wpamesh-stat-updated' );
+                    }, 300 );
+                }
+            } catch ( e ) {
+                console.error( 'WPAMesh: Failed to parse Discord response', e );
+            }
+        };
+
+        xhr.send( 'action=' + encodeURIComponent( wpameshDiscord.action ) );
+    }
+
+    /**
+     * Refresh all sidebar data
+     */
+    function refreshAll() {
+        refreshStats();
+        refreshDiscord();
+    }
+
     // Run on DOM ready
     if ( document.readyState === 'loading' ) {
-        document.addEventListener( 'DOMContentLoaded', refreshStats );
+        document.addEventListener( 'DOMContentLoaded', refreshAll );
     } else {
-        refreshStats();
+        refreshAll();
     }
 
     // Optionally refresh periodically (every 5 minutes)
-    setInterval( refreshStats, 5 * 60 * 1000 );
+    setInterval( refreshAll, 5 * 60 * 1000 );
 
 } )();
