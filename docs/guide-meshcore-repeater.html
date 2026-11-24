@@ -78,21 +78,7 @@
 </div>
 
       <h2 id="regions">Region setup</h2>
-<p>This builds the <code>pit</code> hierarchy in one line. Every region it creates allows flood traffic by default. North of New Castle and Grove City, use <code>eri</code> instead of <code>pit</code> (see <a href="guide-meshcore-regions.html#which">Pit or eri?</a>).</p>
-<div class="wpamesh-card wpamesh-cli">
-  <div class="bar"><span>Repeater CLI</span><button class="wpamesh-copy" type="button">Copy all</button></div>
-  <ol>
-    <li><code>region def us us-pa wpa pit</code><button class="wpamesh-copy" type="button" aria-label="Copy: region def us us-pa wpa pit">Copy</button></li>
-    <li><code>region allowf *</code><button class="wpamesh-copy" type="button" aria-label="Copy: region allowf *">Copy</button></li>
-    <li><code>region save</code><button class="wpamesh-copy" type="button" aria-label="Copy: region save">Copy</button></li>
-  </ol>
-</div>
-<p>The reply to <code>region def</code> is the resulting region tree. Check it before you run <code>region save</code>.</p>
-<div class="wpamesh-callout tip">
-  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
-  <span class="title">Already have regions set?</span>
-  <p><code>region def</code> doesn’t clear the existing tree. Names that already exist get moved under the new parent, and anything else stays. To start clean, <code>region remove</code> the regions you don’t want first.</p>
-</div>
+<p>Every repeater needs its region hierarchy set. Follow <a href="guide-meshcore-regions.html#setup">Setting it up</a> in the regions guide, including the extra step for repeaters.</p>
 
       <h2 id="antennas">Antennas and power</h2>
 <p>Radio power plus antenna gain can’t go over about 36 dBm. The <a href="guide-meshcore-radio.html#antennas">antennas and power</a> section has the details and a quick table.</p>

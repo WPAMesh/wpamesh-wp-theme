@@ -104,8 +104,20 @@
     <li><code>region save</code><button class="wpamesh-copy" type="button" aria-label="Copy: region save">Copy</button></li>
   </ol>
 </div>
-<p>North of New Castle and Grove City, swap <code>pit</code> for <code>eri</code>. The reply to <code>region def</code> shows the resulting tree, so check it before saving.</p>
-<p>Running a repeater? See <a href="guide-meshcore-repeater.html#regions">repeater configuration</a> for the full setup.</p>
+<p>North of New Castle and Grove City, swap <code>pit</code> for <code>eri</code>. The reply to <code>region def</code> shows the resulting tree, so check it before saving. Every region it creates allows flood traffic by default.</p>
+<div class="wpamesh-callout tip">
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+  <span class="title">Already have regions set?</span>
+  <p><code>region def</code> doesn’t clear the existing tree. Names that already exist get moved under the new parent, and anything else stays. To start clean, <code>region remove</code> the regions you don’t want first.</p>
+</div>
+<h3>Repeaters</h3>
+<p>Repeaters also need to allow flood traffic for the wildcard region. Run this before <code>region save</code>:</p>
+<div class="wpamesh-card wpamesh-cli">
+  <div class="bar"><span>Repeater CLI</span><button class="wpamesh-copy" type="button">Copy all</button></div>
+  <ol>
+    <li><code>region allowf *</code><button class="wpamesh-copy" type="button" aria-label="Copy: region allowf *">Copy</button></li>
+  </ol>
+</div>
 
       <h2 id="local">Don’t go narrower than airport codes</h2>
 <p>Don’t add regions more specific than IATA codes. Many of us have to make very circular hops just to reach people the next city over, and a tighter region would cut those paths off.</p>
