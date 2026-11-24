@@ -1252,6 +1252,7 @@ p { margin: 0; }
     & .head { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
     & .platforms { font-size: 14px; color: var(--wpamesh-text-muted); margin-top: -6px; }
     & a { margin-top: auto; font-weight: 600; font-size: 15px; }
+    & .links { margin-top: auto; }
 }
 
 /* Guides index */

@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Neighboring meshes · WPAmesh redesign preview</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&amp;family=Barlow+Condensed:wght@600;700&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+<script src="assets/demo.js" defer></script>
+</head>
+<body>
+<a class="wpamesh-skip" href="#main">Skip to main content</a>
+
+<div class="wpamesh-demo-banner">
+  Design preview, not the live site. Links come from Discord and haven’t all been checked recently. Current site: <a href="https://wpamesh.net">wpamesh.net</a>
+</div>
+
+<header class="wpamesh-header">
+  <div class="wpamesh-wrap">
+    <a class="wpamesh-logo" href="index.html"><span class="badge">WPA</span><span class="word">MESH</span></a>
+    <button class="wpamesh-menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="wpamesh-nav">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+    </button>
+    <nav class="wpamesh-nav" id="wpamesh-nav" aria-label="Main">
+      <ul>
+        <li><a href="index.html">Get started</a></li>
+        <li><a href="index.html#networks">Networks</a></li>
+        <li><a href="https://map.wpamesh.net/map">Live map</a></li>
+        <li><a href="infrastructure.html">Infrastructure</a></li>
+        <li><a href="guides.html" aria-current="page">Guides</a></li>
+        <li><a href="index.html#events">Events</a></li>
+      </ul>
+      <div class="actions">
+        <a class="login" href="https://mqtt.wpamesh.net">MQTT login</a>
+        <a class="wpamesh-btn discord" href="https://wpamesh.net/discord-access/">Join the Discord</a>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<main id="main" class="wpamesh-wrap">
+  <nav class="wpamesh-crumbs" aria-label="Breadcrumb">
+    <a href="guides.html">Guides</a><span aria-hidden="true">/</span>Community
+  </nav>
+
+  <div class="wpamesh-guide-head">
+    <p class="kicker">Community</p>
+    <h1>Neighboring meshes</h1>
+    <p class="lede">Western PA doesn’t end at the county line. These are the meshes around us, for when your node hears someone new or you’re traveling.</p>
+  </div>
+
+  <div class="wpamesh-guide-layout">
+    <article class="wpamesh-article">
+      <h2 id="list">Meshes near us</h2>
+<div class="wpamesh-picks">
+  <div class="wpamesh-card">
+    <div class="head"><h3>Lake Effect Mesh</h3></div>
+    <p class="platforms">Erie County</p>
+    <p class="links"><a href="https://lemesh.us/">Website</a> · <a href="https://discord.gg/htjWSASKSa">Discord</a></p>
+  </div>
+  <div class="wpamesh-card">
+    <div class="head"><h3>North East Ohio Mesh</h3></div>
+    <p class="platforms">NE Ohio</p>
+    <p>Meshtastic</p>
+    <p class="links"><a href="https://neome.sh/">Website</a></p>
+  </div>
+  <div class="wpamesh-card">
+    <div class="head"><h3>Ohio Valley Mesh</h3></div>
+    <p class="platforms">Ohio Valley</p>
+    <p>Moved to MeshCore</p>
+    <p class="links"><a href="https://ovmesh.com/">Website</a> · <a href="https://discord.gg/kwKhFamfaU">Discord</a></p>
+  </div>
+  <div class="wpamesh-card">
+    <div class="head"><h3>Central Ohio Mesh</h3></div>
+    <p class="platforms">Columbus metro</p>
+    <p>Meshtastic. Sometimes heard from our western edge</p>
+    <p class="links"><a href="https://meshcolumb.us/">Website</a></p>
+  </div>
+  <div class="wpamesh-card">
+    <div class="head"><h3>WV Mesh Net</h3></div>
+    <p class="platforms">West Virginia</p>
+    <p>Mostly reached on flyovers</p>
+    <p class="links"><a href="https://www.wvmesh.net/">Website</a></p>
+  </div>
+  <div class="wpamesh-card">
+    <div class="head"><h3>Somerset PA Mesh</h3></div>
+    <p class="platforms">Somerset County</p>
+    <p>Between Laurel Hill and Allegheny Mountain</p>
+    <p class="links"><a href="https://www.somersetpamesh.com/">Website</a></p>
+  </div>
+  <div class="wpamesh-card">
+    <div class="head"><h3>Central PA Mesh</h3></div>
+    <p class="platforms">Centre County</p>
+    <p class="links"><a href="https://discord.gg/Xe5WvYtHPg">Discord</a></p>
+  </div>
+  <div class="wpamesh-card">
+    <div class="head"><h3>Nittany Valley Mesh</h3></div>
+    <p class="platforms">Central PA</p>
+    <p>Meshtastic</p>
+    <p class="links"><a href="https://nittanyvalleymesh.org/">Website</a></p>
+  </div>
+  <div class="wpamesh-card">
+    <div class="head"><h3>Susquehanna Valley Mesh</h3></div>
+    <p class="platforms">Eastern PA, growing west</p>
+    <p>Meshtastic</p>
+    <p class="links"><a href="https://svmesh.net/">Website</a></p>
+  </div>
+</div>
+<p>For the rest of the state, <a href="https://pame.sh/">PAMesh</a> keeps a directory of public Meshtastic and MeshCore groups in Pennsylvania.</p>
+
+      <h2 id="borders">Running a node near a border?</h2>
+<p>MeshCore repeaters near a neighbor may need to carry that mesh’s regions too. Agree on it with both meshes first. See <a href="guide-meshcore-regions.html#which">Near a state line?</a> in the regions guide.</p>
+<p>Neighboring meshes post updates in #friends-n-family on our Discord.</p>
+
+      <h2 id="missing">Missing someone?</h2>
+<p>Let us know in the Discord and we’ll add them.</p><div class="wpamesh-next">
+  <a class="wpamesh-card discord" href="https://wpamesh.net/discord-access/"><b>Questions?</b>Ask in the Discord. Someone is usually around.</a>
+</div>
+    </article>
+
+    <aside class="wpamesh-toc" aria-label="On this page">
+      <p class="wpamesh-aside-title">On this page</p>
+      <ol>
+        <li><a href="#list">Meshes near us</a></li>
+        <li><a href="#borders">Running a node near a border?</a></li>
+        <li><a href="#missing">Missing someone?</a></li>
+      </ol>
+      <div class="wpamesh-card switch">
+        <strong>Stuck?</strong>Most help happens in our Discord. <a href="https://wpamesh.net/discord-access/">Ask there</a>
+      </div>
+    </aside>
+  </div>
+</main>
+
+<footer class="wpamesh-footer">
+  <div class="wpamesh-wrap">
+    <span>WPAmesh · Western Pennsylvania community mesh</span>
+    <nav aria-label="Footer"><a href="guides.html">Guides</a><a href="https://map.wpamesh.net/map">Live map</a><a href="https://mqtt.wpamesh.net">MQTT server</a><a href="https://wpamesh.net/discord-access/">Discord</a></nav>
+  </div>
+</footer>
+</body>
+</html>
