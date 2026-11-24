@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Guides · WPAmesh redesign preview</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&amp;family=Barlow+Condensed:wght@600;700&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+<script src="assets/demo.js" defer></script>
+</head>
+<body>
+<a class="wpamesh-skip" href="#main">Skip to main content</a>
+
+<div class="wpamesh-demo-banner">
+  Design preview, not the live site. Faded guides exist on the current site but aren’t in this preview. Current site: <a href="https://wpamesh.net">wpamesh.net</a>
+</div>
+
+<header class="wpamesh-header">
+  <div class="wpamesh-wrap">
+    <a class="wpamesh-logo" href="index.html"><span class="badge">WPA</span><span class="word">MESH</span></a>
+    <button class="wpamesh-menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="wpamesh-nav">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+    </button>
+    <nav class="wpamesh-nav" id="wpamesh-nav" aria-label="Main">
+      <ul>
+        <li><a href="index.html">Get started</a></li>
+        <li><a href="index.html#networks">Networks</a></li>
+        <li><a href="https://map.wpamesh.net/map">Live map</a></li>
+        <li><a href="infrastructure.html">Infrastructure</a></li>
+        <li><a href="guides.html" aria-current="page">Guides</a></li>
+        <li><a href="index.html#events">Events</a></li>
+      </ul>
+      <div class="actions">
+        <a class="login" href="https://mqtt.wpamesh.net">MQTT login</a>
+        <a class="wpamesh-btn discord" href="https://wpamesh.net/discord-access/">Join the Discord</a>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<main id="main" class="wpamesh-wrap">
+  <div class="wpamesh-page-head">
+    <h1>Guides</h1>
+    <p>Setup help for every network we run. New here? Start with choosing a MeshCore radio.</p>
+  </div>
+
+  <section class="wpamesh-guide-group">
+    <div class="head"><span class="wpamesh-chip lg">MC</span><h2>MeshCore</h2></div>
+    <div class="wpamesh-guide-list">
+      <a class="wpamesh-card" href="guide-meshcore-radio.html"><b>Choosing a MeshCore radio</b><span>Recommended radios, flashing, and antenna power limits.</span></a>
+      <a class="wpamesh-card" href="guide-meshcore-regions.html"><b>MeshCore regions</b><span>The WPA region hierarchy, and pit vs. eri.</span></a>
+      <a class="wpamesh-card" href="guide-meshcore-repeater.html"><b>Repeater configuration</b><span>Recommended settings and region commands, ready to copy.</span></a>
+      <a class="wpamesh-card" href="guide-meshcore-observers.html"><b>Running an observer</b><span>Feed packets to CoreScope from WiFi or a computer.</span></a>
+    </div>
+  </section>
+
+  <section class="wpamesh-guide-group">
+    <div class="head"><span class="wpamesh-chip mt lg">MT</span><h2>Meshtastic</h2></div>
+    <div class="wpamesh-guide-list">
+      <a class="wpamesh-card" href="guide-meshtastic.html"><b>Getting started on Meshtastic</b><span>Firmware, region, modem preset and channels.</span></a>
+      <a class="wpamesh-card soon" href="#" aria-disabled="true"><b>Device roles</b><span>Which role to pick, and why CLIENT is almost always right.</span></a>
+      <a class="wpamesh-card soon" href="#" aria-disabled="true"><b>Reaching the mesh</b><span>How to tell if your node is being heard.</span></a>
+    </div>
+  </section>
+
+  <section class="wpamesh-guide-group">
+    <div class="head"><h2>Community</h2></div>
+    <div class="wpamesh-guide-list">
+      <a class="wpamesh-card soon" href="#" aria-disabled="true"><b>Property owner FAQ</b><span>For owners of tall buildings or tower space.</span></a>
+    </div>
+  </section>
+</main>
+
+<footer class="wpamesh-footer">
+  <div class="wpamesh-wrap">
+    <span>WPAmesh · Western Pennsylvania community mesh</span>
+    <nav aria-label="Footer"><a href="guides.html">Guides</a><a href="https://map.wpamesh.net/map">Live map</a><a href="https://mqtt.wpamesh.net">MQTT server</a><a href="https://wpamesh.net/discord-access/">Discord</a></nav>
+  </div>
+</footer>
+</body>
+</html>

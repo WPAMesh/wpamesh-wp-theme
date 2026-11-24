@@ -45,4 +45,23 @@ document.addEventListener('DOMContentLoaded', () => {
         addEventListener('scroll', update, { passive: true });
         update();
     }
+
+    document.addEventListener('click', async (e) => {
+        const btn = e.target.closest('.wpamesh-copy');
+        if (!btn) return;
+        const block = btn.closest('.wpamesh-cli');
+        const line = btn.closest('li');
+        const text = line
+            ? line.querySelector('code').textContent
+            : [...block.querySelectorAll('li code, pre')].map((c) => c.textContent).join('\n');
+        try {
+            await navigator.clipboard.writeText(text);
+        } catch {
+            return;
+        }
+        const label = btn.textContent;
+        btn.textContent = 'Copied';
+        btn.classList.add('done');
+        setTimeout(() => { btn.textContent = label; btn.classList.remove('done'); }, 1500);
+    });
 });

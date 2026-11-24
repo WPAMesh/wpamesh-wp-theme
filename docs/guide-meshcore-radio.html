@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Choosing a MeshCore radio · WPAmesh redesign preview</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&amp;family=Barlow+Condensed:wght@600;700&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+<script src="assets/demo.js" defer></script>
+</head>
+<body>
+<a class="wpamesh-skip" href="#main">Skip to main content</a>
+
+<div class="wpamesh-demo-banner">
+  Design preview, not the live site. This guide is a draft compiled from Discord notes. Current site: <a href="https://wpamesh.net">wpamesh.net</a>
+</div>
+
+<header class="wpamesh-header">
+  <div class="wpamesh-wrap">
+    <a class="wpamesh-logo" href="index.html"><span class="badge">WPA</span><span class="word">MESH</span></a>
+    <button class="wpamesh-menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="wpamesh-nav">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+    </button>
+    <nav class="wpamesh-nav" id="wpamesh-nav" aria-label="Main">
+      <ul>
+        <li><a href="index.html">Get started</a></li>
+        <li><a href="index.html#networks">Networks</a></li>
+        <li><a href="https://map.wpamesh.net/map">Live map</a></li>
+        <li><a href="infrastructure.html">Infrastructure</a></li>
+        <li><a href="guides.html" aria-current="page">Guides</a></li>
+        <li><a href="index.html#events">Events</a></li>
+      </ul>
+      <div class="actions">
+        <a class="login" href="https://mqtt.wpamesh.net">MQTT login</a>
+        <a class="wpamesh-btn discord" href="https://wpamesh.net/discord-access/">Join the Discord</a>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<main id="main" class="wpamesh-wrap">
+  <nav class="wpamesh-crumbs" aria-label="Breadcrumb">
+    <a href="guides.html">Guides</a><span aria-hidden="true">/</span>MeshCore
+  </nav>
+
+  <div class="wpamesh-guide-head">
+    <p class="kicker"><span class="wpamesh-chip ">MC</span>MeshCore guide</p>
+    <h1>Choosing a MeshCore radio</h1>
+    <p class="lede">You only need one radio to get on MeshCore. These are the ones our regulars recommend, and how to get MeshCore onto them.</p>
+  </div>
+
+  <div class="wpamesh-guide-layout">
+    <article class="wpamesh-article">
+      <h2 id="radios">Radios we recommend</h2>
+<div class="wpamesh-picks">
+  <div class="wpamesh-card top-pick">
+    <div class="head"><h3>Heltec T096</h3><span class="wpamesh-pill gold">Best value</span></div>
+    <p>The best price-to-performance ratio and a good all-around unit. Comes fully assembled with a case, 3000 mAh battery, GPS and antenna.</p>
+    <a href="https://www.amazon.com/dp/B0H6FD98Z4">View on Amazon →</a>
+  </div>
+  <div class="wpamesh-card">
+    <div class="head"><h3>SenseCAP MeshTracker X1</h3><span class="wpamesh-pill outline">Card-sized</span></div>
+    <p>The best credit-card-style radio. Dual-band GPS, IP66 rated, LR2021 LoRa chip. Often backordered.</p>
+    <a href="https://www.seeedstudio.com/sensecap-meshtracker-x1-meshtastic-gps-tracker-p-6935.html">View at Seeed Studio →</a>
+  </div>
+</div>
+<p>Both are sold as “Meshtastic” devices. That’s fine: the same hardware runs MeshCore once you flash it.</p>
+<div class="wpamesh-callout tip">
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18h6M10 22h4M12 2a7 7 0 0 0-4 12.7V17h8v-2.3A7 7 0 0 0 12 2z"/></svg>
+  <span class="title">T096: keep the screen attached</span>
+  <p>The T096’s BLE and GPS antennas are built into the screen bezel. If you disconnect the screen ribbon cable, keep that hardware attached so Bluetooth still works when you need it, for OTA updates and such.</p>
+</div>
+
+      <h2 id="flashing">Flashing MeshCore</h2>
+<p>The easiest way to flash MeshCore is the <a href="https://meshamerica.com/device-configurator/">Mesh America Device Configurator</a>. It runs in your browser.</p>
+<p>Two alternative firmwares are popular here:</p>
+<div class="wpamesh-card wpamesh-guide-table">
+  <table>
+    <thead><tr><th scope="col">Firmware</th><th scope="col">Why use it</th></tr></thead>
+    <tbody>
+      <tr><td>Keymind Cascade</td><td class="wpamesh-ph">[One-line description]</td></tr>
+      <tr><td><a href="https://easyskymesh.com/">Easy SkyMesh PowerSaving</a></td><td>Much better battery life on ESP32 and nRF52 boards. Has its own web flasher.</td></tr>
+    </tbody>
+  </table>
+</div>
+
+      <h2 id="antennas">Antennas and power</h2>
+<p>Radio power and antenna gain are two different numbers. Power is in <strong>dBm</strong>, antenna gain is in <strong>dBi</strong>, and the FCC limit covers both together.</p>
+<p>On this band the FCC caps the radio at 1 W (30 dBm) with an antenna of 6 dBi or less. That works out to a ceiling of about <strong>36 dBm</strong> for radio power plus antenna gain.</p>
+<div class="wpamesh-card wpamesh-guide-table">
+  <table>
+    <thead><tr><th scope="col">Radio power</th><th scope="col">Largest legal antenna</th><th scope="col">Examples</th></tr></thead>
+    <tbody>
+      <tr><td>30 dBm</td><td>6 dBi</td><td>1 W radios</td></tr>
+      <tr><td>28 dBm</td><td>About 8 dBi</td><td>T096, Tracker V2</td></tr>
+    </tbody>
+  </table>
+</div>
+<p>Coax loss counts in your favor, so you can go a little higher if you actually measure your loss.</p>
+<div class="wpamesh-callout tip">
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18h6M10 22h4M12 2a7 7 0 0 0-4 12.7V17h8v-2.3A7 7 0 0 0 12 2z"/></svg>
+  <span class="title">Higher gain isn’t always better</span>
+  <p>Higher-gain antennas squash the signal toward the horizon. Somewhere around 5-6 dBi on a ridge still reaches down into the valleys, and 3-5 dBi suits a house in a hollow aiming up at the ridge.</p>
+</div>
+
+      <h2 id="next">Next steps</h2>
+<div class="wpamesh-next">
+  <a class="wpamesh-card" href="guide-meshcore-regions.html"><b>Set your region</b>Pick pit or eri so your radio uses the right scope.</a>
+  <a class="wpamesh-card discord" href="https://wpamesh.net/discord-access/"><b>Questions?</b>Ask in the Discord. Someone is usually around.</a>
+</div>
+    </article>
+
+    <aside class="wpamesh-toc" aria-label="On this page">
+      <p class="wpamesh-aside-title">On this page</p>
+      <ol>
+        <li><a href="#radios">Radios we recommend</a></li>
+        <li><a href="#flashing">Flashing MeshCore</a></li>
+        <li><a href="#antennas">Antennas and power</a></li>
+        <li><a href="#next">Next steps</a></li>
+      </ol>
+      <div class="wpamesh-card switch">
+        <strong>Stuck?</strong>Most help happens in our Discord. <a href="https://wpamesh.net/discord-access/">Ask there</a>
+      </div>
+    </aside>
+  </div>
+</main>
+
+<footer class="wpamesh-footer">
+  <div class="wpamesh-wrap">
+    <span>WPAmesh · Western Pennsylvania community mesh</span>
+    <nav aria-label="Footer"><a href="guides.html">Guides</a><a href="https://map.wpamesh.net/map">Live map</a><a href="https://mqtt.wpamesh.net">MQTT server</a><a href="https://wpamesh.net/discord-access/">Discord</a></nav>
+  </div>
+</footer>
+</body>
+</html>

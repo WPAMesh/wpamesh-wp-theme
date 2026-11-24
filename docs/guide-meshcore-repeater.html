@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Repeater configuration · WPAmesh redesign preview</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&amp;family=Barlow+Condensed:wght@600;700&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+<script src="assets/demo.js" defer></script>
+</head>
+<body>
+<a class="wpamesh-skip" href="#main">Skip to main content</a>
+
+<div class="wpamesh-demo-banner">
+  Design preview, not the live site. This guide is a draft compiled from Discord notes. Current site: <a href="https://wpamesh.net">wpamesh.net</a>
+</div>
+
+<header class="wpamesh-header">
+  <div class="wpamesh-wrap">
+    <a class="wpamesh-logo" href="index.html"><span class="badge">WPA</span><span class="word">MESH</span></a>
+    <button class="wpamesh-menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="wpamesh-nav">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+    </button>
+    <nav class="wpamesh-nav" id="wpamesh-nav" aria-label="Main">
+      <ul>
+        <li><a href="index.html">Get started</a></li>
+        <li><a href="index.html#networks">Networks</a></li>
+        <li><a href="https://map.wpamesh.net/map">Live map</a></li>
+        <li><a href="infrastructure.html">Infrastructure</a></li>
+        <li><a href="guides.html" aria-current="page">Guides</a></li>
+        <li><a href="index.html#events">Events</a></li>
+      </ul>
+      <div class="actions">
+        <a class="login" href="https://mqtt.wpamesh.net">MQTT login</a>
+        <a class="wpamesh-btn discord" href="https://wpamesh.net/discord-access/">Join the Discord</a>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<main id="main" class="wpamesh-wrap">
+  <nav class="wpamesh-crumbs" aria-label="Breadcrumb">
+    <a href="guides.html">Guides</a><span aria-hidden="true">/</span>MeshCore
+  </nav>
+
+  <div class="wpamesh-guide-head">
+    <p class="kicker"><span class="wpamesh-chip ">MC</span>MeshCore guide</p>
+    <h1>Repeater configuration</h1>
+    <p class="lede">Recommended settings for MeshCore repeaters on WPAmesh. Every command should answer <code>OK</code> after you enter it.</p>
+  </div>
+
+  <div class="wpamesh-guide-layout">
+    <article class="wpamesh-article">
+      <h2 id="before">Before you deploy</h2>
+<div class="wpamesh-callout">
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><path d="M12 9v4M12 17h.01"/></svg>
+  <span class="title">Coordinate first</span>
+  <p>Please talk to the coordinators before putting up a repeater. Unplanned infrastructure hurts everyone’s airtime.</p>
+</div>
+<p>Battery-powered repeater? <a href="https://easyskymesh.com/">Easy SkyMesh PowerSaving</a> firmware does wonders for battery management. See <a href="guide-meshcore-radio.html#flashing">Flashing MeshCore</a>.</p>
+
+      <h2 id="settings">Recommended settings</h2>
+<div class="wpamesh-card wpamesh-cli">
+  <div class="bar"><span>Repeater CLI</span><button class="wpamesh-copy" type="button">Copy all</button></div>
+  <ol>
+    <li><code>set loop.detect minimal</code><button class="wpamesh-copy" type="button" aria-label="Copy: set loop.detect minimal">Copy</button></li>
+    <li><code>set path.hash.mode 1</code><button class="wpamesh-copy" type="button" aria-label="Copy: set path.hash.mode 1">Copy</button></li>
+    <li><code>set multi.acks 1</code><button class="wpamesh-copy" type="button" aria-label="Copy: set multi.acks 1">Copy</button></li>
+    <li><code>set agc.reset.interval 4</code><button class="wpamesh-copy" type="button" aria-label="Copy: set agc.reset.interval 4">Copy</button></li>
+    <li><code>set rxdelay 3</code><button class="wpamesh-copy" type="button" aria-label="Copy: set rxdelay 3">Copy</button></li>
+    <li><code>set txdelay 1</code><button class="wpamesh-copy" type="button" aria-label="Copy: set txdelay 1">Copy</button></li>
+    <li><code>set advert.interval 240</code><button class="wpamesh-copy" type="button" aria-label="Copy: set advert.interval 240">Copy</button></li>
+    <li><code>set flood.advert.interval 168</code><button class="wpamesh-copy" type="button" aria-label="Copy: set flood.advert.interval 168">Copy</button></li>
+  </ol>
+</div>
+
+      <h2 id="regions">Region setup</h2>
+<p>This sets up the <code>pit</code> hierarchy and allows flood traffic for each level. North of New Castle and Grove City, use <code>eri</code> instead of <code>pit</code> (see <a href="guide-meshcore-regions.html#which">Pit or eri?</a>).</p>
+<div class="wpamesh-card wpamesh-cli">
+  <div class="bar"><span>Repeater CLI</span><button class="wpamesh-copy" type="button">Copy all</button></div>
+  <ol>
+    <li><code>region put us</code><button class="wpamesh-copy" type="button" aria-label="Copy: region put us">Copy</button></li>
+    <li><code>region put us-pa us</code><button class="wpamesh-copy" type="button" aria-label="Copy: region put us-pa us">Copy</button></li>
+    <li><code>region put wpa us-pa</code><button class="wpamesh-copy" type="button" aria-label="Copy: region put wpa us-pa">Copy</button></li>
+    <li><code>region put pit wpa</code><button class="wpamesh-copy" type="button" aria-label="Copy: region put pit wpa">Copy</button></li>
+    <li><code>region allowf *</code><button class="wpamesh-copy" type="button" aria-label="Copy: region allowf *">Copy</button></li>
+    <li><code>region allowf us</code><button class="wpamesh-copy" type="button" aria-label="Copy: region allowf us">Copy</button></li>
+    <li><code>region allowf us-pa</code><button class="wpamesh-copy" type="button" aria-label="Copy: region allowf us-pa">Copy</button></li>
+    <li><code>region allowf wpa</code><button class="wpamesh-copy" type="button" aria-label="Copy: region allowf wpa">Copy</button></li>
+    <li><code>region allowf pit</code><button class="wpamesh-copy" type="button" aria-label="Copy: region allowf pit">Copy</button></li>
+    <li><code>region save</code><button class="wpamesh-copy" type="button" aria-label="Copy: region save">Copy</button></li>
+  </ol>
+</div>
+
+      <h2 id="antennas">Antennas and power</h2>
+<p>Radio power plus antenna gain can’t go over about 36 dBm. The <a href="guide-meshcore-radio.html#antennas">antennas and power</a> section has the details and a quick table.</p>
+    </article>
+
+    <aside class="wpamesh-toc" aria-label="On this page">
+      <p class="wpamesh-aside-title">On this page</p>
+      <ol>
+        <li><a href="#before">Before you deploy</a></li>
+        <li><a href="#settings">Recommended settings</a></li>
+        <li><a href="#regions">Region setup</a></li>
+        <li><a href="#antennas">Antennas and power</a></li>
+      </ol>
+      <div class="wpamesh-card switch">
+        <strong>Stuck?</strong>Most help happens in our Discord. <a href="https://wpamesh.net/discord-access/">Ask there</a>
+      </div>
+    </aside>
+  </div>
+</main>
+
+<footer class="wpamesh-footer">
+  <div class="wpamesh-wrap">
+    <span>WPAmesh · Western Pennsylvania community mesh</span>
+    <nav aria-label="Footer"><a href="guides.html">Guides</a><a href="https://map.wpamesh.net/map">Live map</a><a href="https://mqtt.wpamesh.net">MQTT server</a><a href="https://wpamesh.net/discord-access/">Discord</a></nav>
+  </div>
+</footer>
+</body>
+</html>

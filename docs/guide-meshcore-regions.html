@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MeshCore regions · WPAmesh redesign preview</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&amp;family=Barlow+Condensed:wght@600;700&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+<script src="assets/demo.js" defer></script>
+</head>
+<body>
+<a class="wpamesh-skip" href="#main">Skip to main content</a>
+
+<div class="wpamesh-demo-banner">
+  Design preview, not the live site. This guide is a draft compiled from Discord notes. Current site: <a href="https://wpamesh.net">wpamesh.net</a>
+</div>
+
+<header class="wpamesh-header">
+  <div class="wpamesh-wrap">
+    <a class="wpamesh-logo" href="index.html"><span class="badge">WPA</span><span class="word">MESH</span></a>
+    <button class="wpamesh-menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="wpamesh-nav">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+    </button>
+    <nav class="wpamesh-nav" id="wpamesh-nav" aria-label="Main">
+      <ul>
+        <li><a href="index.html">Get started</a></li>
+        <li><a href="index.html#networks">Networks</a></li>
+        <li><a href="https://map.wpamesh.net/map">Live map</a></li>
+        <li><a href="infrastructure.html">Infrastructure</a></li>
+        <li><a href="guides.html" aria-current="page">Guides</a></li>
+        <li><a href="index.html#events">Events</a></li>
+      </ul>
+      <div class="actions">
+        <a class="login" href="https://mqtt.wpamesh.net">MQTT login</a>
+        <a class="wpamesh-btn discord" href="https://wpamesh.net/discord-access/">Join the Discord</a>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<main id="main" class="wpamesh-wrap">
+  <nav class="wpamesh-crumbs" aria-label="Breadcrumb">
+    <a href="guides.html">Guides</a><span aria-hidden="true">/</span>MeshCore
+  </nav>
+
+  <div class="wpamesh-guide-head">
+    <p class="kicker"><span class="wpamesh-chip ">MC</span>MeshCore guide</p>
+    <h1>MeshCore regions</h1>
+    <p class="lede">Regions scope traffic to an area. WPAmesh uses the common US hierarchy, with an extra layer for Western PA between the state and the airport codes.</p>
+  </div>
+
+  <div class="wpamesh-guide-layout">
+    <article class="wpamesh-article">
+      <h2 id="hierarchy">The hierarchy</h2>
+<div class="wpamesh-card wpamesh-tree">
+  <ul>
+    <li><code>*</code><span>Global / unscoped</span>
+      <ul>
+        <li><code>us</code>
+          <ul>
+            <li><code>us-pa</code>
+              <ul>
+                <li class="here"><code>wpa</code><span>Western PA</span>
+                  <ul>
+                    <li><code>pit</code><span>Pittsburgh / Southwest PA</span></li>
+                    <li><code>eri</code><span>Erie / Northwest PA</span></li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+<p>PIT and ERI are the IATA airport codes for Pittsburgh and Erie.</p>
+
+      <h2 id="which">Pit or eri?</h2>
+<p>The <code>pit</code> region only extends up to around <strong>New Castle and Grove City</strong>. Anything further north than that is <code>eri</code>.</p>
+<div class="wpamesh-callout">
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 3 3 6v15l6-3 6 3 6-3V3l-6 3-6-3zM9 3v15M15 6v15"/></svg>
+  <span class="title">Near a state line?</span>
+  <p>Repeaters along state or region borders, or ones that serve as a major hop for another area, should usually carry that area’s hierarchy too, for example <code>us-oh</code> or <code>us-wv</code>. If you live near a border, check #friends-n-family for the neighboring mesh to see what region config they use.</p>
+</div>
+
+      <h2 id="setup">Setting it up</h2>
+<p>For the Pittsburgh hierarchy:</p>
+<div class="wpamesh-card wpamesh-cli">
+  <div class="bar"><span>CLI</span><button class="wpamesh-copy" type="button">Copy all</button></div>
+  <ol>
+    <li><code>region def us us-pa wpa pit</code><button class="wpamesh-copy" type="button" aria-label="Copy: region def us us-pa wpa pit">Copy</button></li>
+    <li><code>region save</code><button class="wpamesh-copy" type="button" aria-label="Copy: region save">Copy</button></li>
+  </ol>
+</div>
+<p>Or, for an even bigger hierarchy that covers the whole East Coast:</p>
+<div class="wpamesh-card wpamesh-cli">
+  <div class="bar"><span>CLI</span><button class="wpamesh-copy" type="button">Copy all</button></div>
+  <ol>
+    <li><code>region def us us-east northeast us-midatlantic us-pa wpa pit</code><button class="wpamesh-copy" type="button" aria-label="Copy: region def us us-east northeast us-midatlantic us-pa wpa pit">Copy</button></li>
+    <li><code>region save</code><button class="wpamesh-copy" type="button" aria-label="Copy: region save">Copy</button></li>
+  </ol>
+</div>
+<p>Running a repeater? Use the full region commands in the <a href="guide-meshcore-repeater.html#regions">repeater configuration</a> guide.</p>
+
+      <h2 id="local">Don’t go narrower than airport codes</h2>
+<p>Don’t add regions more specific than IATA codes. Many of us have to make very circular hops just to reach people the next city over, and a tighter region would cut those paths off.</p>
+<p>Instead, make a channel just for your area and scope it to the nearest IATA code.</p>
+    </article>
+
+    <aside class="wpamesh-toc" aria-label="On this page">
+      <p class="wpamesh-aside-title">On this page</p>
+      <ol>
+        <li><a href="#hierarchy">The hierarchy</a></li>
+        <li><a href="#which">Pit or eri?</a></li>
+        <li><a href="#setup">Setting it up</a></li>
+        <li><a href="#local">Don’t go narrower than airport codes</a></li>
+      </ol>
+      <div class="wpamesh-card switch">
+        <strong>Stuck?</strong>Most help happens in our Discord. <a href="https://wpamesh.net/discord-access/">Ask there</a>
+      </div>
+    </aside>
+  </div>
+</main>
+
+<footer class="wpamesh-footer">
+  <div class="wpamesh-wrap">
+    <span>WPAmesh · Western Pennsylvania community mesh</span>
+    <nav aria-label="Footer"><a href="guides.html">Guides</a><a href="https://map.wpamesh.net/map">Live map</a><a href="https://mqtt.wpamesh.net">MQTT server</a><a href="https://wpamesh.net/discord-access/">Discord</a></nav>
+  </div>
+</footer>
+</body>
+</html>

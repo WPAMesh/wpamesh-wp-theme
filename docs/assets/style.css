@@ -1149,3 +1149,134 @@ p { margin: 0; }
         &.discord b { color: #9aa2ff; }
     }
 }
+
+/* Copyable CLI blocks */
+.wpamesh-cli {
+    margin: 20px 0 28px;
+    overflow: hidden;
+
+    & .bar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 8px 8px 8px 18px;
+        background: var(--wpamesh-surface-2);
+        border-bottom: 1px solid var(--wpamesh-border);
+        font-family: var(--wpamesh-font-head);
+        font-weight: 600;
+        font-size: 14px;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--wpamesh-text-muted);
+    }
+
+    & ol { list-style: none; margin: 0; padding: 6px 0; }
+
+    & li {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 2px 8px 2px 18px;
+
+        &:hover { background: rgb(255 255 255 / 0.03); }
+    }
+
+    & li code, & pre {
+        font-family: 'JetBrains Mono', Consolas, monospace;
+        font-size: 15px;
+        color: var(--wpamesh-text-strong);
+        background: none;
+        padding: 0;
+    }
+
+    & li code { flex: 1 1 auto; overflow-x: auto; white-space: pre; padding-block: 8px; }
+    & pre { margin: 0; padding: 16px 18px; overflow-x: auto; line-height: 1.6; }
+}
+
+.wpamesh-copy {
+    flex: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    min-height: 36px;
+    min-width: 36px;
+    justify-content: center;
+    padding: 6px 10px;
+    background: transparent;
+    border: 1px solid var(--wpamesh-border-strong);
+    border-radius: 6px;
+    color: var(--wpamesh-text);
+    font: inherit;
+    font-family: var(--wpamesh-font-body);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0;
+    text-transform: none;
+    cursor: pointer;
+
+    &:hover { border-color: var(--wpamesh-gold); color: var(--wpamesh-text-strong); }
+    &:focus-visible { outline: 2px solid var(--wpamesh-gold); outline-offset: 2px; }
+    &.done { border-color: var(--wpamesh-green); color: var(--wpamesh-green); }
+    &.icon-only { padding: 6px; }
+}
+
+/* Region hierarchy */
+.wpamesh-tree {
+    margin: 20px 0;
+    padding: 20px 24px;
+    font-size: 16px;
+
+    & ul { list-style: none; margin: 0; padding-left: 26px; border-left: 1px solid var(--wpamesh-border-strong); }
+    & > ul { padding-left: 0; border: 0; }
+    & li { padding: 5px 0; }
+    & li li { position: relative; }
+    & li li::before { content: ""; position: absolute; left: -26px; top: 19px; width: 18px; border-top: 1px solid var(--wpamesh-border-strong); }
+    & code { font-family: 'JetBrains Mono', Consolas, monospace; color: var(--wpamesh-gold); font-weight: 600; background: none; padding: 0; margin-right: 10px; }
+    & span { color: var(--wpamesh-text-muted); }
+    & .here > code { background: rgb(255 184 28 / 0.15); padding: 2px 8px; border-radius: 4px; }
+}
+
+/* Hardware picks */
+.wpamesh-picks {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 16px;
+    margin: 20px 0;
+
+    & .wpamesh-card { padding: 20px; display: flex; flex-direction: column; gap: 10px; }
+    & .wpamesh-card.top-pick { border-color: var(--wpamesh-gold); }
+    & h3 { margin: 0; font-size: 24px; text-transform: none; }
+    & p { margin: 0; font-size: 16px; }
+    & .head { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+    & a { margin-top: auto; font-weight: 600; font-size: 15px; }
+}
+
+/* Guides index */
+.wpamesh-guide-group {
+    margin-bottom: 48px;
+
+    & .head { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+    & h2 { font-size: 28px; }
+}
+
+.wpamesh-guide-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 16px;
+
+    & a {
+        padding: 20px;
+        text-decoration: none;
+        color: var(--wpamesh-text);
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+
+        &:hover { border-color: var(--wpamesh-border-strong); color: var(--wpamesh-text); }
+    }
+
+    & b { font-family: var(--wpamesh-font-head); font-size: 22px; color: var(--wpamesh-text-strong); line-height: 1.15; }
+    & span { font-size: 15px; }
+    & .soon { opacity: 0.6; pointer-events: none; }
+}
