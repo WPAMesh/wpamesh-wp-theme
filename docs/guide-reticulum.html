@@ -116,7 +116,7 @@
 <p>It uses <code>boundary</code> mode because it’s an internet link. See <a href="guide-reticulum-modes.html#boundary">interface modes</a> for why.</p>
 
       <h2 id="rnode">RNode radio settings</h2>
-<p>These are adapted from the ones Chicago Mesh uses. The spreading factor and coding rate were picked for longer range.</p>
+<p>These match the standard settings <a href="https://chicagolandmesh.org/guides/reticulum/getting-started/configure/">Chicagoland Mesh</a> uses. In range and speed they’re comparable to Meshtastic’s MediumFast.</p>
 <div class="wpamesh-card wpamesh-cli">
   <div class="bar"><span>Reticulum config</span><button class="wpamesh-copy" type="button">Copy</button></div>
   <pre>[[RNode LoRa Interface]]
@@ -125,20 +125,28 @@
   port = /dev/ttyUSB0
   frequency = 914875000
   bandwidth = 125000
-  txpower = 17
-  spreadingfactor = 10
+  txpower = 22
+  spreadingfactor = 8
   codingrate = 5</pre>
 </div>
 <div class="wpamesh-card wpamesh-settings">
   <dl class="wpamesh-specs">
     <div><dt>Frequency</dt><dd><code>914.875 MHz</code></dd></div>
     <div><dt>Bandwidth</dt><dd><code>125 kHz</code></dd></div>
-    <div><dt>Spreading factor</dt><dd><code>10</code></dd></div>
+    <div><dt>Spreading factor</dt><dd><code>8</code></dd></div>
     <div><dt>Coding rate</dt><dd><code>4/5</code></dd></div>
-    <div><dt>TX power</dt><dd><code>17 dBm</code></dd></div>
+    <div><dt>TX power</dt><dd><code>22 dBm</code> or your radio’s max</dd></div>
   </dl>
 </div>
 <p>Change <code>port</code> to wherever your RNode shows up, for example <code>/dev/ttyACM0</code> on Linux or a <code>COM</code> port on Windows.</p>
+<p>Radios only hear each other when frequency, bandwidth, spreading factor and coding rate all match exactly. Don’t change them unless you’re joining a test.</p>
+<div class="wpamesh-callout">
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><path d="M12 9v4M12 17h.01"/></svg>
+  <span class="title">Check your hardware’s TX power ceiling</span>
+  <p>Not all RNode hardware supports 22 dBm. Set <code>txpower</code> to the highest value your device actually supports, up to 22. Setting more than it can deliver is harmless, but knowing your real maximum gets you better results.</p>
+</div>
+<h3>Testing: longer range with SF10</h3>
+<p>Some of us are testing <code>spreadingfactor = 10</code> for longer range. It trades speed for reach: about 1 kbps instead of about 3 kbps. A radio on SF10 can’t talk to one on SF8, so only switch if you’re part of the test, and ask in the Discord first.</p>
     </article>
 
     <aside class="wpamesh-toc" aria-label="On this page">
