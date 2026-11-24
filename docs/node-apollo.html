@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Apollo · WPAmesh redesign preview</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&amp;family=Barlow+Condensed:wght@600;700&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+<script src="assets/demo.js" defer></script>
+</head>
+<body>
+<a class="wpamesh-skip" href="#main">Skip to main content</a>
+
+<div class="wpamesh-demo-banner">
+  Design preview, not the live site. The MeshCore repeater at this site is illustrative. Current site: <a href="https://wpamesh.net">wpamesh.net</a>
+</div>
+
+<header class="wpamesh-header">
+  <div class="wpamesh-wrap">
+    <a class="wpamesh-logo" href="index.html"><span class="badge">WPA</span><span class="word">MESH</span></a>
+    <button class="wpamesh-menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="wpamesh-nav">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+    </button>
+    <nav class="wpamesh-nav" id="wpamesh-nav" aria-label="Main">
+      <ul>
+        <li><a href="index.html">Get started</a></li>
+        <li><a href="index.html#networks">Networks</a></li>
+        <li><a href="https://map.wpamesh.net/map">Live map</a></li>
+        <li><a href="infrastructure.html" aria-current="page">Infrastructure</a></li>
+        <li><a href="guide-meshtastic.html">Guides</a></li>
+        <li><a href="index.html#events">Events</a></li>
+      </ul>
+      <div class="actions">
+        <a class="login" href="https://mqtt.wpamesh.net">MQTT login</a>
+        <a class="wpamesh-btn discord" href="https://wpamesh.net/discord-access/">Join the Discord</a>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<main id="main" class="wpamesh-wrap">
+  <nav class="wpamesh-crumbs" aria-label="Breadcrumb">
+    <a href="infrastructure.html">Infrastructure</a><span aria-hidden="true">/</span>Core sites
+  </nav>
+
+  <div class="wpamesh-node-head">
+    <div>
+      <h1>Apollo</h1>
+      <div class="meta">
+        <span>Westmoreland County · Core site</span>
+        <span class="protos"><span class="wpamesh-chip">MC</span><span class="wpamesh-chip mt">MT</span></span>
+      </div>
+    </div>
+    <span class="wpamesh-status-pill"><span class="wpamesh-dot" aria-hidden="true"></span>Online</span>
+  </div>
+
+  <div class="wpamesh-node-layout">
+    <figure class="photo wpamesh-node-photo">
+      <img src="assets/img/apollo.jpg" alt="Node enclosure mounted on a tower mast, overlooking wooded hills">
+      <figcaption>About 200 ft up a 300 ft tower between Avonmore and Apollo</figcaption>
+    </figure>
+
+    <aside>
+      <p class="wpamesh-aside-title">Radios at this site</p>
+
+      <div class="wpamesh-card wpamesh-radio">
+        <div class="top">
+          <span class="title"><span class="wpamesh-chip mt">MT</span>Meshtastic router</span>
+          <span class="seen">Heard <span class="wpamesh-ph">[4]</span> min ago</span>
+        </div>
+        <div class="live">
+          <div><b class="wpamesh-ph">[—]%</b><span>Ch. util</span></div>
+          <div><b class="wpamesh-ph">[—]%</b><span>Airtime</span></div>
+        </div>
+        <dl class="wpamesh-specs">
+          <div><dt>Short name</dt><dd>🔔</dd></div>
+          <div><dt>Node ID</dt><dd><code class="wpamesh-ph">![node id]</code></dd></div>
+          <div><dt>Role</dt><dd>ROUTER</dd></div>
+          <div><dt>Hardware</dt><dd>RAK 4631</dd></div>
+          <div><dt>Antenna</dt><dd>5.8 dBi</dd></div>
+        </dl>
+        <a class="link" href="https://map.wpamesh.net/map">Open on Meshview →</a>
+      </div>
+
+      <div class="wpamesh-card wpamesh-radio">
+        <div class="top">
+          <span class="title"><span class="wpamesh-chip">MC</span>MeshCore repeater</span>
+          <span class="seen">Heard <span class="wpamesh-ph">[2]</span> min ago</span>
+        </div>
+        <div class="live">
+          <div><b class="wpamesh-ph">[N]</b><span>Relayed 24h</span></div>
+          <div><b class="wpamesh-ph">[N]</b><span>Neighbors</span></div>
+        </div>
+        <dl class="wpamesh-specs">
+          <div><dt>Name</dt><dd class="wpamesh-ph">[Repeater name]</dd></div>
+          <div><dt>Public key</dt><dd><code class="wpamesh-ph">[a1b2c3…]</code></dd></div>
+          <div><dt>Hardware</dt><dd class="wpamesh-ph">[Hardware]</dd></div>
+        </dl>
+        <a class="link" href="https://scope.wpamesh.net/#/nodes">Open on CoreScope →</a>
+      </div>
+
+      <p class="wpamesh-aside-title">Site details</p>
+      <div class="wpamesh-card wpamesh-site-details">
+        <dl class="wpamesh-specs">
+          <div><dt>Height AGL</dt><dd>200 ft (61 m)</dd></div>
+          <div><dt>Height MSL</dt><dd>1,758 ft (536 m)</dd></div>
+          <div><dt>Location</dt><dd><a href="https://www.google.com/maps?q=40.533617,-79.532715">40.533617, -79.532715</a></dd></div>
+          <div><dt>Installed</dt><dd>March 19, 2025</dd></div>
+          <div><dt>Maintainer</dt><dd>@rjdipcord</dd></div>
+        </dl>
+      </div>
+    </aside>
+
+    <div class="body wpamesh-prose">
+      <section>
+        <h2>About this site</h2>
+        <p>Apollo 🔔 is located 2/3 the way up a 300 ft tower in the area between Avonmore and Apollo. It was installed by @rjdipcord on March 19th, 2025. This node has proven to be a core part of the WPA Mesh backbone that supports Westmoreland and Allegheny Counties. It helps to connect these far stretches of land together, which would have been impossible without the help of MQTT.</p>
+        <p>Apollo has a very wide area visible and therefore acts as the first-hop priority to nodes in Murrysville, Plum, Delmont, Vandergrift, and some higher altitudes in Latrobe, Greensburg and Kittanning.</p>
+      </section>
+      <section>
+        <h2>Coverage</h2>
+        <div class="wpamesh-rf-estimate">[Theoretical RF estimate for Apollo]</div>
+      </section>
+    </div>
+  </div>
+
+  <nav class="wpamesh-pager" aria-label="More core sites">
+    <a class="wpamesh-card prev" href="node-7-springs.html"><span>← Previous core site</span><b>7 Springs</b></a>
+    <a class="wpamesh-card next" href="#"><span>Next core site →</span><b>KE3JP Tower</b></a>
+  </nav>
+</main>
+
+<footer class="wpamesh-footer">
+  <div class="wpamesh-wrap">
+    <span>WPAmesh · Western Pennsylvania community mesh</span>
+    <nav aria-label="Footer"><a href="#">Guides</a><a href="https://map.wpamesh.net/map">Live map</a><a href="https://mqtt.wpamesh.net">MQTT server</a><a href="https://wpamesh.net/discord-access/">Discord</a></nav>
+  </div>
+</footer>
+</body>
+</html>

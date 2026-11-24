@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>WPAmesh redesign preview</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&amp;family=Barlow+Condensed:wght@600;700&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+<script src="assets/demo.js" defer></script>
+</head>
+<body>
+<a class="wpamesh-skip" href="#main">Skip to main content</a>
+
+<div class="wpamesh-demo-banner">
+  Design preview, not the live site. Values like <span class="wpamesh-ph">[N]</span> are placeholders. Current site: <a href="https://wpamesh.net">wpamesh.net</a>
+</div>
+
+<header class="wpamesh-header">
+  <div class="wpamesh-wrap">
+    <a class="wpamesh-logo" href="index.html"><span class="badge">WPA</span><span class="word">MESH</span></a>
+    <button class="wpamesh-menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="wpamesh-nav">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+    </button>
+    <nav class="wpamesh-nav" id="wpamesh-nav" aria-label="Main">
+      <ul>
+        <li><a href="index.html" aria-current="page">Get started</a></li>
+        <li><a href="index.html#networks">Networks</a></li>
+        <li><a href="https://map.wpamesh.net/map">Live map</a></li>
+        <li><a href="infrastructure.html">Infrastructure</a></li>
+        <li><a href="guide-meshtastic.html">Guides</a></li>
+        <li><a href="#events">Events</a></li>
+      </ul>
+      <div class="actions">
+        <a class="login" href="https://mqtt.wpamesh.net">MQTT login</a>
+        <a class="wpamesh-btn discord" href="https://wpamesh.net/discord-access/">Join the Discord</a>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <section class="wpamesh-hero">
+    <div class="wpamesh-wrap">
+      <div class="copy">
+        <p class="wpamesh-eyebrow">Western Pennsylvania · Off-grid LoRa radio</p>
+        <h1>Mesh networking<br>for the Yinzers</h1>
+        <p class="lede">A community-built radio network centered on Pittsburgh and reaching into Allegheny, Westmoreland, Butler, Armstrong, Indiana and Beaver counties. Radios talking to radios. No cell service or subscription needed.</p>
+        <div class="ctas">
+          <a class="wpamesh-btn primary lg" href="#">Get started on MeshCore</a>
+          <a class="wpamesh-btn ghost lg" href="#networks">Compare the networks</a>
+        </div>
+      </div>
+      <figure>
+        <img src="https://wpamesh.net/wp-content/uploads/2025/06/pittsburgh_109_9953_pano_up-copy-1024x399.jpg" alt="Downtown Pittsburgh skyline">
+      </figure>
+    </div>
+  </section>
+
+  <section class="wpamesh-section wpamesh-wrap" id="networks">
+    <h2>Three networks, one community</h2>
+    <p class="intro">WPAmesh runs more than one mesh. If you're buying your first radio, start with MeshCore. Already on Meshtastic? You're still welcome. That network isn't going anywhere.</p>
+    <div class="wpamesh-networks">
+      <article class="wpamesh-card wpamesh-network recommended">
+        <div class="top">
+          <div class="name"><span class="wpamesh-chip lg">MC</span><h3>MeshCore</h3></div>
+          <span class="wpamesh-pill gold">Recommended</span>
+        </div>
+        <p>Our fastest-growing network. Dedicated repeaters do the relaying, so your handheld stays quiet and the airwaves hold up as more people join.</p>
+        <ul>
+          <li>Companion apps for phone and web</li>
+          <li>Room servers for group chat and boards</li>
+          <li>Best choice for new users</li>
+        </ul>
+        <div class="nums">
+          <div><b class="wpamesh-ph">[N]</b><span>Repeaters</span></div>
+          <div><b class="wpamesh-ph">[N]</b><span>Heard in 24h</span></div>
+        </div>
+        <a class="wpamesh-btn primary" href="#">Start on MeshCore</a>
+      </article>
+
+      <article class="wpamesh-card wpamesh-network">
+        <div class="top">
+          <div class="name"><span class="wpamesh-chip mt lg">MT</span><h3>Meshtastic</h3></div>
+        </div>
+        <p>The network WPAmesh started on. Large and well covered, running the <strong>Long_Fast</strong> preset on the default channel.</p>
+        <ul>
+          <li>Leave your role on CLIENT unless coordinated</li>
+          <li>MQTT gateways bridge isolated areas</li>
+          <li>Good if you already own a Meshtastic radio</li>
+        </ul>
+        <div class="nums">
+          <div><b>274</b><span>Nodes</span></div>
+          <div><b>13</b><span>Routers</span></div>
+        </div>
+        <a class="wpamesh-btn ghost" href="guide-meshtastic.html">Meshtastic setup guide</a>
+      </article>
+
+      <article class="wpamesh-card wpamesh-network">
+        <div class="top">
+          <div class="name"><span class="wpamesh-chip rns lg">RNS</span><h3>Reticulum</h3></div>
+          <span class="wpamesh-pill outline">Experimental</span>
+        </div>
+        <p>A handful of members are testing Reticulum and LXMF over LoRa. Expect rough edges. This one is for tinkerers.</p>
+        <ul>
+          <li>RNode hardware, Sideband or MeshChat</li>
+          <li>Reachable from the cross-mesh BBS</li>
+          <li>Ask in #reticulum before you buy</li>
+        </ul>
+        <div class="nums">
+          <div><b class="wpamesh-ph">[N]</b><span>Testers</span></div>
+        </div>
+        <a class="wpamesh-btn ghost" href="#">Read the Reticulum notes</a>
+      </article>
+    </div>
+  </section>
+
+  <section class="wpamesh-section wpamesh-wrap">
+    <div class="wpamesh-section-head">
+      <h2>The mesh right now</h2>
+      <span>Refreshed every 15 minutes</span>
+    </div>
+
+    <div class="wpamesh-card wpamesh-stats-table">
+      <table>
+        <thead>
+          <tr>
+            <th scope="col">Network</th>
+            <th scope="col">Nodes</th>
+            <th scope="col">Active 24h</th>
+            <th scope="col">Infrastructure</th>
+            <th scope="col">Messages 24h</th>
+            <th scope="col">Channel health</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="net"><span class="wpamesh-chip">MC</span>MeshCore</span></td>
+            <td class="wpamesh-ph">[N]</td>
+            <td class="wpamesh-ph">[N]</td>
+            <td><span class="wpamesh-ph">[N]</span> repeaters · <span class="wpamesh-ph">[N]</span> rooms</td>
+            <td class="wpamesh-ph">[N]</td>
+            <td class="wpamesh-ph">[—]</td>
+          </tr>
+          <tr>
+            <td><span class="net"><span class="wpamesh-chip mt">MT</span>Meshtastic</span></td>
+            <td>274</td>
+            <td>231</td>
+            <td>13 routers</td>
+            <td>4,084</td>
+            <td><span class="wpamesh-load-high">▲ High</span> · 11.2% util · 2.16% air</td>
+          </tr>
+          <tr>
+            <td><span class="net"><span class="wpamesh-chip rns">RNS</span>Reticulum</span></td>
+            <td class="wpamesh-ph">[N]</td>
+            <td class="wpamesh-ph">[N]</td>
+            <td><span class="wpamesh-ph">[N]</span> transport nodes</td>
+            <td class="muted">Not tracked</td>
+            <td class="muted">Not tracked</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="wpamesh-card wpamesh-stats-list">
+      <ul>
+        <li>
+          <span class="wpamesh-chip">MC</span>
+          <span><span class="main"><span class="wpamesh-ph">[N]</span> nodes heard</span><span class="sub">[N] repeaters · [N] rooms</span></span>
+          <span class="side">[—]</span>
+        </li>
+        <li>
+          <span class="wpamesh-chip mt">MT</span>
+          <span><span class="main">231 of 274 active</span><span class="sub">13 routers · 4,084 msgs/24h</span></span>
+          <span class="side"><span class="wpamesh-load-high">▲ High</span><br>11.2% util</span>
+        </li>
+        <li>
+          <span class="wpamesh-chip rns">RNS</span>
+          <span><span class="main"><span class="wpamesh-ph">[N]</span> nodes</span><span class="sub">[N] transport nodes</span></span>
+          <span class="side">—</span>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="wpamesh-section wpamesh-wrap wpamesh-split">
+    <div class="wpamesh-card wpamesh-coverage">
+      <div class="bar">
+        <h2>Coverage</h2>
+        <div class="wpamesh-filter" role="group" aria-label="Show network">
+          <button type="button" aria-pressed="true" data-filter="all">All</button>
+          <button type="button" aria-pressed="false" data-filter="MC" class="mc">MeshCore</button>
+          <button type="button" aria-pressed="false" data-filter="MT" class="mt">Meshtastic</button>
+          <button type="button" aria-pressed="false" data-filter="RNS" class="rns">Reticulum</button>
+        </div>
+      </div>
+      <a class="map" href="https://map.wpamesh.net/map">
+        <img src="https://wpamesh.net/wp-content/uploads/2025/12/WPAmesh_1-1-26-1024x853.webp" alt="WPAmesh Meshtastic coverage map as of January 2026">
+      </a>
+      <div class="foot">
+        <span>Pins show infrastructure sites; heat shows heard nodes.</span>
+        <a href="https://map.wpamesh.net/map">Open the live map →</a>
+      </div>
+    </div>
+
+    <aside class="wpamesh-card wpamesh-featured">
+      <img class="photo" src="assets/img/calvary.jpg" alt="Node enclosure on a lattice tower above a wooded valley">
+      <div class="body">
+        <p class="wpamesh-eyebrow">Featured site</p>
+        <h3>Calvary</h3>
+        <p>Leased space on a commercial structure near Calvary Cemetery, Allegheny County.</p>
+        <div class="protos"><span class="wpamesh-chip mt">MT · Router late</span></div>
+        <a class="more" href="infrastructure.html">All infrastructure sites →</a>
+      </div>
+    </aside>
+  </section>
+
+  <section class="wpamesh-section wpamesh-wrap wpamesh-split" id="events">
+    <div class="col">
+      <h2 class="small">Upcoming</h2>
+      <div class="wpamesh-events">
+        <div class="wpamesh-card">
+          <div class="date"><div class="mon wpamesh-ph">[MON]</div><div class="day wpamesh-ph">[DD]</div></div>
+          <div><div class="title">Monthly Mesh Meetup</div><div class="where">[Location] · Details on Discord</div></div>
+        </div>
+        <div class="wpamesh-card">
+          <div class="date"><div class="mon">Open</div><div class="any">Any<br>time</div></div>
+          <div><div class="title">Node Building Workshop</div><div class="where">Virtual · Discord voice</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <h2 class="small">Get involved</h2>
+      <div class="wpamesh-card wpamesh-involved">
+        <p>Most coordination happens on the PghMesh Discord: setup help, site planning and the monthly meetup.</p>
+        <div class="row">
+          <a class="wpamesh-btn discord" href="https://wpamesh.net/discord-access/">Join the Discord</a>
+          <a class="wpamesh-btn ghost" href="#">Facebook group</a>
+        </div>
+        <div class="owner">
+          <strong>Own a tall building or tower space?</strong>
+          <p>A single well-placed site can link whole counties. <a href="#">Read the property owner FAQ</a>.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="wpamesh-footer">
+  <div class="wpamesh-wrap">
+    <span>WPAmesh · Western Pennsylvania community mesh</span>
+    <nav aria-label="Footer"><a href="#">Guides</a><a href="https://map.wpamesh.net/map">Live map</a><a href="https://mqtt.wpamesh.net">MQTT server</a><a href="https://wpamesh.net/discord-access/">Discord</a></nav>
+  </div>
+</footer>
+</body>
+</html>

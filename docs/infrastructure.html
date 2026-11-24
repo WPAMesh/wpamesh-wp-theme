@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Infrastructure · WPAmesh redesign preview</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&amp;family=Barlow+Condensed:wght@600;700&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+<script src="assets/demo.js" defer></script>
+</head>
+<body>
+<a class="wpamesh-skip" href="#main">Skip to main content</a>
+
+<div class="wpamesh-demo-banner">
+  Design preview, not the live site. Which sites run MeshCore vs. Meshtastic is illustrative. Current site: <a href="https://wpamesh.net">wpamesh.net</a>
+</div>
+
+<header class="wpamesh-header">
+  <div class="wpamesh-wrap">
+    <a class="wpamesh-logo" href="index.html"><span class="badge">WPA</span><span class="word">MESH</span></a>
+    <button class="wpamesh-menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="wpamesh-nav">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+    </button>
+    <nav class="wpamesh-nav" id="wpamesh-nav" aria-label="Main">
+      <ul>
+        <li><a href="index.html">Get started</a></li>
+        <li><a href="index.html#networks">Networks</a></li>
+        <li><a href="https://map.wpamesh.net/map">Live map</a></li>
+        <li><a href="infrastructure.html" aria-current="page">Infrastructure</a></li>
+        <li><a href="guide-meshtastic.html">Guides</a></li>
+        <li><a href="index.html#events">Events</a></li>
+      </ul>
+      <div class="actions">
+        <a class="login" href="https://mqtt.wpamesh.net">MQTT login</a>
+        <a class="wpamesh-btn discord" href="https://wpamesh.net/discord-access/">Join the Discord</a>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<main id="main" class="wpamesh-wrap">
+  <div class="wpamesh-page-head">
+    <h1>Infrastructure</h1>
+    <p>Sites WPAmesh coordinates to extend reach and reliability. Many sites host more than one network. A tower might carry a MeshCore repeater and a Meshtastic router side by side.</p>
+  </div>
+
+  <div class="wpamesh-infra-bar">
+    <div class="wpamesh-filter" role="group" aria-label="Filter by network">
+      <button type="button" aria-pressed="true" data-filter="all">All networks</button>
+      <button type="button" aria-pressed="false" data-filter="MC" class="mc">MeshCore</button>
+      <button type="button" aria-pressed="false" data-filter="MT" class="mt">Meshtastic</button>
+      <button type="button" aria-pressed="false" data-filter="RNS" class="rns">Reticulum</button>
+    </div>
+    <div class="wpamesh-legend">
+      <span><span class="wpamesh-dot" aria-hidden="true"></span>Online</span>
+      <span><span class="wpamesh-dot off" aria-hidden="true"></span>Offline</span>
+    </div>
+  </div>
+
+  <section class="wpamesh-infra-section">
+    <div class="head"><h2>Core sites</h2><span class="count"></span></div>
+    <p class="blurb">Backbone sites that cover a county or more and link to other core sites.</p>
+    <div class="wpamesh-sites">
+      <a class="wpamesh-card wpamesh-site" href="node-7-springs.html" data-protos="MT">
+        <div class="top"><div><div class="name">7 Springs</div><div class="county">Somerset</div></div><span class="status off"><span class="wpamesh-dot off" aria-hidden="true"></span>Offline · 189 days</span></div>
+        <div class="protos"><div class="proto"><span class="wpamesh-chip mt">MT</span>Router</div></div>
+      </a>
+      <a class="wpamesh-card wpamesh-site" href="node-apollo.html" data-protos="MC MT">
+        <div class="top"><div><div class="name">Apollo</div><div class="county">Westmoreland</div></div><span class="status"><span class="wpamesh-dot" aria-hidden="true"></span>Online</span></div>
+        <div class="protos"><div class="proto"><span class="wpamesh-chip">MC</span>Repeater</div><div class="proto"><span class="wpamesh-chip mt">MT</span>Router</div></div>
+      </a>
+      <a class="wpamesh-card wpamesh-site" href="#" data-protos="MT">
+        <div class="top"><div><div class="name">KE3JP Tower</div><div class="county">Mercer</div></div><span class="status"><span class="wpamesh-dot" aria-hidden="true"></span>Online</span></div>
+        <div class="protos"><div class="proto"><span class="wpamesh-chip mt">MT</span>Router late</div></div>
+      </a>
+      <a class="wpamesh-card wpamesh-site" href="#" data-protos="MC MT">
+        <div class="top"><div><div class="name">W3JTV Keel Ridge</div><div class="county">Mercer</div></div><span class="status"><span class="wpamesh-dot" aria-hidden="true"></span>Online</span></div>
+        <div class="protos"><div class="proto"><span class="wpamesh-chip">MC</span>Repeater</div><div class="proto"><span class="wpamesh-chip mt">MT</span>Router</div></div>
+        <div class="util"><span>Ch. util <strong>1.7%</strong></span><span>Airtime <strong>0.26%</strong></span></div>
+      </a>
+      <a class="wpamesh-card wpamesh-site" href="#" data-protos="MC MT">
+        <div class="top"><div><div class="name">Pine Ridge</div><div class="county">Indiana</div></div><span class="status"><span class="wpamesh-dot" aria-hidden="true"></span>Online</span></div>
+        <div class="protos"><div class="proto"><span class="wpamesh-chip">MC</span>Repeater</div><div class="proto"><span class="wpamesh-chip mt">MT</span>Router</div></div>
+        <div class="util"><span>Ch. util <strong>16.5%</strong></span><span>Airtime <strong>3.6%</strong></span></div>
+      </a>
+      <a class="wpamesh-card wpamesh-site" href="#" data-protos="MT">
+        <div class="top"><div><div class="name">WEARS1</div><div class="county">Westmoreland</div></div><span class="status"><span class="wpamesh-dot" aria-hidden="true"></span>Online</span></div>
+        <div class="protos"><div class="proto"><span class="wpamesh-chip mt">MT</span>Router</div></div>
+        <div class="util"><span>Ch. util <strong>18%</strong></span><span>Airtime <strong>3.72%</strong></span></div>
+      </a>
+    </div>
+  </section>
+
+  <section class="wpamesh-infra-section">
+    <div class="head"><h2>Supplementary sites</h2><span class="count"></span></div>
+    <p class="blurb">Smaller coverage areas that connect otherwise isolated communities to a core site.</p>
+    <div class="wpamesh-sites">
+      <a class="wpamesh-card wpamesh-site" href="#" data-protos="MC MT">
+        <div class="top"><div><div class="name">Calvary</div><div class="county">Allegheny</div></div><span class="status"><span class="wpamesh-dot" aria-hidden="true"></span>Online</span></div>
+        <div class="protos"><div class="proto"><span class="wpamesh-chip">MC</span>Repeater</div><div class="proto"><span class="wpamesh-chip mt">MT</span>Router late</div></div>
+        <div class="util"><span>Ch. util <strong>16.8%</strong></span><span>Airtime <strong>2.81%</strong></span></div>
+      </a>
+      <a class="wpamesh-card wpamesh-site" href="#" data-protos="MT">
+        <div class="top"><div><div class="name">McCracken</div><div class="county">Westmoreland / Allegheny</div></div><span class="status off"><span class="wpamesh-dot off" aria-hidden="true"></span>Offline · [N] days</span></div>
+        <div class="protos"><div class="proto"><span class="wpamesh-chip mt">MT</span>Router late</div></div>
+      </a>
+      <a class="wpamesh-card wpamesh-site" href="#" data-protos="MT">
+        <div class="top"><div><div class="name">RoadsEnd Tower</div><div class="county">Butler</div></div><span class="status"><span class="wpamesh-dot" aria-hidden="true"></span>Online</span></div>
+        <div class="protos"><div class="proto"><span class="wpamesh-chip mt">MT</span>Client</div></div>
+        <div class="util"><span>Ch. util <strong>11.4%</strong></span><span>Airtime <strong>3.41%</strong></span></div>
+      </a>
+      <a class="wpamesh-card wpamesh-site" href="#" data-protos="MT">
+        <div class="top"><div><div class="name">WEARS3</div><div class="county">Westmoreland</div></div><span class="status"><span class="wpamesh-dot" aria-hidden="true"></span>Online</span></div>
+        <div class="protos"><div class="proto"><span class="wpamesh-chip mt">MT</span>Router late</div></div>
+        <div class="util"><span>Ch. util <strong>13.2%</strong></span><span>Airtime <strong>2.48%</strong></span></div>
+      </a>
+    </div>
+  </section>
+
+  <section class="wpamesh-infra-section">
+    <div class="head"><h2>Gateways &amp; services</h2><span class="count"></span></div>
+    <p class="blurb">MQTT gateways, MeshCore observers, room servers and cross-mesh services.</p>
+    <div class="wpamesh-sites">
+      <a class="wpamesh-card wpamesh-site" href="#" data-protos="MT">
+        <div class="top"><div><div class="name">K3BRY MQTT</div><div class="county">[County]</div></div><span class="status"><span class="wpamesh-dot" aria-hidden="true"></span>Online</span></div>
+        <div class="protos"><div class="proto"><span class="wpamesh-chip mt">MT</span>MQTT gateway</div></div>
+        <div class="util"><span>Ch. util <strong>1.7%</strong></span><span>Airtime <strong>[—]</strong></span></div>
+      </a>
+      <a class="wpamesh-card wpamesh-site" href="#" data-protos="MT">
+        <div class="top"><div><div class="name">oakwood-5</div><div class="county">[County]</div></div><span class="status"><span class="wpamesh-dot" aria-hidden="true"></span>Online</span></div>
+        <div class="protos"><div class="proto"><span class="wpamesh-chip mt">MT</span>MQTT gateway</div></div>
+      </a>
+      <a class="wpamesh-card wpamesh-site" href="#" data-protos="MC">
+        <div class="top"><div><div class="name">[Room server name]</div><div class="county">[County]</div></div><span class="status"><span class="wpamesh-dot" aria-hidden="true"></span>Online</span></div>
+        <div class="protos"><div class="proto"><span class="wpamesh-chip">MC</span>Room server · observer</div></div>
+      </a>
+      <a class="wpamesh-card wpamesh-site" href="#" data-protos="MC MT RNS">
+        <div class="top"><div><div class="name">[Cross-mesh BBS]</div><div class="county">Allegheny</div></div><span class="status"><span class="wpamesh-dot" aria-hidden="true"></span>Online</span></div>
+        <div class="protos"><div class="proto"><span class="wpamesh-chip">MC</span>Companion</div><div class="proto"><span class="wpamesh-chip mt">MT</span>Virtual node</div><div class="proto"><span class="wpamesh-chip rns">RNS</span>LXMF</div></div>
+      </a>
+    </div>
+  </section>
+
+  <div class="wpamesh-card wpamesh-cta-card">
+    <div>
+      <div class="title">Running a repeater or router?</div>
+      <div class="sub">Please coordinate before deploying. Unplanned infrastructure hurts everyone's airtime.</div>
+    </div>
+    <a class="wpamesh-btn primary" href="https://wpamesh.net/discord-access/">Talk to the coordinators</a>
+  </div>
+</main>
+
+<footer class="wpamesh-footer">
+  <div class="wpamesh-wrap">
+    <span>WPAmesh · Western Pennsylvania community mesh</span>
+    <nav aria-label="Footer"><a href="#">Guides</a><a href="https://map.wpamesh.net/map">Live map</a><a href="https://mqtt.wpamesh.net">MQTT server</a><a href="https://wpamesh.net/discord-access/">Discord</a></nav>
+  </div>
+</footer>
+</body>
+</html>
