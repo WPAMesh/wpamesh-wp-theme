@@ -17,6 +17,7 @@ fi
 wp rewrite structure '/posts/%postname%/' --hard
 wp plugin install --activate secure-custom-fields wordpress-importer forminator wp-user-manager announcer
 wp theme activate wpamesh-theme
+wp plugin activate wpamesh-sites
 
 export_file=$(ls ../exports/*.xml | tail -n 1)
 wp import "/exports/$(basename "$export_file")" --authors=create --skip=attachment
