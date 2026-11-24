@@ -60,9 +60,17 @@
   <span class="title">Coordinate first</span>
   <p>Please talk to the coordinators before putting up a repeater. Unplanned infrastructure hurts everyone’s airtime.</p>
 </div>
-<p>Battery-powered repeater? <a href="https://easyskymesh.com/">Easy SkyMesh PowerSaving</a> firmware does wonders for battery management. See <a href="guide-meshcore-radio.html#flashing">Flashing MeshCore</a>.</p>
+<p>Battery-powered repeater? <a href="https://github.com/IoTThinks/EasySkyMesh">EasySkyMesh PowerSaving</a> firmware does wonders for battery management. See <a href="guide-meshcore-radio.html#flashing">Flashing MeshCore</a>.</p>
 
-      <h2 id="settings">Recommended settings</h2>
+      <h2 id="regions">Step 1: Set your regions</h2>
+<div class="wpamesh-callout danger">
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 3 3 6v15l6-3 6 3 6-3V3l-6 3-6-3zM9 3v15M15 6v15"/></svg>
+  <span class="title">Don’t skip this</span>
+  <p>A repeater without regions won’t repeat scoped messages, so it breaks scoped paths through it. Set them before the repeater goes up.</p>
+</div>
+<p>Follow <a href="guide-meshcore-regions.html#setup">Setting it up</a> in the regions guide. It takes two commands, and <a href="guide-meshcore-regions.html#why">Why repeaters need the whole chain</a> explains what happens without them.</p>
+
+      <h2 id="settings">Step 2: Recommended settings</h2>
 <div class="wpamesh-card wpamesh-cli">
   <div class="bar"><span>Repeater CLI</span><button class="wpamesh-copy" type="button">Copy all</button></div>
   <ol>
@@ -76,9 +84,36 @@
     <li><code>set flood.advert.interval 168</code><button class="wpamesh-copy" type="button" aria-label="Copy: set flood.advert.interval 168">Copy</button></li>
   </ol>
 </div>
+<div class="wpamesh-card wpamesh-guide-table">
+  <table>
+    <thead><tr><th scope="col">Setting</th><th scope="col">What it does</th></tr></thead>
+    <tbody>
+      <tr><td><code>loop.detect minimal</code></td><td>Drops flood packets that have already passed through this repeater several times</td></tr>
+      <tr><td><code>path.hash.mode 1</code></td><td>2-byte path hashes, so fewer repeaters share an ID. Caps floods at 32 hops instead of 64</td></tr>
+      <tr><td><code>multi.acks 1</code></td><td>Turns on multi-ack support</td></tr>
+      <tr><td><code>agc.reset.interval 4</code></td><td>Resets the radio every 4 seconds, so SX1262 boards don’t go deaf after a strong signal</td></tr>
+      <tr><td><code>rxdelay 3</code></td><td>Weak copies of a flood wait, so the strong path forwards first and duplicates get dropped</td></tr>
+      <tr><td><code>txdelay 1</code></td><td>A longer random wait before retransmitting a flood. Fewer collisions, a little more latency</td></tr>
+      <tr><td><code>advert.interval 240</code></td><td>Zero-hop advert every 4 hours, the maximum</td></tr>
+      <tr><td><code>flood.advert.interval 168</code></td><td>Flood advert once a week, the maximum</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="wpamesh-callout tip">
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+  <span class="title">Repeaters older than 1.14</span>
+  <p>Repeaters on firmware before 1.14 silently drop messages with 2-byte paths. If you run one, update it before changing <code>path.hash.mode</code> anywhere.</p>
+</div>
 
-      <h2 id="regions">Region setup</h2>
-<p>Every repeater needs its region hierarchy set. Follow <a href="guide-meshcore-regions.html#setup">Setting it up</a> in the regions guide, including the extra step for repeaters.</p>
+      <h2 id="password">Step 3: Change the admin password</h2>
+<p>Repeaters ship with the admin password <code>password</code>. Change it before the repeater goes up:</p>
+<div class="wpamesh-card wpamesh-cli">
+  <div class="bar"><span>Repeater CLI</span><button class="wpamesh-copy" type="button">Copy all</button></div>
+  <ol>
+    <li><code>password YourNewPassword</code><button class="wpamesh-copy" type="button" aria-label="Copy: password YourNewPassword">Copy</button></li>
+  </ol>
+</div>
+<p>The reply echoes the new password so you can check it.</p>
 
       <h2 id="antennas">Antennas and power</h2>
 <p>Radio power plus antenna gain can’t go over about 36 dBm. The <a href="guide-meshcore-radio.html#antennas">antennas and power</a> section has the details and a quick table.</p>
@@ -88,8 +123,9 @@
       <p class="wpamesh-aside-title">On this page</p>
       <ol>
         <li><a href="#before">Before you deploy</a></li>
-        <li><a href="#settings">Recommended settings</a></li>
-        <li><a href="#regions">Region setup</a></li>
+        <li><a href="#regions">Step 1: Set your regions</a></li>
+        <li><a href="#settings">Step 2: Recommended settings</a></li>
+        <li><a href="#password">Step 3: Change the admin password</a></li>
         <li><a href="#antennas">Antennas and power</a></li>
       </ol>
       <div class="wpamesh-card switch">

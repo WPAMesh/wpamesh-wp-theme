@@ -79,12 +79,22 @@
 </div>
 <p>PIT and ERI are the IATA airport codes for Pittsburgh and Erie.</p>
 
+      <h2 id="why">Why repeaters need the whole chain</h2>
+<p>A repeater only repeats a scoped message if it has a region with <strong>that exact name</strong>. The tree doesn’t help: a repeater with only <code>pit</code> won’t repeat a message scoped to <code>wpa</code>, and a repeater with no regions at all won’t repeat any scoped message.</p>
+<p>So every repeater should carry the full chain, from <code>us</code> down to its airport code. Unscoped messages still go through either way, which is why a missing region is easy to miss until people start using scopes.</p>
+<div class="wpamesh-callout">
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><path d="M12 9v4M12 17h.01"/></svg>
+  <span class="title">Setting up a repeater? Do this first</span>
+  <p>One repeater without regions can cut a scoped path in half. Set them before the repeater goes up, while you still have it on your desk.</p>
+</div>
+<p>Companions hear everything regardless of region. The app only picks the scope when you send.</p>
+
       <h2 id="which">Pit or eri?</h2>
 <p>The <code>pit</code> region only extends up to around <strong>New Castle and Grove City</strong>. Anything further north than that is <code>eri</code>.</p>
 <div class="wpamesh-callout">
   <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 3 3 6v15l6-3 6 3 6-3V3l-6 3-6-3zM9 3v15M15 6v15"/></svg>
   <span class="title">Near a state line?</span>
-  <p>Repeaters along state or region borders, or ones that serve as a major hop for another area, should usually carry that area’s hierarchy too, for example <code>us-oh</code> or <code>us-wv</code>. If you live near a border, check #friends-n-family for the neighboring mesh to see what region config they use.</p>
+  <p>Repeaters along state or region borders, or ones that serve as a major hop for another area, may need to carry that area’s hierarchy too, for example <code>us-oh</code> or <code>us-wv</code>. Agree on it with both meshes rather than adding it by default. Check #friends-n-family for the neighboring mesh’s region config. <a href="https://ovmesh.com/">Ohio Valley Mesh</a> runs MeshCore, so they’re the likeliest to coordinate with.</p>
 </div>
 
       <h2 id="setup">Setting it up</h2>
@@ -109,9 +119,13 @@
   <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
   <span class="title">Already have regions set?</span>
   <p><code>region def</code> doesn’t clear the existing tree. Names that already exist get moved under the new parent, and anything else stays. To start clean, <code>region remove</code> the regions you don’t want first.</p>
+</div><div class="wpamesh-callout">
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+  <span class="title">Firmware older than 1.16?</span>
+  <p><code>region def</code> needs firmware 1.16.0 or newer. On older firmware, add each region with <code>region put &lt;name&gt; &lt;parent&gt;</code>, starting from <code>us</code>. Before 1.15, <code>region put</code> also leaves the region blocked until you run <code>region allowf &lt;name&gt;</code>.</p>
 </div>
-<h3>Repeaters</h3>
-<p>Repeaters also need to allow flood traffic for the wildcard region. Run this before <code>region save</code>:</p>
+<h3>Unscoped traffic</h3>
+<p>Repeaters allow unscoped (<code>*</code>) floods by default. If you’ve ever run <code>region denyf *</code>, turn it back on before <code>region save</code>:</p>
 <div class="wpamesh-card wpamesh-cli">
   <div class="bar"><span>Repeater CLI</span><button class="wpamesh-copy" type="button">Copy all</button></div>
   <ol>
@@ -122,12 +136,14 @@
       <h2 id="local">Don’t go narrower than airport codes</h2>
 <p>Don’t add regions more specific than IATA codes. Many of us have to make very circular hops just to reach people the next city over, and a tighter region would cut those paths off.</p>
 <p>Instead, make a channel just for your area and scope it to the nearest IATA code.</p>
+<p>Region names are lowercase letters, numbers and hyphens. For how regions work in general, see the mesh guide’s <a href="https://kabili207.github.io/mesh-guide/meshcore-regions/">Regions</a> page.</p>
     </article>
 
     <aside class="wpamesh-toc" aria-label="On this page">
       <p class="wpamesh-aside-title">On this page</p>
       <ol>
         <li><a href="#hierarchy">The hierarchy</a></li>
+        <li><a href="#why">Why repeaters need the whole chain</a></li>
         <li><a href="#which">Pit or eri?</a></li>
         <li><a href="#setup">Setting it up</a></li>
         <li><a href="#local">Don’t go narrower than airport codes</a></li>

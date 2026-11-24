@@ -64,16 +64,16 @@
 
       <h2 id="wifi">Standalone WiFi observer</h2>
 <p>If your node is ESP32-based, like the Heltec V4, it can connect directly over WiFi. Flash it with the <a href="https://observer.gessaman.com/">observer firmware flasher</a>.</p>
-<p>These commands set it up to upload to Let’s Mesh (mqtt1), MeshMapper (mqtt2) and the WPAmesh CoreScope (mqtt3). Replace the WiFi name and password with your own.</p>
+<p>These commands set the US radio settings and upload to Let’s Mesh (mqtt1, already set by default), MeshMapper (mqtt2, replacing the EU analyzer) and the WPAmesh CoreScope (mqtt3). Replace the WiFi name and password with your own.</p>
 <div class="wpamesh-card wpamesh-cli">
   <div class="bar"><span>Observer CLI</span><button class="wpamesh-copy" type="button">Copy all</button></div>
   <ol>
+    <li><code>set radio 910.525,62.5,7,5</code><button class="wpamesh-copy" type="button" aria-label="Copy: set radio 910.525,62.5,7,5">Copy</button></li>
     <li><code>set wifi.ssid YourWiFiNetwork</code><button class="wpamesh-copy" type="button" aria-label="Copy: set wifi.ssid YourWiFiNetwork">Copy</button></li>
     <li><code>set wifi.pwd YourWiFiPassword</code><button class="wpamesh-copy" type="button" aria-label="Copy: set wifi.pwd YourWiFiPassword">Copy</button></li>
     <li><code>set mqtt.iata PIT</code><button class="wpamesh-copy" type="button" aria-label="Copy: set mqtt.iata PIT">Copy</button></li>
     <li><code>set mqtt.rx on</code><button class="wpamesh-copy" type="button" aria-label="Copy: set mqtt.rx on">Copy</button></li>
     <li><code>set mqtt.tx on</code><button class="wpamesh-copy" type="button" aria-label="Copy: set mqtt.tx on">Copy</button></li>
-    <li><code>set mqtt1.preset analyzer-us</code><button class="wpamesh-copy" type="button" aria-label="Copy: set mqtt1.preset analyzer-us">Copy</button></li>
     <li><code>set mqtt2.preset meshmapper</code><button class="wpamesh-copy" type="button" aria-label="Copy: set mqtt2.preset meshmapper">Copy</button></li>
     <li><code>set mqtt3.preset custom</code><button class="wpamesh-copy" type="button" aria-label="Copy: set mqtt3.preset custom">Copy</button></li>
     <li><code>set mqtt3.server mqtt.wpamesh.net</code><button class="wpamesh-copy" type="button" aria-label="Copy: set mqtt3.server mqtt.wpamesh.net">Copy</button></li>
@@ -82,7 +82,9 @@
     <li><code>reboot</code><button class="wpamesh-copy" type="button" aria-label="Copy: reboot">Copy</button></li>
   </ol>
 </div>
-<p>After it reboots, run <code>get mqtt.status</code> to check that it connected.</p>
+<p><code>mqtt.tx on</code> reports everything the observer transmits. Leave it out to report only its own adverts.</p>
+<p>The observer firmware is a repeater build, so it repeats by default. For a receive-only observer, also run <code>set repeat off</code>.</p>
+<p>After it reboots, run <code>get mqtt.status</code> to check that it connected, and <code>get link.status</code> if it isn’t on WiFi.</p>
 <div class="wpamesh-callout">
   <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
   <span class="title">Older instructions used slot 2</span>

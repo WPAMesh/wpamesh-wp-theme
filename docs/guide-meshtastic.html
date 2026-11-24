@@ -64,14 +64,19 @@
       <p>The Meshtastic developers tend to release updates on this schedule:</p>
       <div class="wpamesh-card wpamesh-guide-table">
         <table>
-          <thead><tr><th scope="col">Release type</th><th scope="col">Frequency</th><th scope="col">Stability</th></tr></thead>
+          <thead><tr><th scope="col">Flasher label</th><th scope="col">Frequency</th><th scope="col">Stability</th></tr></thead>
           <tbody>
-            <tr><td>Beta</td><td>Every 2-3 months</td><td>Stable — update to these ASAP</td></tr>
-            <tr><td>Alpha</td><td>Every 2-3 weeks</td><td>Experimental — may have issues</td></tr>
+            <tr><td>Stable (Beta)</td><td>Every 2-3 months</td><td>Stable. Update to these ASAP</td></tr>
+            <tr><td>Unstable (Alpha)</td><td>Every 2-3 weeks</td><td>Experimental. May have issues</td></tr>
           </tbody>
         </table>
       </div>
-      <p>You’re welcome to try out the alpha releases, but they are experimental and likely unstable. You may experience minor issues while using them. <strong>Beta releases, however, should be updated to as soon as feasible.</strong></p>
+      <p>You’re welcome to try out the alpha releases, but they are experimental and likely unstable. You may experience minor issues while using them. <strong>Stable releases, however, should be updated to as soon as feasible.</strong></p>
+      <div class="wpamesh-callout">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><path d="M12 9v4M12 17h.01"/></svg>
+        <span class="title">Reflash every new node</span>
+        <p>Even if it came preflashed. Firmware 2.5.0 through 2.6.11 let some sellers ship batches of nodes that all share one private key, so anyone with that key could read DMs sent to them. If your node came preflashed, also go to <strong>Settings › Security</strong> and generate a new private key.</p>
+      </div>
 
       <div class="wpamesh-card wpamesh-steps">
         <div class="title">How to update firmware</div>
@@ -80,7 +85,7 @@
           <li><span>Go to <a href="https://flasher.meshtastic.org" target="_blank" rel="noopener">flasher.meshtastic.org</a></span></li>
           <li><span>Connect your device via USB</span></li>
           <li><span>Select your device type from the list</span></li>
-          <li><span>Choose the latest <strong>Beta</strong> release (or Alpha if you’re adventurous)</span></li>
+          <li><span>Choose the latest <strong>Stable</strong> release (or Unstable if you’re adventurous)</span></li>
           <li><span>Click Flash and wait for it to complete</span></li>
         </ol>
       </div>
@@ -133,6 +138,27 @@
         </dl>
       </div>
       <p><strong>Note:</strong> You <em>can</em> move the LongFast channel to a different slot than 0. It just means your node won’t broadcast its own telemetry there—you’ll still decode others’ telemetry though. This is useful if you’d like to share your precise location with friends and family, but not the greater mesh.</p>
+      <p>If that’s all you want, a cleaner option is <strong>position precision</strong>. It’s set per channel, so you can share an exact location on a private channel and an approximate one on LongFast.</p>
+
+      <h2 id="roles">Pick a role</h2>
+      <p>Your node’s role decides when it relays other people’s messages. The default, <code>CLIENT</code>, made sense when the mesh was small. Western PA now has hundreds of nodes, and every extra relay adds traffic and makes routing worse for everyone.</p>
+      <div class="wpamesh-callout tip">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18h6M10 22h4M12 2a7 7 0 0 0-4 12.7V17h8v-2.3A7 7 0 0 0 12 2z"/></svg>
+        <span class="title">Use CLIENT_MUTE</span>
+        <p>For your everyday node, set the role to <strong>CLIENT_MUTE</strong>. You still send and receive everything. Your node just doesn’t relay for others, and the routers and repeaters handle that.</p>
+      </div>
+      <div class="wpamesh-card wpamesh-guide-table">
+        <table>
+          <thead><tr><th scope="col">Role</th><th scope="col">Use it for</th></tr></thead>
+          <tbody>
+            <tr><td><code>CLIENT_MUTE</code></td><td>Your handheld or everyday node. Our recommendation for most people</td></tr>
+            <tr><td><code>CLIENT_BASE</code></td><td>A rooftop or attic node that relays for your own favorited nodes, so your handheld reaches the mesh through it</td></tr>
+            <tr><td><code>CLIENT</code></td><td>Only in sparse areas with few other nodes nearby</td></tr>
+            <tr><td><code>ROUTER</code>, <code>ROUTER_LATE</code></td><td>Infrastructure only. Talk to the coordinators first</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>The mesh guide’s <a href="https://kabili207.github.io/mesh-guide/meshtastic/#choosing-a-role">Choosing a role</a> section covers every role in detail.</p>
 
       <h2 id="done">You’re ready!</h2>
       <div class="wpamesh-callout success">
@@ -152,6 +178,7 @@
         <li><a href="#firmware">Firmware</a></li>
         <li><a href="#out-of-box">Out of the box</a></li>
         <li><a href="#channels">Channels</a></li>
+        <li><a href="#roles">Pick a role</a></li>
         <li><a href="#done">You’re ready!</a></li>
       </ol>
       <div class="wpamesh-card switch">

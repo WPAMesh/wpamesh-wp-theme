@@ -55,7 +55,7 @@
   <div class="wpamesh-guide-layout">
     <article class="wpamesh-article">
       <h2 id="start">Before you start</h2>
-<p>For a full walkthrough of installing and configuring Reticulum, see <a href="https://kabili207.github.io/mesh-guide/">kabi’s mesh guide</a>. It’s written to be generic for people anywhere, so use the WPAmesh settings below instead of the RNode settings listed there.</p>
+<p>For a full walkthrough of installing and configuring Reticulum, see <a href="https://kabili207.github.io/mesh-guide/">kabi’s mesh guide</a>. Its US RNode settings match ours, except we run TX power at 22 dBm.</p>
 <div class="wpamesh-callout">
   <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><path d="M12 9v4M12 17h.01"/></svg>
   <span class="title">Expect rough edges</span>
@@ -116,7 +116,7 @@
 <p>It uses <code>boundary</code> mode because it’s an internet link. See <a href="guide-reticulum-modes.html#boundary">interface modes</a> for why.</p>
 
       <h2 id="rnode">RNode radio settings</h2>
-<p>These match the standard settings <a href="https://chicagolandmesh.org/guides/reticulum/getting-started/configure/">Chicagoland Mesh</a> uses. In range and speed they’re comparable to Meshtastic’s MediumFast.</p>
+<p>These match the standard settings <a href="https://chicagolandmesh.org/guides/reticulum/getting-started/configure/">Chicagoland Mesh</a> uses. They’re roughly as fast as Meshtastic’s Medium Fast, about 3 kbps.</p>
 <div class="wpamesh-card wpamesh-cli">
   <div class="bar"><span>Reticulum config</span><button class="wpamesh-copy" type="button">Copy</button></div>
   <pre>[[RNode LoRa Interface]]
@@ -143,7 +143,8 @@
 <div class="wpamesh-callout">
   <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><path d="M12 9v4M12 17h.01"/></svg>
   <span class="title">Check your hardware’s TX power ceiling</span>
-  <p>Not all RNode hardware supports 22 dBm. Set <code>txpower</code> to the highest value your device actually supports, up to 22. Setting more than it can deliver is harmless, but knowing your real maximum gets you better results.</p>
+  <p>Radios with an SX1262 or SX1268 go up to 22 dBm. Older SX1276 and SX1278 boards top out at 20 dBm. Set <code>txpower</code> to the highest value your radio actually supports, up to 22.</p>
+  <p>Hardware details and antenna advice are in the mesh guide’s <a href="https://kabili207.github.io/mesh-guide/hardware/">Choosing a radio</a> and <a href="https://kabili207.github.io/mesh-guide/antennas/">Antennas and power</a> pages.</p>
 </div>
 <h3>Testing: longer range with SF10</h3>
 <p>Some of us are testing <code>spreadingfactor = 10</code> for longer range. It trades speed for reach: about 1 kbps instead of about 3 kbps. A radio on SF10 can’t talk to one on SF8, so only switch if you’re part of the test, and ask in the Discord first.</p>

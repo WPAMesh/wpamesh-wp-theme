@@ -75,36 +75,51 @@
 </div>
 
       <h2 id="flashing">Flashing MeshCore</h2>
-<p>The easiest way to flash MeshCore is the <a href="https://meshamerica.com/device-configurator/">Mesh America Device Configurator</a>. It runs in your browser.</p>
+<p>The easiest way to flash MeshCore is the <a href="https://meshamerica.com/device-configurator/">Mesh America Device Configurator</a>. It runs in Chrome or Edge.</p>
+<div class="wpamesh-callout">
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><path d="M12 9v4M12 17h.01"/></svg>
+  <span class="title">Reflash every new radio</span>
+  <p>Even if it arrived with firmware on it. Preinstalled firmware is usually old, and some sellers have shipped batches of cloned radios that share one private key.</p>
+</div><div class="wpamesh-callout tip">
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+  <span class="title">Updating? Don’t full erase</span>
+  <p>A full erase wipes the radio’s identity along with its settings. Only use it on a brand-new radio or when switching firmware.</p>
+</div>
 <p>Two alternative firmwares are popular here:</p>
 <div class="wpamesh-card wpamesh-guide-table">
   <table>
     <thead><tr><th scope="col">Firmware</th><th scope="col">Why use it</th></tr></thead>
     <tbody>
-      <tr><td>Keymind Cascade</td><td class="wpamesh-ph">[One-line description]</td></tr>
-      <tr><td><a href="https://easyskymesh.com/">Easy SkyMesh PowerSaving</a></td><td>Much better battery life on ESP32 and nRF52 boards. Has its own web flasher.</td></tr>
+      <tr><td><a href="https://mikecarper.github.io/MeshCore/">Keymind Cascade</a></td><td>Smarter retries for DMs and floods, plus an optional second radio profile for photos, voice and remote repeater updates, or for text with Meshtastic Long Fast. Includes the EasySkyMesh power saving changes. Use its <a href="https://mikecarper.github.io/MeshCore/firmware_picker/">firmware picker</a>.</td></tr>
+      <tr><td><a href="https://github.com/IoTThinks/EasySkyMesh">EasySkyMesh PowerSaving</a></td><td>Much better battery life on ESP32 and nRF52 boards. Builds are on <a href="https://easyskymesh.com/">easyskymesh.com</a>.</td></tr>
     </tbody>
   </table>
 </div>
 
       <h2 id="antennas">Antennas and power</h2>
 <p>Radio power and antenna gain are two different numbers. Power is in <strong>dBm</strong>, antenna gain is in <strong>dBi</strong>, and the FCC limit covers both together.</p>
-<p>On this band the FCC caps the radio at 1 W (30 dBm) with an antenna of 6 dBi or less. That works out to a ceiling of about <strong>36 dBm</strong> for radio power plus antenna gain.</p>
+<p>On this band the FCC allows up to 1 W (30 dBm) with an antenna of 6 dBi or less, and you cut power 1 dB for every dBi above that. That works out to a ceiling of <strong>36 dBm</strong> for radio power plus antenna gain.</p>
 <div class="wpamesh-card wpamesh-guide-table">
   <table>
     <thead><tr><th scope="col">Radio power</th><th scope="col">Largest legal antenna</th><th scope="col">Examples</th></tr></thead>
     <tbody>
       <tr><td>30 dBm</td><td>6 dBi</td><td>1 W radios</td></tr>
-      <tr><td>28 dBm</td><td>About 8 dBi</td><td>T096, Tracker V2</td></tr>
+      <tr><td>28 dBm</td><td>8 dBi</td><td>Heltec V4 on its high output setting</td></tr>
+      <tr><td>22 dBm</td><td>14 dBi</td><td>Most radios, including the T096</td></tr>
     </tbody>
   </table>
 </div>
-<p>Coax loss counts in your favor, so you can go a little higher if you actually measure your loss.</p>
-<div class="wpamesh-callout tip">
+<p>The limit applies to power delivered to the antenna, so long coax runs give you a little more room. Measure your loss before counting on it.</p>
+<div class="wpamesh-callout">
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><path d="M12 9v4M12 17h.01"/></svg>
+  <span class="title">The 1 W allowance assumes 500 kHz</span>
+  <p>The rule’s full-power allowance is written for signals at least 500 kHz wide. MeshCore uses 62.5 kHz, so it isn’t clearly covered. That doesn’t matter at 22 dBm into a modest antenna, but keep it in mind before adding an amplifier.</p>
+</div><div class="wpamesh-callout tip">
   <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18h6M10 22h4M12 2a7 7 0 0 0-4 12.7V17h8v-2.3A7 7 0 0 0 12 2z"/></svg>
   <span class="title">Higher gain isn’t always better</span>
   <p>Higher-gain antennas squash the signal toward the horizon. Somewhere around 5-6 dBi on a ridge still reaches down into the valleys, and 3-5 dBi suits a house in a hollow aiming up at the ridge.</p>
 </div>
+<p>More on dBm, dBi and antenna placement in the mesh guide’s <a href="https://kabili207.github.io/mesh-guide/antennas/">Antennas and power</a> page.</p>
 
       <h2 id="next">Next steps</h2>
 <div class="wpamesh-next">
