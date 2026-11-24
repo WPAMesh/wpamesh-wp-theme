@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Reticulum on WPAmesh · WPAmesh redesign preview</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&amp;family=Barlow+Condensed:wght@600;700&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+<script src="assets/demo.js" defer></script>
+</head>
+<body>
+<a class="wpamesh-skip" href="#main">Skip to main content</a>
+
+<div class="wpamesh-demo-banner">
+  Design preview, not the live site. Reticulum is experimental on WPAmesh, and this guide is a draft compiled from Discord notes. Current site: <a href="https://wpamesh.net">wpamesh.net</a>
+</div>
+
+<header class="wpamesh-header">
+  <div class="wpamesh-wrap">
+    <a class="wpamesh-logo" href="index.html"><span class="badge">WPA</span><span class="word">MESH</span></a>
+    <button class="wpamesh-menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="wpamesh-nav">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+    </button>
+    <nav class="wpamesh-nav" id="wpamesh-nav" aria-label="Main">
+      <ul>
+        <li><a href="index.html">Get started</a></li>
+        <li><a href="index.html#networks">Networks</a></li>
+        <li><a href="https://map.wpamesh.net/map">Live map</a></li>
+        <li><a href="infrastructure.html">Infrastructure</a></li>
+        <li><a href="guides.html" aria-current="page">Guides</a></li>
+        <li><a href="index.html#events">Events</a></li>
+      </ul>
+      <div class="actions">
+        <a class="login" href="https://mqtt.wpamesh.net">MQTT login</a>
+        <a class="wpamesh-btn discord" href="https://wpamesh.net/discord-access/">Join the Discord</a>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<main id="main" class="wpamesh-wrap">
+  <nav class="wpamesh-crumbs" aria-label="Breadcrumb">
+    <a href="guides.html">Guides</a><span aria-hidden="true">/</span>Reticulum
+  </nav>
+
+  <div class="wpamesh-guide-head">
+    <p class="kicker"><span class="wpamesh-chip rns">RNS</span>Reticulum guide</p>
+    <h1>Reticulum on WPAmesh</h1>
+    <p class="lede">A handful of members are testing Reticulum over LoRa and the internet. These are the settings we use locally, plus the apps worth trying.</p>
+  </div>
+
+  <div class="wpamesh-guide-layout">
+    <article class="wpamesh-article">
+      <h2 id="start">Before you start</h2>
+<p>For a full walkthrough of installing and configuring Reticulum, see <a href="https://kabili207.github.io/mesh-guide/">kabi’s mesh guide</a>. It’s written to be generic for people anywhere, so use the WPAmesh settings below instead of the RNode settings listed there.</p>
+<div class="wpamesh-callout">
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><path d="M12 9v4M12 17h.01"/></svg>
+  <span class="title">Expect rough edges</span>
+  <p>Reticulum is experimental here. Ask in the Discord before buying hardware for it.</p>
+</div>
+
+      <h2 id="clients">Pick a client</h2>
+<div class="wpamesh-picks">
+  <div class="wpamesh-card">
+    <div class="head"><h3>Sideband</h3></div>
+    <p class="platforms">Android · Linux · macOS · Windows</p>
+    <p>The most full-featured option: voice messages, real-time calls, file attachments, telemetry sharing and plugins. Good for power users, but battery life is pretty poor.</p>
+    <a href="https://unsigned.io/sideband">unsigned.io →</a>
+  </div>
+  <div class="wpamesh-card">
+    <div class="head"><h3>MeshChatX</h3></div>
+    <p class="platforms">Linux · macOS · Windows</p>
+    <p>A feature-rich, actively developed fork of MeshChat. Voice calls, multiple identities, phonebook, contact sharing, page archiving, maps and a polished modern UI.</p>
+    <a href="https://git.quad4.io/RNS-Things/MeshChatX">git.quad4.io →</a>
+  </div>
+  <div class="wpamesh-card">
+    <div class="head"><h3>MeshChat</h3></div>
+    <p class="platforms">Linux · macOS · Windows</p>
+    <p>The original web-based client. Clean interface, a built-in NomadNet page browser, image, file and voice support, and an optional local propagation node.</p>
+    <a href="https://github.com/liamcottle/reticulum-meshchat">GitHub →</a>
+  </div>
+  <div class="wpamesh-card">
+    <div class="head"><h3>Columba</h3></div>
+    <p class="platforms">Android</p>
+    <p>A native Android client in the latest Material Design. Early but actively maintained, and compatible with all other clients. Comes in a Python version (more stable, uses the official library) and a native Kotlin version (more power-efficient, smaller download).</p>
+    <a href="https://github.com/torlando-tech/columba">GitHub →</a>
+  </div>
+  <div class="wpamesh-card">
+    <div class="head"><h3>Pyxis</h3></div>
+    <p class="platforms">T-Deck Plus</p>
+    <p>A self-contained node for the T-Deck, from the developer of Columba. Clean interface, a tad slow at times. WiFi and LoRa work well, BLE is very buggy, and audio calls work but at low quality.</p>
+    <a href="https://github.com/torlando-tech/pyxis">GitHub →</a>
+  </div>
+  <div class="wpamesh-card">
+    <div class="head"><h3>Nomad Network</h3></div>
+    <p class="platforms">Linux · macOS · Windows (terminal)</p>
+    <p>The original terminal client. Encrypted messaging, file sharing and a built-in page server. The reference implementation for NomadNet pages.</p>
+    <a href="https://github.com/markqvist/nomadnet">GitHub →</a>
+  </div>
+</div>
+
+      <h2 id="backbone">WPAmesh backbone</h2>
+<p>Our test backbone connects Reticulum nodes over the internet. Add this to the <code>[interfaces]</code> section of your Reticulum config (usually <code>~/.reticulum/config</code>):</p>
+<div class="wpamesh-card wpamesh-cli">
+  <div class="bar"><span>Reticulum config</span><button class="wpamesh-copy" type="button">Copy</button></div>
+  <pre>[[WPAMesh]]
+  type = BackboneInterface
+  enabled = true
+  mode = boundary
+  remote = mqtt.wpamesh.net
+  target_port = 4242</pre>
+</div>
+<p>It uses <code>boundary</code> mode because it’s an internet link. See <a href="guide-reticulum-modes.html#boundary">interface modes</a> for why.</p>
+
+      <h2 id="rnode">RNode radio settings</h2>
+<p>These are adapted from the ones Chicago Mesh uses. The spreading factor and coding rate were picked for longer range.</p>
+<div class="wpamesh-card wpamesh-cli">
+  <div class="bar"><span>Reticulum config</span><button class="wpamesh-copy" type="button">Copy</button></div>
+  <pre>[[RNode LoRa Interface]]
+  type = RNodeInterface
+  enabled = yes
+  port = /dev/ttyUSB0
+  frequency = 914875000
+  bandwidth = 125000
+  txpower = 17
+  spreadingfactor = 10
+  codingrate = 5</pre>
+</div>
+<div class="wpamesh-card wpamesh-settings">
+  <dl class="wpamesh-specs">
+    <div><dt>Frequency</dt><dd><code>914.875 MHz</code></dd></div>
+    <div><dt>Bandwidth</dt><dd><code>125 kHz</code></dd></div>
+    <div><dt>Spreading factor</dt><dd><code>10</code></dd></div>
+    <div><dt>Coding rate</dt><dd><code>4/5</code></dd></div>
+    <div><dt>TX power</dt><dd><code>17 dBm</code></dd></div>
+  </dl>
+</div>
+<p>Change <code>port</code> to wherever your RNode shows up, for example <code>/dev/ttyACM0</code> on Linux or a <code>COM</code> port on Windows.</p>
+    </article>
+
+    <aside class="wpamesh-toc" aria-label="On this page">
+      <p class="wpamesh-aside-title">On this page</p>
+      <ol>
+        <li><a href="#start">Before you start</a></li>
+        <li><a href="#clients">Pick a client</a></li>
+        <li><a href="#backbone">WPAmesh backbone</a></li>
+        <li><a href="#rnode">RNode radio settings</a></li>
+      </ol>
+      <div class="wpamesh-card switch">
+        <strong>Stuck?</strong>Most help happens in our Discord. <a href="https://wpamesh.net/discord-access/">Ask there</a>
+      </div>
+    </aside>
+  </div>
+</main>
+
+<footer class="wpamesh-footer">
+  <div class="wpamesh-wrap">
+    <span>WPAmesh · Western Pennsylvania community mesh</span>
+    <nav aria-label="Footer"><a href="guides.html">Guides</a><a href="https://map.wpamesh.net/map">Live map</a><a href="https://mqtt.wpamesh.net">MQTT server</a><a href="https://wpamesh.net/discord-access/">Discord</a></nav>
+  </div>
+</footer>
+</body>
+</html>

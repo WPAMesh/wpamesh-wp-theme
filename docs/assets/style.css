@@ -1025,6 +1025,7 @@ p { margin: 0; }
     }
 
     & h3 { font-size: 22px; text-transform: uppercase; margin: 32px 0 12px; }
+    & h3 code { text-transform: none; font-size: 0.85em; }
     & p { margin-bottom: 1em; }
     & strong { color: var(--wpamesh-text-strong); }
 
@@ -1249,6 +1250,7 @@ p { margin: 0; }
     & h3 { margin: 0; font-size: 24px; text-transform: none; }
     & p { margin: 0; font-size: 16px; }
     & .head { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+    & .platforms { font-size: 14px; color: var(--wpamesh-text-muted); margin-top: -6px; }
     & a { margin-top: auto; font-weight: 600; font-size: 15px; }
 }
 
