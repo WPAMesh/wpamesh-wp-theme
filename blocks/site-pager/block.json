@@ -1,0 +1,20 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
+    "name": "wpamesh/site-pager",
+    "version": "1.0.0",
+    "title": "Site Pager",
+    "category": "theme",
+    "icon": "location-alt",
+    "description": "Links to the previous and next site in the same tier.",
+    "textdomain": "wpamesh",
+    "usesContext": [
+        "postId",
+        "postType"
+    ],
+    "supports": {
+        "html": false
+    },
+    "render": "file:./render.php",
+    "editorScript": "wpamesh-site-blocks-editor"
+}

@@ -1,0 +1,20 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
+    "name": "wpamesh/site-photo",
+    "version": "1.0.0",
+    "title": "Site Photo",
+    "category": "theme",
+    "icon": "location-alt",
+    "description": "The site's featured image with its caption.",
+    "textdomain": "wpamesh",
+    "usesContext": [
+        "postId",
+        "postType"
+    ],
+    "supports": {
+        "html": false
+    },
+    "render": "file:./render.php",
+    "editorScript": "wpamesh-site-blocks-editor"
+}

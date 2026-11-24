@@ -22,11 +22,17 @@ add_action( 'wp_enqueue_scripts', function() {
         null
     );
 
-    // Main theme stylesheet (extracted from HTML redesign)
     wp_enqueue_style(
         'wpamesh-theme',
         get_theme_file_uri( 'assets/css/theme.css' ),
         array( 'wpamesh-google-fonts' ),
+        wp_get_theme()->get( 'Version' )
+    );
+
+    wp_enqueue_style(
+        'wpamesh-legacy',
+        get_theme_file_uri( 'assets/css/legacy.css' ),
+        array( 'wpamesh-theme' ),
         wp_get_theme()->get( 'Version' )
     );
 
@@ -45,8 +51,10 @@ add_action( 'wp_enqueue_scripts', function() {
  */
 add_action( 'after_setup_theme', function() {
     add_theme_support( 'editor-styles' );
-    add_editor_style( 'assets/css/theme.css' );
+    add_editor_style( array( 'assets/css/theme.css', 'assets/css/legacy.css' ) );
 });
+
+require_once get_template_directory() . '/inc/sites.php';
 
 /**
  * Register block pattern category
@@ -64,33 +72,6 @@ add_action( 'init', function() {
     register_block_type( get_template_directory() . '/blocks/network-stats' );
     register_block_type( get_template_directory() . '/blocks/stat-box' );
     register_block_type( get_template_directory() . '/blocks/node-list' );
-});
-
-/**
- * Add tabindex to main content anchor for skip link accessibility
- * Block themes don't automatically add tabindex to anchored elements
- */
-add_filter( 'render_block', function( $content, $block ) {
-    if ( isset( $block['attrs']['anchor'] ) && $block['attrs']['anchor'] === 'main-content' ) {
-        $content = str_replace(
-            'id="main-content"',
-            'id="main-content" tabindex="-1"',
-            $content
-        );
-    }
-    return $content;
-}, 10, 2 );
-
-/**
- * Register navigation menu locations for Site Editor
- */
-add_action( 'after_setup_theme', function() {
-    register_nav_menus( array(
-        'getting-started' => __( 'Getting Started', 'wpamesh' ),
-        'view-the-mesh'   => __( 'View The Mesh', 'wpamesh' ),
-        'guides'          => __( 'Guides', 'wpamesh' ),
-        'community'       => __( 'Community', 'wpamesh' ),
-    ));
 });
 
 /**

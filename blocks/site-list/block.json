@@ -1,0 +1,21 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
+    "name": "wpamesh/site-list",
+    "version": "1.0.0",
+    "title": "Site List",
+    "category": "theme",
+    "icon": "location-alt",
+    "description": "All sites, grouped by tier, with a network filter.",
+    "textdomain": "wpamesh",
+    "supports": {
+        "html": false,
+        "align": [
+            "wide",
+            "full"
+        ]
+    },
+    "render": "file:./render.php",
+    "editorScript": "wpamesh-site-blocks-editor",
+    "viewScript": "wpamesh-site-list"
+}

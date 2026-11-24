@@ -1,0 +1,20 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
+    "name": "wpamesh/site-header",
+    "version": "1.0.0",
+    "title": "Site Header",
+    "category": "theme",
+    "icon": "location-alt",
+    "description": "Breadcrumb, name, county, networks and notice for a site.",
+    "textdomain": "wpamesh",
+    "usesContext": [
+        "postId",
+        "postType"
+    ],
+    "supports": {
+        "html": false
+    },
+    "render": "file:./render.php",
+    "editorScript": "wpamesh-site-blocks-editor"
+}

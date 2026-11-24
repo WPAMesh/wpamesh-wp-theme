@@ -120,8 +120,8 @@
         },
         "typography": {
             "fontFamily": "var(--wp--preset--font-family--barlow)",
-            "fontSize": "var(--wp--preset--font-size--medium)",
-            "lineHeight": "1.6"
+            "fontSize": "1rem",
+            "lineHeight": "1.55"
         },
         "spacing": {
             "blockGap": "1.5rem"
@@ -156,29 +156,12 @@
             },
             "h1": {
                 "typography": {
-                    "fontSize": "var(--wp--preset--font-size--xx-large)",
-                    "textTransform": "uppercase",
-                    "letterSpacing": "2px"
+                    "textTransform": "uppercase"
                 }
             },
             "h2": {
                 "typography": {
-                    "fontSize": "var(--wp--preset--font-size--large)",
-                    "textTransform": "uppercase",
-                    "letterSpacing": "0.5px"
-                },
-                "color": {
-                    "text": "var(--wp--preset--color--gold)"
-                }
-            },
-            "h3": {
-                "typography": {
-                    "fontSize": "var(--wp--preset--font-size--small)",
-                    "textTransform": "uppercase",
-                    "letterSpacing": "1px"
-                },
-                "color": {
-                    "text": "var(--wp--preset--color--gold)"
+                    "textTransform": "uppercase"
                 }
             },
             "button": {
@@ -202,11 +185,6 @@
             }
         },
         "blocks": {
-            "core/navigation": {
-                "typography": {
-                    "fontSize": "var(--wp--preset--font-size--small)"
-                }
-            },
             "core/site-title": {
                 "typography": {
                     "fontFamily": "var(--wp--preset--font-family--barlow-condensed)",
@@ -245,9 +223,7 @@
     },
     "templateParts": [
         { "name": "header", "title": "Header", "area": "header" },
-        { "name": "footer", "title": "Footer", "area": "footer" },
-        { "name": "sidebar-left", "title": "Left Sidebar", "area": "sidebar" },
-        { "name": "sidebar-right", "title": "Right Sidebar", "area": "sidebar" }
+        { "name": "footer", "title": "Footer", "area": "footer" }
     ],
     "customTemplates": [
         { "name": "page-no-title", "title": "Page (No Title)", "postTypes": ["page"] },
