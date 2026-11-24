@@ -6,7 +6,7 @@
  */
 
 $site_id = wpamesh_block_site_id( $block );
-if ( ! $site_id || ! wpamesh_sites_available() ) {
+if ( ! $site_id || ! wpamesh_has_sites() ) {
     return;
 }
 
@@ -14,6 +14,7 @@ $tier   = (string) get_field( 'tier', $site_id );
 $county = (string) get_field( 'county', $site_id );
 $notice = (string) get_field( 'notice', $site_id );
 $meta   = array_filter( array( $county, wpamesh_site_tier_label( $tier ) ) );
+$status = wpamesh_site_status_view( $site_id );
 ?>
 <div <?php echo get_block_wrapper_attributes( array( 'class' => 'wpamesh-site-header' ) ); ?>>
     <nav class="wpamesh-crumbs" aria-label="<?php esc_attr_e( 'Breadcrumb', 'wpamesh' ); ?>">
@@ -36,6 +37,9 @@ $meta   = array_filter( array( $county, wpamesh_site_tier_label( $tier ) ) );
                 </span>
             </div>
         </div>
+        <span class="wpamesh-status-pill <?php echo esc_attr( $status ? $status['class'] : '' ); ?>" data-wpamesh-site="<?php echo (int) $site_id; ?>"<?php echo $status ? '' : ' hidden'; ?>>
+            <span class="wpamesh-dot" aria-hidden="true"></span><span class="label"><?php echo esc_html( $status ? $status['label'] : '' ); ?></span>
+        </span>
     </div>
 
     <?php if ( $notice ) : ?>

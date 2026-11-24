@@ -7,9 +7,8 @@
  * Inserter: true
  */
 
-// Fetch live stats from meshview API
-$stats = wpamesh_get_network_stats();
-$channel_metrics = wpamesh_get_channel_metrics();
+$stats = wpamesh_get_sidebar_stats();
+$channel_metrics = $stats;
 ?>
 <!-- wp:group {"className":"wpamesh-right-widget","layout":{"type":"default"}} -->
 <div class="wpamesh-right-widget wp-block-group"><!-- wp:heading {"level":3} -->

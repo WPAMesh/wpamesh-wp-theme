@@ -30,52 +30,12 @@
                 {
                     "fontFamily": "'Barlow', sans-serif",
                     "slug": "barlow",
-                    "name": "Barlow",
-                    "fontFace": [
-                        {
-                            "fontFamily": "Barlow",
-                            "fontWeight": "400",
-                            "fontStyle": "normal",
-                            "src": ["https://fonts.gstatic.com/s/barlow/v12/7cHpv4kjgoGqM7EPCw.woff2"]
-                        },
-                        {
-                            "fontFamily": "Barlow",
-                            "fontWeight": "500",
-                            "fontStyle": "normal",
-                            "src": ["https://fonts.gstatic.com/s/barlow/v12/7cHqv4kjgoGqM7E3p-kk6A.woff2"]
-                        },
-                        {
-                            "fontFamily": "Barlow",
-                            "fontWeight": "600",
-                            "fontStyle": "normal",
-                            "src": ["https://fonts.gstatic.com/s/barlow/v12/7cHqv4kjgoGqM7E3i-kk6A.woff2"]
-                        },
-                        {
-                            "fontFamily": "Barlow",
-                            "fontWeight": "700",
-                            "fontStyle": "normal",
-                            "src": ["https://fonts.gstatic.com/s/barlow/v12/7cHqv4kjgoGqM7E3--kk6A.woff2"]
-                        }
-                    ]
+                    "name": "Barlow"
                 },
                 {
                     "fontFamily": "'Barlow Condensed', sans-serif",
                     "slug": "barlow-condensed",
-                    "name": "Barlow Condensed",
-                    "fontFace": [
-                        {
-                            "fontFamily": "Barlow Condensed",
-                            "fontWeight": "600",
-                            "fontStyle": "normal",
-                            "src": ["https://fonts.gstatic.com/s/barlowcondensed/v12/HTxwL3I-JCGChYJ8VI-L6Qkr1UUHBiMr0TY.woff2"]
-                        },
-                        {
-                            "fontFamily": "Barlow Condensed",
-                            "fontWeight": "700",
-                            "fontStyle": "normal",
-                            "src": ["https://fonts.gstatic.com/s/barlowcondensed/v12/HTxwL3I-JCGChYJ8VI-L6Qkr8UQHBiMr0TY.woff2"]
-                        }
-                    ]
+                    "name": "Barlow Condensed"
                 },
                 {
                     "fontFamily": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",

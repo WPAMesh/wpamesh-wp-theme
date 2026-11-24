@@ -469,6 +469,7 @@ p { margin: 0; }
 }
 
 .wpamesh-load-high { color: var(--wpamesh-warn); font-weight: 600; }
+.wpamesh-load-elevated { color: var(--wpamesh-gold); font-weight: 600; }
 
 .wpamesh-stats-list {
     display: none;
@@ -1303,3 +1304,15 @@ p { margin: 0; }
 }
 
 .wpamesh-site-page .wpamesh-prose .wp-block-post-content > * + * { margin-top: 1em; }
+
+/* Status set by blocks/site-* and site-status.js; the dot follows its container. */
+:is(.wpamesh-status-pill, .wpamesh-site .status).off > .wpamesh-dot {
+    background: none;
+    border: 2px solid var(--wpamesh-text-muted);
+}
+
+.wpamesh-node-layout:not(:has(> .photo)) {
+    grid-template-areas: "body aside";
+
+    @media (max-width: 999px) { grid-template-areas: "aside" "body"; }
+}

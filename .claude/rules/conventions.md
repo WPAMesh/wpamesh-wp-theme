@@ -26,8 +26,8 @@ All custom Gutenberg blocks use **server-side rendering** via `render.php`. Neve
 
 ## Transient Caching
 
-Use 15-minute expiry for API data transients. Cache keys:
-- `wpamesh_node_list_data` - Aggregated node list
-- `wpamesh_node_{id}` - Per-node cache for O(1) lookups
-- `wpamesh_network_stats` - Network statistics
-- `wpamesh_channel_metrics` - Channel utilization averages
+API data is cached by the wpamesh-sites plugin, not the theme. Use 15-minute expiry for raw API
+responses (`wpamesh_mv_*` for Meshview, `wpamesh_cs_*` for CoreScope). The WP-Cron refresh
+writes the aggregates read on page load:
+- `wpamesh_sites_status` - Live status for every radio, keyed `protocol:node_id`
+- `wpamesh_sites_mesh_stats` - Network-wide Meshtastic stats

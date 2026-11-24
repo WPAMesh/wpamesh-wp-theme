@@ -6,7 +6,7 @@
  */
 
 $site_id = wpamesh_block_site_id( $block );
-if ( ! $site_id || ! wpamesh_sites_available() ) {
+if ( ! $site_id || ! wpamesh_has_sites() ) {
     return;
 }
 

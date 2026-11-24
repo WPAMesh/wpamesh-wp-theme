@@ -10,7 +10,7 @@ if ( ! $site_id || ! has_post_thumbnail( $site_id ) ) {
     return;
 }
 
-$caption = wpamesh_sites_available() ? (string) get_field( 'photo_caption', $site_id ) : '';
+$caption = wpamesh_has_sites() ? (string) get_field( 'photo_caption', $site_id ) : '';
 ?>
 <figure <?php echo get_block_wrapper_attributes( array( 'class' => 'photo wpamesh-node-photo' ) ); ?>>
     <?php echo get_the_post_thumbnail( $site_id, 'large' ); ?>

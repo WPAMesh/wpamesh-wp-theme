@@ -16,5 +16,8 @@
         "html": false
     },
     "render": "file:./render.php",
-    "editorScript": "wpamesh-site-blocks-editor"
+    "editorScript": "wpamesh-site-blocks-editor",
+    "viewScript": [
+        "wpamesh-site-status"
+    ]
 }

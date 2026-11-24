@@ -6,7 +6,7 @@
  */
 
 $site_id = wpamesh_block_site_id( $block );
-if ( ! $site_id || ! wpamesh_sites_available() ) {
+if ( ! $site_id || ! wpamesh_has_sites() ) {
     return;
 }
 
@@ -31,21 +31,32 @@ $details = array_filter( $details );
         <?php
         foreach ( $radios as $radio ) :
             $info  = wpamesh_protocol_info( $radio['protocol'] );
-            $link  = wpamesh_radio_link( $radio );
+            $link  = wpamesh_sites_radio_link( $radio );
+            $live  = wpamesh_radio_live_view( $radio );
             $specs = array_filter( array(
                 __( 'Short name', 'wpamesh' ) => esc_html( $radio['short_name'] ),
-                __( 'Node ID', 'wpamesh' )    => $radio['node_id'] ? '<code>' . esc_html( $radio['node_id'] ) . '</code>' : '',
+                __( 'Node ID', 'wpamesh' )    => $radio['node_id'] ? sprintf(
+                    '<code title="%s">%s</code>',
+                    esc_attr( $radio['node_id'] ),
+                    esc_html( strlen( $radio['node_id'] ) > 16 ? substr( $radio['node_id'], 0, 12 ) . '…' : $radio['node_id'] )
+                ) : '',
                 __( 'Role', 'wpamesh' )       => esc_html( $radio['role'] ),
                 __( 'Hardware', 'wpamesh' )   => esc_html( $radio['hardware'] ),
                 __( 'Antenna', 'wpamesh' )    => is_numeric( $radio['antenna_gain'] ) ? esc_html( $radio['antenna_gain'] . ' dBi' ) : '',
             ) );
             ?>
-            <div class="wpamesh-card wpamesh-radio">
+            <div class="wpamesh-card wpamesh-radio" data-wpamesh-radio="<?php echo esc_attr( wpamesh_sites_radio_key( $radio ) ); ?>">
                 <div class="top">
                     <span class="title">
                         <?php echo wpamesh_protocol_chip( $radio['protocol'] ); // phpcs:ignore WordPress.Security.EscapeOutput -- escaped in helper. ?>
                         <?php echo esc_html( trim( $info['name'] . ' ' . strtolower( wpamesh_role_label( $radio['role'] ) ) ) ); ?>
                     </span>
+                    <span class="seen"><?php echo esc_html( $live['seen'] ); ?></span>
+                </div>
+                <div class="live"<?php echo $live['tiles'] ? '' : ' hidden'; ?>>
+                    <?php foreach ( $live['tiles'] as $tile ) : ?>
+                        <div><b class="<?php echo esc_attr( $tile[2] ); ?>"><?php echo esc_html( $tile[0] ); ?></b><span><?php echo esc_html( $tile[1] ); ?></span></div>
+                    <?php endforeach; ?>
                 </div>
                 <?php if ( $specs ) : ?>
                     <dl class="wpamesh-specs">
