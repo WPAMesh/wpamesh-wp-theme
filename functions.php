@@ -98,6 +98,14 @@ add_action( 'init', function() {
         'name'  => 'stat-box',
         'label' => __( 'Stat Box', 'wpamesh' ),
     ));
+
+    foreach ( array(
+        'wpamesh-primary' => __( 'Primary', 'wpamesh' ),
+        'wpamesh-ghost'   => __( 'Outline', 'wpamesh' ),
+        'wpamesh-discord' => __( 'Discord', 'wpamesh' ),
+    ) as $name => $label ) {
+        register_block_style( 'core/button', array( 'name' => $name, 'label' => $label ) );
+    }
 });
 
 /**

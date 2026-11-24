@@ -8,14 +8,14 @@
 
 defined( 'ABSPATH' ) || exit;
 
-const WPAMESH_SITE_BLOCKS = array( 'site-header', 'site-photo', 'site-info', 'site-pager', 'site-list' );
+const WPAMESH_SITE_BLOCKS = array( 'site-header', 'site-photo', 'site-info', 'site-pager', 'site-list', 'network-numbers', 'mesh-stats', 'featured-site' );
 
 add_action( 'init', function () {
     $version = wp_get_theme()->get( 'Version' );
     wp_register_script(
         'wpamesh-site-blocks-editor',
         get_theme_file_uri( 'assets/js/site-blocks-editor.js' ),
-        array( 'wp-blocks', 'wp-element', 'wp-block-editor', 'wp-server-side-render' ),
+        array( 'wp-blocks', 'wp-element', 'wp-block-editor', 'wp-server-side-render', 'wp-components', 'wp-data', 'wp-core-data' ),
         $version,
         true
     );
@@ -110,6 +110,20 @@ function wpamesh_channel_load_class( $util ) {
         return '';
     }
     return $util >= 40 ? 'wpamesh-load-high' : ( $util >= 25 ? 'wpamesh-load-elevated' : '' );
+}
+
+function wpamesh_channel_load_label( $util ) {
+    if ( null === $util ) {
+        return '';
+    }
+    return $util >= 40 ? __( 'High', 'wpamesh' ) : ( $util >= 25 ? __( 'Elevated', 'wpamesh' ) : __( 'Low', 'wpamesh' ) );
+}
+
+/**
+ * Live network stats from the wpamesh-sites plugin, or null without it.
+ */
+function wpamesh_mesh_stats() {
+    return function_exists( 'wpamesh_sites_mesh_stats' ) ? wpamesh_sites_mesh_stats() : null;
 }
 
 /**

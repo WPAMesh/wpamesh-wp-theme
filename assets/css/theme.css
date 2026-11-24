@@ -1316,3 +1316,84 @@ p { margin: 0; }
 
     @media (max-width: 999px) { grid-template-areas: "aside" "body"; }
 }
+
+/* Homepage (templates/front-page.html) is core blocks with the demo's class names. Flow layout
+   puts a top margin on every block; the design spaces with gaps instead. */
+.wpamesh-home .is-layout-flow > * { margin-block-start: 0; }
+
+.wpamesh-home {
+    & .wpamesh-eyebrow { margin-bottom: 16px; }
+    & .wpamesh-section > .intro { margin: 8px 0 32px; }
+    & .wpamesh-section-head { margin-bottom: 20px; }
+    & .wpamesh-section-head p { font-size: 14px; color: var(--wpamesh-text-muted); }
+    & .wpamesh-network > .wp-block-buttons { margin-top: auto; }
+    & .wpamesh-hero figure { margin: 0; }
+    & .owner p + p { margin-top: 4px; }
+
+    & .wpamesh-coverage {
+        & .map { margin: 0; }
+        & .map a { display: block; height: 100%; }
+        & .foot p:first-child { color: var(--wpamesh-text-muted); }
+    }
+
+    & .wpamesh-events .title a { color: inherit; }
+}
+
+@media (max-width: 599px) {
+    .wpamesh-home .wpamesh-eyebrow { margin-bottom: 10px; }
+}
+
+.wpamesh-featured {
+    & h3 a { color: inherit; text-decoration: none; }
+    & .proto { display: inline-flex; align-items: center; gap: 6px; font-size: 14px; }
+}
+
+/* Button block styles registered in functions.php */
+.wp-block-button[class*="is-style-wpamesh-"] .wp-block-button__link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    padding: 11px 20px;
+    border-radius: 6px;
+    border: 1px solid transparent;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 1.3;
+    text-decoration: none;
+}
+
+.wp-block-button.lg .wp-block-button__link { font-size: 17px; padding: 14px 24px; }
+
+.wp-block-button.is-style-wpamesh-primary .wp-block-button__link {
+    background: var(--wpamesh-gold);
+    color: var(--wpamesh-black);
+    font-weight: 700;
+
+    &:hover { background: var(--wpamesh-gold-hover); color: var(--wpamesh-black); }
+}
+
+.wp-block-button.is-style-wpamesh-ghost .wp-block-button__link {
+    background: transparent;
+    border-color: var(--wpamesh-border-strong);
+    color: var(--wpamesh-text-strong);
+
+    &:hover { background: transparent; border-color: var(--wpamesh-text-muted); color: var(--wpamesh-text-strong); }
+}
+
+.wp-block-button.is-style-wpamesh-discord .wp-block-button__link {
+    background: var(--wpamesh-discord);
+    color: #fff;
+
+    &:hover { background: var(--wpamesh-discord); filter: brightness(1.1); color: #fff; }
+}
+
+.wpamesh-stats-list li > .wpamesh-chip { justify-self: start; }
+
+@media (max-width: 599px) {
+    .wpamesh-hero .ctas {
+        align-items: stretch;
+
+        & .wp-block-button, & .wp-block-button__link { width: 100%; }
+    }
+}

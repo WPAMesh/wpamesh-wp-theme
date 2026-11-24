@@ -1,87 +1,358 @@
 <!-- wp:template-part {"slug":"header","tagName":"header","className":"wpamesh-header"} /-->
 
-<!-- wp:group {"tagName":"main","className":"wpamesh-wrap wpamesh-main","layout":{"type":"default"}} -->
-<main class="wp-block-group wpamesh-wrap wpamesh-main">
-<!-- wp:group {"className":"wpamesh-hero-banner","layout":{"type":"default"}} -->
-<div class="wpamesh-hero-banner wp-block-group"><!-- wp:image {"sizeSlug":"large","linkDestination":"none"} -->
+<!-- wp:group {"tagName":"main","className":"wpamesh-home","layout":{"type":"default"}} -->
+<main class="wp-block-group wpamesh-home">
+
+<!-- wp:group {"tagName":"section","className":"wpamesh-hero","layout":{"type":"default"}} -->
+<section class="wp-block-group wpamesh-hero">
+<!-- wp:group {"className":"wpamesh-wrap","layout":{"type":"default"}} -->
+<div class="wp-block-group wpamesh-wrap">
+<!-- wp:group {"className":"copy","layout":{"type":"default"}} -->
+<div class="wp-block-group copy">
+<!-- wp:paragraph {"className":"wpamesh-eyebrow"} -->
+<p class="wpamesh-eyebrow">Western Pennsylvania · Off-grid LoRa radio</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":1} -->
+<h1 class="wp-block-heading">Mesh networking<br>for the Yinzers</h1>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph {"className":"lede"} -->
+<p class="lede">A community-built radio network centered on Pittsburgh and reaching into Allegheny, Westmoreland, Butler, Armstrong, Indiana and Beaver counties. Radios talking to radios. No cell service or subscription needed.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:buttons {"className":"ctas"} -->
+<div class="wp-block-buttons ctas"><!-- wp:button {"className":"is-style-wpamesh-primary lg"} -->
+<div class="wp-block-button is-style-wpamesh-primary lg"><a class="wp-block-button__link wp-element-button" href="/guides/meshcore-radio/">Get started on MeshCore</a></div>
+<!-- /wp:button -->
+
+<!-- wp:button {"className":"is-style-wpamesh-ghost lg"} -->
+<div class="wp-block-button is-style-wpamesh-ghost lg"><a class="wp-block-button__link wp-element-button" href="#networks">Compare the networks</a></div>
+<!-- /wp:button --></div>
+<!-- /wp:buttons -->
+</div>
+<!-- /wp:group -->
+
+<!-- wp:image {"sizeSlug":"large","linkDestination":"none"} -->
 <figure class="wp-block-image size-large"><img src="https://wpamesh.net/wp-content/uploads/2025/06/pittsburgh_109_9953_pano_up-copy-1024x399.jpg" alt="Downtown Pittsburgh skyline"/></figure>
 <!-- /wp:image -->
+</div>
+<!-- /wp:group -->
+</section>
+<!-- /wp:group -->
 
-<!-- wp:group {"className":"wpamesh-hero-text","layout":{"type":"default"}} -->
-<div class="wpamesh-hero-text wp-block-group"><!-- wp:heading {"textAlign":"center","level":1} -->
-<h1 class="wp-block-heading has-text-align-center">Meshtastic For The Yinzers</h1>
+<!-- wp:group {"tagName":"section","anchor":"networks","className":"wpamesh-section wpamesh-wrap","layout":{"type":"default"}} -->
+<section id="networks" class="wp-block-group wpamesh-section wpamesh-wrap">
+<!-- wp:heading -->
+<h2 class="wp-block-heading">Three networks, one community</h2>
 <!-- /wp:heading -->
 
-<!-- wp:paragraph {"align":"center"} -->
-<p class="has-text-align-center">Off-grid mesh radio for Western Pennsylvania</p>
+<!-- wp:paragraph {"className":"intro"} -->
+<p class="intro">WPAmesh runs more than one mesh. If you're buying your first radio, start with MeshCore. Already on Meshtastic? You're still welcome. That network isn't going anywhere.</p>
 <!-- /wp:paragraph -->
 
-<!-- wp:buttons {"layout":{"type":"flex","justifyContent":"center"}} -->
-<div class="wp-block-buttons"><!-- wp:button -->
-<div class="wp-block-button"><a class="wp-block-button__link wp-element-button" href="/whats-meshtastic/">New to Mesh? Start Here</a></div>
+<!-- wp:group {"className":"wpamesh-networks","layout":{"type":"default"}} -->
+<div class="wp-block-group wpamesh-networks">
+<!-- wp:group {"tagName":"article","className":"wpamesh-card wpamesh-network recommended","layout":{"type":"default"}} -->
+<article class="wp-block-group wpamesh-card wpamesh-network recommended">
+<!-- wp:html -->
+<div class="top">
+    <div class="name"><span class="wpamesh-chip lg">MC</span><h3>MeshCore</h3></div>
+    <span class="wpamesh-pill gold">Recommended</span>
+</div>
+<!-- /wp:html -->
+
+<!-- wp:paragraph -->
+<p>Our fastest-growing network. Dedicated repeaters do the relaying, so your handheld stays quiet and the airwaves hold up as more people join.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:list -->
+<ul class="wp-block-list"><!-- wp:list-item -->
+<li>Companion apps for phone and web</li>
+<!-- /wp:list-item -->
+
+<!-- wp:list-item -->
+<li>Room servers for group chat and boards</li>
+<!-- /wp:list-item -->
+
+<!-- wp:list-item -->
+<li>Best choice for new users</li>
+<!-- /wp:list-item --></ul>
+<!-- /wp:list -->
+
+<!-- wp:wpamesh/network-numbers {"protocol":"meshcore"} /-->
+
+<!-- wp:buttons -->
+<div class="wp-block-buttons"><!-- wp:button {"className":"is-style-wpamesh-primary"} -->
+<div class="wp-block-button is-style-wpamesh-primary"><a class="wp-block-button__link wp-element-button" href="/guides/meshcore-radio/">Start on MeshCore</a></div>
 <!-- /wp:button --></div>
-<!-- /wp:buttons --></div>
-<!-- /wp:group --></div>
+<!-- /wp:buttons -->
+</article>
 <!-- /wp:group -->
 
-<!-- wp:group {"className":"wpamesh-main-inner","layout":{"type":"constrained"}} -->
-<div class="wpamesh-main-inner wp-block-group"><!-- wp:group {"className":"wpamesh-content-section","layout":{"type":"default"}} -->
-<div class="wpamesh-content-section wp-block-group"><!-- wp:heading {"className":"wpamesh-section-title"} -->
-<h2 class="wpamesh-section-title wp-block-heading">Welcome</h2>
+<!-- wp:group {"tagName":"article","className":"wpamesh-card wpamesh-network","layout":{"type":"default"}} -->
+<article class="wp-block-group wpamesh-card wpamesh-network">
+<!-- wp:html -->
+<div class="top">
+    <div class="name"><span class="wpamesh-chip mt lg">MT</span><h3>Meshtastic</h3></div>
+</div>
+<!-- /wp:html -->
+
+<!-- wp:paragraph -->
+<p>The network WPAmesh started on. Large and well covered, running the <strong>Long_Fast</strong> preset on the default channel.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:list -->
+<ul class="wp-block-list"><!-- wp:list-item -->
+<li>Use the CLIENT_MUTE role for everyday nodes</li>
+<!-- /wp:list-item -->
+
+<!-- wp:list-item -->
+<li>MQTT gateways bridge isolated areas</li>
+<!-- /wp:list-item -->
+
+<!-- wp:list-item -->
+<li>Good if you already own a Meshtastic radio</li>
+<!-- /wp:list-item --></ul>
+<!-- /wp:list -->
+
+<!-- wp:wpamesh/network-numbers {"protocol":"meshtastic"} /-->
+
+<!-- wp:buttons -->
+<div class="wp-block-buttons"><!-- wp:button {"className":"is-style-wpamesh-ghost"} -->
+<div class="wp-block-button is-style-wpamesh-ghost"><a class="wp-block-button__link wp-element-button" href="/getting-started/">Meshtastic setup guide</a></div>
+<!-- /wp:button --></div>
+<!-- /wp:buttons -->
+</article>
+<!-- /wp:group -->
+
+<!-- wp:group {"tagName":"article","className":"wpamesh-card wpamesh-network","layout":{"type":"default"}} -->
+<article class="wp-block-group wpamesh-card wpamesh-network">
+<!-- wp:html -->
+<div class="top">
+    <div class="name"><span class="wpamesh-chip rns lg">RNS</span><h3>Reticulum</h3></div>
+    <span class="wpamesh-pill outline">Experimental</span>
+</div>
+<!-- /wp:html -->
+
+<!-- wp:paragraph -->
+<p>A handful of members are testing Reticulum and LXMF over LoRa. Expect rough edges. This one is for tinkerers.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:list -->
+<ul class="wp-block-list"><!-- wp:list-item -->
+<li>RNode hardware, Sideband or MeshChat</li>
+<!-- /wp:list-item -->
+
+<!-- wp:list-item -->
+<li>Reachable from the cross-mesh BBS</li>
+<!-- /wp:list-item -->
+
+<!-- wp:list-item -->
+<li>Ask in #reticulum before you buy</li>
+<!-- /wp:list-item --></ul>
+<!-- /wp:list -->
+
+<!-- wp:buttons -->
+<div class="wp-block-buttons"><!-- wp:button {"className":"is-style-wpamesh-ghost"} -->
+<div class="wp-block-button is-style-wpamesh-ghost"><a class="wp-block-button__link wp-element-button" href="/guides/reticulum/">Read the Reticulum notes</a></div>
+<!-- /wp:button --></div>
+<!-- /wp:buttons -->
+</article>
+<!-- /wp:group -->
+</div>
+<!-- /wp:group -->
+</section>
+<!-- /wp:group -->
+
+<!-- wp:group {"tagName":"section","className":"wpamesh-section wpamesh-wrap","layout":{"type":"default"}} -->
+<section class="wp-block-group wpamesh-section wpamesh-wrap">
+<!-- wp:group {"className":"wpamesh-section-head","layout":{"type":"default"}} -->
+<div class="wp-block-group wpamesh-section-head">
+<!-- wp:heading -->
+<h2 class="wp-block-heading">The mesh right now</h2>
 <!-- /wp:heading -->
 
-<!-- wp:group {"className":"wpamesh-intro-text","layout":{"type":"default"}} -->
-<div class="wpamesh-intro-text wp-block-group"><!-- wp:paragraph -->
-<p class="">Welcome to the home of the Western Pennsylvania Meshtastic community. We're a group of radio enthusiasts building an off-grid mesh network centered around Pittsburgh, with nodes reaching into Allegheny, Westmoreland, Butler, Armstrong, Indiana, and Beaver counties.</p>
+<!-- wp:paragraph -->
+<p>Refreshed every 15 minutes</p>
+<!-- /wp:paragraph -->
+</div>
+<!-- /wp:group -->
+
+<!-- wp:wpamesh/mesh-stats /-->
+</section>
+<!-- /wp:group -->
+
+<!-- wp:group {"tagName":"section","className":"wpamesh-section wpamesh-wrap wpamesh-split","layout":{"type":"default"}} -->
+<section class="wp-block-group wpamesh-section wpamesh-wrap wpamesh-split">
+<!-- wp:group {"className":"wpamesh-card wpamesh-coverage","layout":{"type":"default"}} -->
+<div class="wp-block-group wpamesh-card wpamesh-coverage">
+<!-- wp:group {"className":"bar","layout":{"type":"default"}} -->
+<div class="wp-block-group bar">
+<!-- wp:heading -->
+<h2 class="wp-block-heading">Coverage</h2>
+<!-- /wp:heading -->
+</div>
+<!-- /wp:group -->
+
+<!-- wp:image {"sizeSlug":"large","linkDestination":"custom","className":"map"} -->
+<figure class="wp-block-image size-large map"><a href="https://map.wpamesh.net/map"><img src="https://wpamesh.net/wp-content/uploads/2026/02/WPAmesh-February-26-1024x661.jpg" alt="Map of WPAmesh Meshtastic coverage as of February 2026"/></a></figure>
+<!-- /wp:image -->
+
+<!-- wp:group {"className":"foot","layout":{"type":"default"}} -->
+<div class="wp-block-group foot">
+<!-- wp:paragraph -->
+<p>WPAmesh Meshtastic coverage, February 2026</p>
 <!-- /wp:paragraph -->
 
 <!-- wp:paragraph -->
-<p class="">Whether you're looking to join the network, check coverage in your area, or connect with other local operators, you're in the right place.</p>
-<!-- /wp:paragraph --></div>
-<!-- /wp:group --></div>
+<p><a href="https://map.wpamesh.net/map">Open the live map →</a></p>
+<!-- /wp:paragraph -->
+</div>
+<!-- /wp:group -->
+</div>
 <!-- /wp:group -->
 
-<!-- wp:group {"className":"wpamesh-content-section","layout":{"type":"default"}} -->
-<div class="wpamesh-content-section wp-block-group"><!-- wp:heading {"className":"wpamesh-section-title"} -->
-<h2 class="wpamesh-section-title wp-block-heading">Coverage Map</h2>
-<!-- /wp:heading -->
-
-<!-- wp:group {"className":"wpamesh-map-container","layout":{"type":"default"}} -->
-<div class="wpamesh-map-container wp-block-group"><!-- wp:image {"lightbox":{"enabled":false},"id":400,"sizeSlug":"large","linkDestination":"custom"} -->
-<figure class="wp-block-image size-large"><a href="https://map.wpamesh.net/map"><img src="https://wpamesh.net/wp-content/uploads/2025/12/WPAmesh_1-1-26-1024x853.webp" alt="" class="wp-image-400"/></a><figcaption class="wp-element-caption">WPAMesh as of January, 2026</figcaption></figure>
-<!-- /wp:image --></div>
-<!-- /wp:group --></div>
+<!-- wp:wpamesh/featured-site /-->
+</section>
 <!-- /wp:group -->
 
-<!-- wp:group {"className":"wpamesh-content-section","layout":{"type":"default"}} -->
-<div class="wpamesh-content-section wp-block-group"><!-- wp:heading {"className":"wpamesh-section-title"} -->
-<h2 class="wpamesh-section-title wp-block-heading">Recent Posts</h2>
+<!-- wp:group {"tagName":"section","anchor":"events","className":"wpamesh-section wpamesh-wrap wpamesh-split","layout":{"type":"default"}} -->
+<section id="events" class="wp-block-group wpamesh-section wpamesh-wrap wpamesh-split">
+<!-- wp:group {"className":"col","layout":{"type":"default"}} -->
+<div class="wp-block-group col">
+<!-- wp:heading {"className":"small"} -->
+<h2 class="wp-block-heading small">Upcoming</h2>
 <!-- /wp:heading -->
 
-<!-- wp:query {"queryId":10,"query":{"perPage":4,"postType":"post","order":"desc","orderBy":"date","inherit":false}} -->
-<div class="wp-block-query"><!-- wp:post-template {"className":"wpamesh-posts-grid","layout":{"type":"default"}} -->
-<!-- wp:group {"className":"wpamesh-post-card","layout":{"type":"default"}} -->
-<div class="wpamesh-post-card wp-block-group"><!-- wp:post-title {"level":4,"isLink":true} /-->
+<!-- wp:group {"className":"wpamesh-events","layout":{"type":"default"}} -->
+<div class="wp-block-group wpamesh-events">
+<!-- wp:group {"className":"wpamesh-card","layout":{"type":"default"}} -->
+<div class="wp-block-group wpamesh-card">
+<!-- wp:group {"className":"date","layout":{"type":"default"}} -->
+<div class="wp-block-group date">
+<!-- wp:paragraph {"className":"mon"} -->
+<p class="mon">Monthly</p>
+<!-- /wp:paragraph -->
 
-<!-- wp:group {"className":"meta"} -->
-<div class="meta wp-block-group"><!-- wp:post-terms {"term":"category"} /-->
+<!-- wp:paragraph {"className":"any"} -->
+<p class="any">Meet<br>up</p>
+<!-- /wp:paragraph -->
+</div>
+<!-- /wp:group -->
+
+<!-- wp:group {"layout":{"type":"default"}} -->
+<div class="wp-block-group">
+<!-- wp:paragraph {"className":"title"} -->
+<p class="title">Monthly Mesh Meetup</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph {"className":"where"} -->
+<p class="where">Date and place announced on Discord</p>
+<!-- /wp:paragraph -->
+</div>
+<!-- /wp:group -->
+</div>
+<!-- /wp:group -->
+
+<!-- wp:group {"className":"wpamesh-card","layout":{"type":"default"}} -->
+<div class="wp-block-group wpamesh-card">
+<!-- wp:group {"className":"date","layout":{"type":"default"}} -->
+<div class="wp-block-group date">
+<!-- wp:paragraph {"className":"mon"} -->
+<p class="mon">Monthly</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph {"className":"any"} -->
+<p class="any">2nd<br>wknd</p>
+<!-- /wp:paragraph -->
+</div>
+<!-- /wp:group -->
+
+<!-- wp:group {"layout":{"type":"default"}} -->
+<div class="wp-block-group">
+<!-- wp:paragraph {"className":"title"} -->
+<p class="title"><a href="/wpamesh-rf-only-weekends/">RF-only weekends</a></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph {"className":"where"} -->
+<p class="where">Meshtastic MQTT is off the second weekend of every month</p>
+<!-- /wp:paragraph -->
+</div>
+<!-- /wp:group -->
+</div>
+<!-- /wp:group -->
+
+<!-- wp:group {"className":"wpamesh-card","layout":{"type":"default"}} -->
+<div class="wp-block-group wpamesh-card">
+<!-- wp:group {"className":"date","layout":{"type":"default"}} -->
+<div class="wp-block-group date">
+<!-- wp:paragraph {"className":"mon"} -->
+<p class="mon">Open</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph {"className":"any"} -->
+<p class="any">Any<br>time</p>
+<!-- /wp:paragraph -->
+</div>
+<!-- /wp:group -->
+
+<!-- wp:group {"layout":{"type":"default"}} -->
+<div class="wp-block-group">
+<!-- wp:paragraph {"className":"title"} -->
+<p class="title">Node Building Workshop</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph {"className":"where"} -->
+<p class="where">Virtual · Discord voice</p>
+<!-- /wp:paragraph -->
+</div>
+<!-- /wp:group -->
+</div>
+<!-- /wp:group -->
+</div>
+<!-- /wp:group -->
+</div>
+<!-- /wp:group -->
+
+<!-- wp:group {"className":"col","layout":{"type":"default"}} -->
+<div class="wp-block-group col">
+<!-- wp:heading {"className":"small"} -->
+<h2 class="wp-block-heading small">Get involved</h2>
+<!-- /wp:heading -->
+
+<!-- wp:group {"className":"wpamesh-card wpamesh-involved","layout":{"type":"default"}} -->
+<div class="wp-block-group wpamesh-card wpamesh-involved">
+<!-- wp:paragraph -->
+<p>Most coordination happens on the PghMesh Discord: setup help, site planning and the monthly meetup.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:buttons {"className":"row"} -->
+<div class="wp-block-buttons row"><!-- wp:button {"className":"is-style-wpamesh-discord"} -->
+<div class="wp-block-button is-style-wpamesh-discord"><a class="wp-block-button__link wp-element-button" href="/discord-access/">Join the Discord</a></div>
+<!-- /wp:button -->
+
+<!-- wp:button {"className":"is-style-wpamesh-ghost"} -->
+<div class="wp-block-button is-style-wpamesh-ghost"><a class="wp-block-button__link wp-element-button" href="https://www.facebook.com/groups/873345134557415">Facebook group</a></div>
+<!-- /wp:button --></div>
+<!-- /wp:buttons -->
+
+<!-- wp:group {"className":"owner","layout":{"type":"default"}} -->
+<div class="wp-block-group owner">
+<!-- wp:paragraph -->
+<p><strong>Own a tall building or tower space?</strong></p>
+<!-- /wp:paragraph -->
 
 <!-- wp:paragraph -->
-<p class="">·</p>
+<p>A single well-placed site can link whole counties. <a href="/information-for-router-owners/">Information for router owners</a>.</p>
 <!-- /wp:paragraph -->
-
-<!-- wp:post-excerpt {"moreText":"","excerptLength":10} /--></div>
-<!-- /wp:group --></div>
+</div>
 <!-- /wp:group -->
-<!-- /wp:post-template -->
-
-<!-- wp:query-no-results -->
-<!-- wp:paragraph {"align":"center"} -->
-<p class="has-text-align-center">No posts yet. Check back soon!</p>
-<!-- /wp:paragraph -->
-<!-- /wp:query-no-results --></div>
-<!-- /wp:query --></div>
-<!-- /wp:group --></div>
+</div>
+<!-- /wp:group -->
+</div>
+<!-- /wp:group -->
+</section>
 <!-- /wp:group -->
 
 </main>

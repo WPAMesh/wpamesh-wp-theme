@@ -1,0 +1,16 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
+    "name": "wpamesh/mesh-stats",
+    "version": "1.0.0",
+    "title": "Mesh Right Now",
+    "category": "theme",
+    "icon": "chart-bar",
+    "description": "Live numbers for every network, as a table (or a list on phones).",
+    "textdomain": "wpamesh",
+    "supports": {
+        "html": false
+    },
+    "render": "file:./render.php",
+    "editorScript": "wpamesh-site-blocks-editor"
+}

@@ -1,0 +1,22 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
+    "name": "wpamesh/network-numbers",
+    "version": "1.0.0",
+    "title": "Network Numbers",
+    "category": "theme",
+    "icon": "chart-bar",
+    "description": "Two headline numbers for one network, from the live stats cache.",
+    "textdomain": "wpamesh",
+    "attributes": {
+        "protocol": {
+            "type": "string",
+            "default": "meshcore"
+        }
+    },
+    "supports": {
+        "html": false
+    },
+    "render": "file:./render.php",
+    "editorScript": "wpamesh-site-blocks-editor"
+}

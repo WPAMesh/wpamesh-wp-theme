@@ -1,0 +1,22 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
+    "name": "wpamesh/featured-site",
+    "version": "1.0.0",
+    "title": "Featured Site",
+    "category": "theme",
+    "icon": "location-alt",
+    "description": "A site card with its photo. Picks a site with a photo each day unless one is chosen.",
+    "textdomain": "wpamesh",
+    "attributes": {
+        "siteId": {
+            "type": "integer",
+            "default": 0
+        }
+    },
+    "supports": {
+        "html": false
+    },
+    "render": "file:./render.php",
+    "editorScript": "wpamesh-site-blocks-editor"
+}
