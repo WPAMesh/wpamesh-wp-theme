@@ -4,3 +4,7 @@ Thumbs.db
 
 # Build artifacts
 *.zip
+
+# Site exports (contain user emails)
+exports/
+notes/

@@ -1,0 +1,52 @@
+name: wpamesh-dev
+
+services:
+  db:
+    image: mariadb:11.4
+    environment:
+      MARIADB_DATABASE: wordpress
+      MARIADB_USER: wordpress
+      MARIADB_PASSWORD: wordpress
+      MARIADB_ROOT_PASSWORD: root
+    volumes:
+      - db:/var/lib/mysql
+
+  wordpress:
+    image: wordpress:6-php8.3-apache
+    depends_on: [db]
+    ports:
+      - "127.0.0.1:8080:80"
+    environment:
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: wordpress
+      WORDPRESS_DB_NAME: wordpress
+      WORDPRESS_DEBUG: "1"
+      # The theme checkout is mode 700, so Apache runs as the host user to read it.
+      APACHE_RUN_USER: "#${UID:-10000}"
+      APACHE_RUN_GROUP: "#${GID:-10000}"
+    volumes:
+      - wp:/var/www/html
+      - ..:/var/www/html/wp-content/themes/wpamesh-theme
+      - ../../wpamesh-sites:/var/www/html/wp-content/plugins/wpamesh-sites
+      - ../exports:/exports:ro
+
+  cli:
+    image: wordpress:cli-php8.3
+    depends_on: [wordpress]
+    user: "${UID:-10000}:${GID:-10000}"
+    environment:
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: wordpress
+      WORDPRESS_DB_NAME: wordpress
+    volumes:
+      - wp:/var/www/html
+      - ..:/var/www/html/wp-content/themes/wpamesh-theme
+      - ../../wpamesh-sites:/var/www/html/wp-content/plugins/wpamesh-sites
+      - ../exports:/exports:ro
+    profiles: [cli]
+
+volumes:
+  db:
+  wp:
