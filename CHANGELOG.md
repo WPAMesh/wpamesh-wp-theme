@@ -2,6 +2,28 @@
 
 All notable changes to the WPAMesh theme will be documented in this file.
 
+## [2.0.0] - 2026-11-24
+
+Full redesign. Requires the wpamesh-sites plugin for infrastructure pages and live status.
+
+### Added
+- New header, footer and homepage, with network numbers, mesh stats and a featured site
+- Site page template (`single-wpamesh_site`) built from site header, photo, info and pager blocks
+- Site list block for the Infrastructure page, with a network filter and live status
+- Status refresh after page load, so cached pages still show current status
+- Guide template with section badge, table of contents and a guides index block
+- Callout and Copyable commands blocks for guide content
+- 301 redirects from a moved page's old path (`_wpamesh_old_path`)
+
+### Changed
+- Meshview and CoreScope fetching, caching and the `/wpamesh/v1/` REST API moved to wpamesh-sites
+- Pre-redesign styles split into `legacy.css`
+
+### Removed
+- Left and right sidebars
+- Node-Detail template, node patterns, Node List block, `node-list.js` and the `[wpamesh_node_list]` shortcode
+- Self-hosted font declarations in `theme.json` (their URLs had stopped resolving)
+
 ## [1.3.3] - 2026-01-11
 
 ### Added

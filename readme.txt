@@ -1,6 +1,6 @@
 === WPAMesh ===
 Contributors: wpamesh
-Tags: dark, one-column, two-columns, three-columns, full-site-editing, block-patterns, custom-colors, custom-menu, editor-style
+Tags: dark, one-column, two-columns, full-site-editing, block-patterns, custom-colors, custom-menu, editor-style
 Requires at least: 6.0
 Tested up to: 6.7
 Requires PHP: 7.4
@@ -11,31 +11,25 @@ A dark block theme for the Western Pennsylvania Meshtastic community.
 
 == Description ==
 
-WPAMesh is a custom WordPress block theme designed for the Western Pennsylvania Meshtastic community (wpamesh.net). It features a Pittsburgh-inspired dark design with gold accents, responsive sidebar navigation, and a 3-column layout on wide screens.
+WPAMesh is a custom WordPress block theme designed for the Western Pennsylvania mesh community (wpamesh.net). It has a dark design with Pittsburgh gold accents.
 
 **Features:**
 
 * Dark theme with Pittsburgh Steelers-inspired colors
-* Left sidebar navigation with collapsible sections
-* Right sidebar with network stats, events, and Discord widget (wide screens)
-* Responsive design with mobile hamburger menu
+* Header navigation with a mobile menu
+* Site pages and an infrastructure list with live status (needs the wpamesh-sites plugin)
+* Guide pages with a table of contents, callouts and copyable commands
 * Full Site Editing (FSE) support
-* Custom block patterns for quick layout building
-* Accessibility features (skip link, focus styles, reduced motion support)
 
 **Block Patterns Included:**
 
 * Hero Banner - Pittsburgh skyline with call-to-action
 * Coverage Map - Interactive map link
 * Recent Posts Grid - 2-column post display
-* Network Status Widget - Sidebar status indicators
 * Network Stats - Node and coverage statistics
 * Upcoming Events - Event listings
 * Discord Widget - Community join button
 * Featured Node - Highlight infrastructure nodes
-* Node Header - Single node page header with featured image
-* Node Specs - Node specifications table
-* Member Nodes - Dynamic listing of recognized infrastructure nodes with live status
 
 == Installation ==
 
@@ -49,19 +43,20 @@ WPAMesh is a custom WordPress block theme designed for the Western Pennsylvania 
 
 = Does this theme require any plugins? =
 
-The theme works standalone, but for full Node functionality you'll need Secure Custom Fields (SCF) or Advanced Custom Fields (ACF) to manage node metadata.
+Infrastructure pages and live status come from the wpamesh-sites plugin, which needs Secure Custom Fields (SCF). Without it, the rest of the theme still works.
 
 = How do I customize the navigation? =
 
 Go to Appearance > Editor, click on any navigation menu in the sidebar, and edit links directly in the preview.
 
-= Why don't I see the right sidebar? =
-
-The right sidebar only appears on screens wider than 1400px to maintain readability on smaller displays.
-
 == Changelog ==
 
 For full changelog history, see CHANGELOG.md.
+
+= 2.0.0 =
+* Full redesign: new header, homepage, Site pages and guide pages
+* Live status and the REST API moved to the wpamesh-sites plugin
+* Removed the sidebars and the old node templates
 
 = 1.3.3 =
 * Added channel utilization with load level indicator on node page headers
