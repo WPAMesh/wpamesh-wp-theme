@@ -19,6 +19,7 @@
             options: [
                 { value: 'meshcore', label: 'MeshCore' },
                 { value: 'meshtastic', label: 'Meshtastic' },
+                { value: 'reticulum', label: 'Reticulum' },
             ],
             onChange: ( protocol ) => setAttributes( { protocol } ),
         } ),

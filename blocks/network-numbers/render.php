@@ -26,6 +26,14 @@ switch ( $attributes['protocol'] ) {
             __( 'Routers', 'wpamesh' ) => $stats['routers'],
         );
         break;
+    case 'reticulum':
+        if ( ! empty( $stats['reticulum'] ) ) {
+            $numbers = array(
+                __( 'Nodes', 'wpamesh' )        => $stats['reticulum']['nodes'],
+                __( 'Heard in 24h', 'wpamesh' ) => $stats['reticulum']['active_24h'],
+            );
+        }
+        break;
 }
 if ( ! $numbers ) {
     return;

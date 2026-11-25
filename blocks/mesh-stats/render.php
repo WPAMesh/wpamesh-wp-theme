@@ -15,6 +15,7 @@ $num  = function ( $value ) {
 };
 $dash = '<span class="muted">—</span>';
 $mc   = $stats['meshcore'];
+$rns  = isset( $stats['reticulum'] ) ? $stats['reticulum'] : null;
 $cu   = $stats['channel_utilization'];
 
 $load = '';
@@ -27,6 +28,13 @@ if ( null !== $cu ) {
         esc_html( sprintf( __( '%1$s%% util · %2$s%% air', 'wpamesh' ), $cu, $stats['air_util_tx'] ) )
     );
 }
+
+$rns_infra = $rns ? sprintf(
+    /* translators: 1: backbone count, 2: RNode count */
+    __( '%1$s backbones · %2$s RNodes', 'wpamesh' ),
+    number_format_i18n( $rns['backbones'] ),
+    number_format_i18n( $rns['rnodes'] )
+) : '';
 
 /*
  * Each row: chip protocol, name, then table cells (nodes, active, infrastructure, messages,
@@ -58,11 +66,13 @@ $rows = array(
     ),
     array(
         'reticulum', 'Reticulum',
-        $dash, $dash, $dash,
+        $rns ? $num( $rns['nodes'] ) : $dash,
+        $rns ? $num( $rns['active_24h'] ) : $dash,
+        $rns ? esc_html( $rns_infra ) : $dash,
         '<span class="muted">' . esc_html__( 'Not tracked', 'wpamesh' ) . '</span>',
         '<span class="muted">' . esc_html__( 'Not tracked', 'wpamesh' ) . '</span>',
-        esc_html__( 'Not tracked yet', 'wpamesh' ),
-        esc_html__( 'Experimental network', 'wpamesh' ),
+        $rns ? esc_html( sprintf( __( '%1$s of %2$s heard today', 'wpamesh' ), number_format_i18n( $rns['active_24h'] ), number_format_i18n( $rns['nodes'] ) ) ) : esc_html__( 'Not available right now', 'wpamesh' ),
+        $rns ? esc_html( $rns_infra ) : esc_html__( 'Experimental network', 'wpamesh' ),
         '',
     ),
 );
