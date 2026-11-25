@@ -29,15 +29,11 @@ if ( null !== $cu ) {
     );
 }
 
-$rns_infra = $rns ? sprintf(
-    /* translators: 1: backbone count, 2: RNode count */
-    __( '%1$s backbones · %2$s RNodes', 'wpamesh' ),
-    number_format_i18n( $rns['backbones'] ),
-    number_format_i18n( $rns['rnodes'] )
-) : '';
+$rns_infra = $rns ? sprintf( _n( '%s backbone', '%s backbones', $rns['backbones'], 'wpamesh' ), number_format_i18n( $rns['backbones'] ) )
+    . ' · ' . sprintf( _n( '%s RNode', '%s RNodes', $rns['rnodes'], 'wpamesh' ), number_format_i18n( $rns['rnodes'] ) ) : '';
 
 /*
- * Each row: chip protocol, name, then table cells (nodes, active, infrastructure, messages,
+ * Each row: chip protocol, name, then table cells (nodes, active, infrastructure, packets,
  * channel health) and the phone list's main line, sub line and side note. All values are
  * escaped HTML.
  */
@@ -47,10 +43,12 @@ $rows = array(
         $mc ? $num( $mc['nodes'] ) : $dash,
         $mc ? $num( $mc['active_24h'] ) : $dash,
         $mc ? esc_html( sprintf( __( '%1$s repeaters · %2$s rooms', 'wpamesh' ), number_format_i18n( $mc['repeaters'] ), number_format_i18n( $mc['rooms'] ) ) ) : $dash,
-        $dash,
+        $mc && isset( $mc['packets_24h'] ) ? $num( $mc['packets_24h'] ) : $dash,
         $dash,
         $mc ? esc_html( sprintf( __( '%1$s of %2$s heard today', 'wpamesh' ), number_format_i18n( $mc['active_24h'] ), number_format_i18n( $mc['nodes'] ) ) ) : esc_html__( 'Not available right now', 'wpamesh' ),
-        $mc ? esc_html( sprintf( __( '%1$s repeaters · %2$s rooms', 'wpamesh' ), number_format_i18n( $mc['repeaters'] ), number_format_i18n( $mc['rooms'] ) ) ) : '',
+        $mc ? esc_html( isset( $mc['packets_24h'] )
+            ? sprintf( __( '%1$s repeaters · %2$s packets/24h', 'wpamesh' ), number_format_i18n( $mc['repeaters'] ), number_format_i18n( $mc['packets_24h'] ) )
+            : sprintf( __( '%1$s repeaters · %2$s rooms', 'wpamesh' ), number_format_i18n( $mc['repeaters'] ), number_format_i18n( $mc['rooms'] ) ) ) : '',
         '',
     ),
     array(
@@ -61,7 +59,7 @@ $rows = array(
         $num( $stats['packets_24h'] ),
         $load ?: $dash,
         esc_html( sprintf( __( '%1$s of %2$s heard today', 'wpamesh' ), number_format_i18n( $stats['active_24h'] ), number_format_i18n( $stats['total_nodes'] ) ) ),
-        esc_html( sprintf( __( '%1$s routers · %2$s msgs/24h', 'wpamesh' ), number_format_i18n( $stats['routers'] ), number_format_i18n( $stats['packets_24h'] ) ) ),
+        esc_html( sprintf( __( '%1$s routers · %2$s packets/24h', 'wpamesh' ), number_format_i18n( $stats['routers'] ), number_format_i18n( $stats['packets_24h'] ) ) ),
         null !== $cu ? sprintf( '<span class="%s">%s</span><br>%s%%', esc_attr( wpamesh_channel_load_class( $cu ) ), esc_html( wpamesh_channel_load_label( $cu ) ), esc_html( $cu ) ) : '',
     ),
     array(
@@ -86,7 +84,7 @@ $rows = array(
                     <th scope="col"><?php esc_html_e( 'Nodes', 'wpamesh' ); ?></th>
                     <th scope="col"><?php esc_html_e( 'Active 24h', 'wpamesh' ); ?></th>
                     <th scope="col"><?php esc_html_e( 'Infrastructure', 'wpamesh' ); ?></th>
-                    <th scope="col"><?php esc_html_e( 'Messages 24h', 'wpamesh' ); ?></th>
+                    <th scope="col"><?php esc_html_e( 'Packets 24h', 'wpamesh' ); ?></th>
                     <th scope="col"><?php esc_html_e( 'Channel health', 'wpamesh' ); ?></th>
                 </tr>
             </thead>
