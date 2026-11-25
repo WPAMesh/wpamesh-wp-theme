@@ -53,6 +53,9 @@ Go to Appearance > Editor, click on any navigation menu in the sidebar, and edit
 
 For full changelog history, see CHANGELOG.md.
 
+= 2.1.0 =
+* Reticulum numbers on the homepage (needs wpamesh-sites 0.3.0)
+
 = 2.0.0 =
 * Full redesign: new header, homepage, Site pages and guide pages
 * Live status and the REST API moved to the wpamesh-sites plugin

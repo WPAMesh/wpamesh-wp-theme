@@ -2,6 +2,12 @@
 
 All notable changes to the WPAMesh theme will be documented in this file.
 
+## [2.1.0] - 2026-11-25
+
+### Added
+- Reticulum numbers on the homepage: the network card and the "mesh right now" row show nodes, nodes heard in 24h, and backbones and RNodes, for nodes inside the Western PA box. Needs wpamesh-sites 0.3.0
+- Reticulum option for the Network Numbers block
+
 ## [2.0.0] - 2026-11-24
 
 Full redesign. Requires the wpamesh-sites plugin for infrastructure pages and live status.
