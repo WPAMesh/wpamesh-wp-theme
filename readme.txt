@@ -53,6 +53,9 @@ Go to Appearance > Editor, click on any navigation menu in the sidebar, and edit
 
 For full changelog history, see CHANGELOG.md.
 
+= 2.1.1 =
+* MeshCore packet count on the homepage, and the column renamed to Packets 24h (needs wpamesh-sites 0.3.1)
+
 = 2.1.0 =
 * Reticulum numbers on the homepage (needs wpamesh-sites 0.3.0)
 

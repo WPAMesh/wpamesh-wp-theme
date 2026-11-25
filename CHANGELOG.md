@@ -2,6 +2,17 @@
 
 All notable changes to the WPAMesh theme will be documented in this file.
 
+## [2.1.1] - 2026-11-25
+
+### Added
+- MeshCore packet count in "The mesh right now". Needs wpamesh-sites 0.3.1
+
+### Changed
+- The "Messages 24h" column is now "Packets 24h", since Meshview's count was always every packet type
+
+### Fixed
+- Singular labels for one Reticulum backbone or RNode
+
 ## [2.1.0] - 2026-11-25
 
 ### Added
