@@ -187,6 +187,7 @@
     ],
     "customTemplates": [
         { "name": "page-no-title", "title": "Page (No Title)", "postTypes": ["page"] },
-        { "name": "page-wide", "title": "Page (Wide)", "postTypes": ["page"] }
+        { "name": "page-wide", "title": "Page (Wide)", "postTypes": ["page"] },
+        { "name": "page-guide", "title": "Guide", "postTypes": ["page"] }
     ]
 }

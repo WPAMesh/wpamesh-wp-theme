@@ -35,7 +35,7 @@
         },
     };
 
-    [ 'site-header', 'site-photo', 'site-info', 'site-pager', 'site-list', 'network-numbers', 'mesh-stats', 'featured-site' ].forEach( ( name ) => {
+    [ 'site-header', 'site-photo', 'site-info', 'site-pager', 'site-list', 'network-numbers', 'mesh-stats', 'featured-site', 'guide-head', 'guide-toc', 'guide-index' ].forEach( ( name ) => {
         wp.blocks.registerBlockType( 'wpamesh/' + name, {
             edit: ( props ) => el(
                 'div',

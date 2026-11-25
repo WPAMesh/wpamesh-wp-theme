@@ -1,0 +1,30 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
+    "name": "wpamesh/callout",
+    "version": "1.0.0",
+    "title": "Callout",
+    "category": "text",
+    "icon": "info",
+    "description": "A highlighted note, tip or warning with an icon and title.",
+    "textdomain": "wpamesh",
+    "attributes": {
+        "variant": {
+            "type": "string",
+            "default": ""
+        },
+        "icon": {
+            "type": "string",
+            "default": "info"
+        },
+        "title": {
+            "type": "string",
+            "default": ""
+        }
+    },
+    "supports": {
+        "html": false
+    },
+    "render": "file:./render.php",
+    "editorScript": "wpamesh-guide-blocks-editor"
+}

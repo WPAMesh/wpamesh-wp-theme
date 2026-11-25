@@ -1397,3 +1397,40 @@ p { margin: 0; }
         & .wp-block-button, & .wp-block-button__link { width: 100%; }
     }
 }
+
+/* Guide pages (templates/page-guide.html). Post content is a flow layout, which tops every
+   block with a margin; reset that and restate the demo's spacing. */
+.wpamesh-guide-layout.is-layout-flow > *,
+.wpamesh-article .is-layout-flow > * {
+    margin-block: 0;
+}
+
+.wpamesh-article .entry-content {
+    & > p, & > ul, & > ol { margin-bottom: 1em; }
+    & > h2 { margin: 56px 0 16px; }
+    & > h2:first-child { margin-top: 0; }
+    & > h3 { margin: 32px 0 12px; }
+    & > .wpamesh-callout, & > .wpamesh-steps { margin: 24px 0; }
+    & > .wpamesh-cli { margin: 20px 0 28px; }
+    & > :is(.wpamesh-guide-table, .wpamesh-settings, .wpamesh-tree, .wpamesh-picks) { margin: 20px 0; }
+    & > .wpamesh-next { margin-top: 24px; }
+}
+
+.wpamesh-callout > div > p { margin: 0; }
+.wpamesh-callout > div > p + p { margin-top: 8px; }
+
+.wp-block-table.wpamesh-guide-table {
+    background: var(--wpamesh-surface);
+    border: 1px solid var(--wpamesh-border);
+    border-radius: var(--wpamesh-radius);
+
+    & thead { border-bottom: 0; }
+    & :is(th, td) { border: 0; }
+    & td { border-top: 1px solid var(--wpamesh-border); }
+}
+
+.wpamesh-guide-index { margin-top: 40px; }
+
+@media (max-width: 999px) {
+    .wpamesh-guide-layout > .wpamesh-toc { margin-bottom: 32px; }
+}

@@ -1,0 +1,31 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
+    "name": "wpamesh/cli",
+    "version": "1.0.0",
+    "title": "Copyable commands",
+    "category": "text",
+    "icon": "editor-code",
+    "description": "Commands with a copy button on each line, or a config file with one copy button.",
+    "textdomain": "wpamesh",
+    "attributes": {
+        "label": {
+            "type": "string",
+            "default": "CLI"
+        },
+        "mode": {
+            "type": "string",
+            "default": "lines"
+        },
+        "code": {
+            "type": "string",
+            "default": ""
+        }
+    },
+    "supports": {
+        "html": false
+    },
+    "render": "file:./render.php",
+    "editorScript": "wpamesh-guide-blocks-editor",
+    "viewScript": "wpamesh-guides"
+}

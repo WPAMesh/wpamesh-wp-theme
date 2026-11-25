@@ -59,6 +59,7 @@ add_action( 'after_setup_theme', function() {
 });
 
 require_once get_template_directory() . '/inc/sites.php';
+require_once get_template_directory() . '/inc/guides.php';
 
 /**
  * Register block pattern category

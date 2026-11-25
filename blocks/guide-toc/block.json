@@ -1,0 +1,21 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
+    "name": "wpamesh/guide-toc",
+    "version": "1.0.0",
+    "title": "Guide Contents",
+    "category": "theme",
+    "icon": "list-view",
+    "description": "\"On this page\" links built from the guide's h2 headings.",
+    "textdomain": "wpamesh",
+    "usesContext": [
+        "postId",
+        "postType"
+    ],
+    "supports": {
+        "html": false
+    },
+    "render": "file:./render.php",
+    "editorScript": "wpamesh-site-blocks-editor",
+    "viewScript": "wpamesh-guides"
+}

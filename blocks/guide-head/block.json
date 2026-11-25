@@ -1,0 +1,20 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
+    "name": "wpamesh/guide-head",
+    "version": "1.0.0",
+    "title": "Guide Header",
+    "category": "theme",
+    "icon": "heading",
+    "description": "Breadcrumb, section, title and the page excerpt as the lede.",
+    "textdomain": "wpamesh",
+    "usesContext": [
+        "postId",
+        "postType"
+    ],
+    "supports": {
+        "html": false
+    },
+    "render": "file:./render.php",
+    "editorScript": "wpamesh-site-blocks-editor"
+}
